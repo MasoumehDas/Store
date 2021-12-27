@@ -1,0 +1,27 @@
+﻿@model API.Models.PaymentCallbackModel 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PaymentCallback</title>
+</head>
+<body>
+    <label>
+        Amount:  @Model.Amount
+    </label>
+    <label>
+        RRN:   @Model.RRN
+    </label>
+    <label>
+        status:  @Model.status
+    </label>
+    <label>
+        Token:   @Model.Token
+    </label>
+</body>
+</html>

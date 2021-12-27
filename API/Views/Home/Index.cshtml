@@ -1,0 +1,54 @@
+﻿<br />
+<br />
+<form action="/Home/save" method="post">
+    <input type="text" name="TableName" placeholder="Modules Name" />
+    <input type="text" name="ProcedureName" placeholder="Procedure Name" />
+    <input type="text" name="FlieName" placeholder="Controler Name" />
+    <input type="text" name="FolderName" placeholder="Folder Name" />
+    <input type="submit" value="Save Select" />
+</form>
+
+<form action="/Home/saveInsert" method="post">
+    <input type="text" name="TableName" placeholder="Table Name" />
+    <input type="text" name="DataAccessName" placeholder="DataAccess Name" />
+    <input type="text" name="EntityName" placeholder="Entity Name" />
+    <input type="text" name="FolderName" placeholder="Folder Name" />
+    <input type="submit" value="Save Insert Update Delete" />
+</form>
+
+
+<form method="post" id="form_Submit">
+    <input type="text" placeholder="page_unique" name="page_unique" />
+    <input type="text" placeholder="page_url" name="page_url" />
+    <input type="text" placeholder="page" name="page" />
+    <input type="button" value="Sent to trob" onclick="send()" />
+</form>
+<div id="form_View">
+
+</div>
+<script>
+
+    function send() {
+        Data = $("#form_Submit").serialize();
+        
+        $.ajax({
+            traditional: true,
+            type: 'Post',
+            url: 'http://torob.farshdastani.ir/api/products/post',
+            //url: 'http://localhost:11938//api/products/post',
+            dataType: 'html',
+            data: Data,
+            success: function (response) {
+                
+                alert(response)
+                $("#form_View").html(response);
+
+
+            },
+            error: function (ex) {
+                alert(ex.responseText);
+            }
+        });
+    }
+
+</script>

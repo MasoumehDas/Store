@@ -1,0 +1,32 @@
+.footer_content {
+    padding-top: 88px;
+    padding-bottom: 83px;
+    background: #1e1332;
+    margin-top:50px;
+    line-height:3;
+}
+.icon-image{
+    max-height: 25px;
+    max-width: 25px;
+    
+}
+span {
+    font-size: 14px;
+    font-weight: 500;
+   
+    margin-left: 13px;
+    margin-right:5px;
+}
+footer-company {
+  
+    display: inline-block;
+    color: #808080;
+    font-size: 13px;
+    text-align:justify;
+  }
+  .footer-company image{
+    width:40px;
+  }
+  ul{
+      list-style:none;
+  }

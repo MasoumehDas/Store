@@ -1,0 +1,13 @@
+<div id="doit">
+    <div class="container">
+      <div class="center ">
+        <h4 class="text-center ">{{'easySearch' | translate}}</h4>
+        <hr />
+        <div class="col-md-12">
+          <button class="btn btn-outline-info btn-sm m-1" *ngFor="let item of productService.BasicDataParam6" (click)=productService.DataParam6Select(item.ID,item.Title,item.CodeChar)>
+            {{item.Title}}
+        </button>
+        </div>
+      </div>
+      
+    </div>

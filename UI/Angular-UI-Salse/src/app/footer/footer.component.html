@@ -1,0 +1,70 @@
+<!--Footer-->
+  <div class="footer_content" [ngStyle]="{'color': them.HeaderFontColor,'background-color':them.HeaderColor}">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4" *ngIf="service.Company!=undefined">
+          <ul>
+            <li>
+              <span>
+                {{'CompanyInfo' | translate}}
+              </span>
+            </li>
+            <li *ngIf="service.Company.Tell!=null && service.Company.Tell!=''">
+              <img class="icon-image" src="../../assets/image/phone-call.svg" />
+              <span>{{service.Company.Tell}}</span>
+            </li>
+            <li *ngIf="service.Company.Address!=null && service.Company.Address!=''">
+              <img class="icon-image" src="../../assets/image/placeholder.svg" />
+              <span>{{service.Company.Address}}</span>
+            </li>
+            <li *ngIf="service.Company.Email!=null && service.Company.Email!=''">
+              <img class="icon-image" src="../../assets/image/envelope.svg" />
+              <span>
+                {{service.Company.Email}}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <!--PageGenerator_4--->
+          <div id="PageGenerator_4">
+
+          </div>
+
+        </div>
+        <div class="col-md-4">
+          <div class="footer-namad" id="Namd1">
+
+          <a referrerpolicy="origin" target="_blank" href="https://trustseal.enamad.ir/?id=210334&amp;Code=9tkmP7zSTaBzUgYHTifD">
+            <img referrerpolicy="origin" src="https://Trustseal.eNamad.ir/logo.aspx?id=210334&amp;Code=9tkmP7zSTaBzUgYHTifD"
+             alt="" style="cursor:pointer" id="9tkmP7zSTaBzUgYHTifD">
+         </a>
+        </div>
+        <div class="footer-namad" id="Namd2">
+
+          
+        </div>
+        <div class="footer-namad" id="Namd3">
+
+          
+        </div>
+        </div>
+
+      </div>
+
+    </div>
+    
+  </div>
+  <div class="row  footer-company" >
+    <div class="col-md-12 text-center">
+      <a href="https://www.nikoooo.ir"><img src="../../assets/image/logo.png" width="40" /> طراحی و پیاده سازی توسط شرکت نیکو سیستم آفرین</a>
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+  

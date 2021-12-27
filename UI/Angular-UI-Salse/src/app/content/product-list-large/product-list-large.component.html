@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-xs-4 col-md-4 bootstrap snippets bootdeys" *ngFor="let item of products" id="W{{item.ID}}">
+      <!-- product -->
+      <div class="product-content product-wrap clearfix">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="product-image">
+              <!--Image-->
+              <video controls *ngIf="item.Image_Url.includes('.mp4')" class="image-list" poster="{{item.DefaultImageVideo}}">
+                <source src="{{them.configUrlBasicImage}}{{item.Image_Url}}" type="video/mp4">
+              </video>
+              <img *ngIf="!item.Image_Url.includes('.mp4')" src="{{them.configUrlBasicImage}}{{item.Image_Url}}" alt="{{item.Name}}" class="img-responsive image-list" (click)="onProductDetail(item.ID,'W')">
+              
+              <span class="tag2 hot" *ngIf="item.IsOffPercent>0">
+                {{item.OffPercent}}%
+              </span>
+              <img *ngIf="item.AvailableCount==0" src="/assets/image/Sold.png" class="Sold" />
+              <span class="Barcode" *ngIf="item.AvailableCount!=0">
+                
+                {{item.BarCode}}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="product-deatil">
+              <h6 class="name">
+
+                {{item.Name}}
+
+              </h6>
+              <span style="color:#d1caca;font-size:12px;">{{item.ProductGroup_Title }}</span>
+              <div class="row">
+                <div class="col-md-7 price-container" style="padding:0px;">
+                  <h6 class="price-text-color" [ngClass]="{'discountPrice':item.DiscountPrice>0}">{{item.PriceSales | number:'4.0-0'}}  {{item.CourrencyName}}</h6>
+                    <h6 class="price-text-color" *ngIf="item.DiscountPrice>0">{{item.PriceSales-item.DiscountPrice | number:'4.0-0'}} {{item.CourrencyName}}</h6>
+                </div>
+                <div class="rating col-md-5 " style="padding:0px;">
+                  <i class="price-text-color fa fa-star float-left" *ngIf="item.Grad>=1"></i>
+                  <i class="price-text-color fa fa-star float-left" *ngIf="item.Grad>=2"></i>
+                  <i class="price-text-color fa fa-star float-left" *ngIf="item.Grad>=3"></i>
+                  <i class="price-text-color fa fa-star float-left" *ngIf="item.Grad>=4"></i>
+                  <i class="price-text-color fa fa-star float-left" *ngIf="item.Grad>=5"></i>
+                  <p class="vc float-left" *ngIf="item.DiscountPrice>0">{{'Discount' | translate}} %{{item.OffPercent}}</p> 
+                </div>
+              </div>
+              <span class="tag1">
+                
+              </span>
+            </div>
+            <div class="description">
+              <p>{{item.SumerySpecification}} </p>
+
+
+            </div>
+
+            <div class="product-info smart-form" >
+              <div class="row">
+                <div class="price-responsive">
+
+                  <button class="btn_offer" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" (click)="onSelectProductOrder(item.ID, item.ProductGroupID ,item.ProductGroup_Title,11)" *ngIf="item.IsAvailable==true"><i class="fa fa-shopping-cart"></i> {{'Add' | translate}}</button>
+                  <button class="btn_offer" disabled="disabled" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" *ngIf="item.IsAvailable==false"> {{'NotAvailable' | translate}}</button>
+                </div>
+                <div class="btn_price" [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}">
+                  <a class="btn_price"  (click)="onProductDetail(item.ID,'W')"  [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}"> <i class="fa fa-list"></i>  {{'MoreDeails' | translate}} </a>
+
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+      <!-- end product -->
+    </div>
+
+  </div>

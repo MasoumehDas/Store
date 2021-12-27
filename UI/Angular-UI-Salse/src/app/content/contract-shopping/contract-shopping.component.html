@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="card m-5 bg-secondary">
+    <h5 class="card-header text-white">
+      <span style="float:right">
+        <i class="fa fa-shopping-bag"></i> {{'Menu.TrackOrder' | translate}}
+      </span>
+
+    </h5>
+    <div class="card-body">
+      
+      <div class="card text-dark mb-3">
+        <div class="card-header">{{'CustomerInformation' | translate}} </div>
+        <div class="card-body">
+          <form [formGroup]="CustomerForm">
+            <div class="form-group row">
+              <label for="Mobile" class="col-sm-2 col-form-label">{{'Panel.Mobile' | translate}}</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="Mobile" placeholder="" formControlName="Mobile" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.Mobile.errors }" />
+                <samp *ngIf="isSubmitted && formControlsCustomer.Mobile.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="staticCodeMelli" class="col-sm-2 col-form-label">{{'Panel.CodeMelli' | translate}}</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="staticCodeMelli" placeholder="" formControlName="CodeMelli" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.CodeMelli.errors }" />
+                <samp *ngIf="isSubmitted && formControlsCustomer.CodeMelli.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+              </div>
+            </div>
+
+            <div>
+              <span style="float:left;">
+                <button class="btn_price" [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}" (click)="onSubmit()">{{'Submit' | translate}}</button>
+              </span>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

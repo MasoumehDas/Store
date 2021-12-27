@@ -1,0 +1,41 @@
+.product-deatil-small {
+    border-bottom: 1px solid #dfe5e9;
+
+ 
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 5px;
+
+    padding-top: 5px;
+
+    position: relative;
+    background: #fff;
+    height: 100px;
+
+}
+.product-deatil-small p{
+    font-size: 12px;
+}
+.image-list-small {
+    
+    max-height: 200px;
+    cursor: pointer;
+
+}
+.product-image-small {
+    background-color: #fff;
+    display: block;
+    
+    overflow: hidden;
+    position: relative;
+}
+
+.product-content-small {
+    background-color: #fff;
+    display: block;
+    height: 300px;
+    width: 300;
+    overflow: hidden;
+    position: relative;
+    margin-left: 10px;
+}

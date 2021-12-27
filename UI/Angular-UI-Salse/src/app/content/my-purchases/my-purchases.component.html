@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="card m-5 bg-secondary">
+    <h5 class="card-header text-white">
+      <span style="float:right">
+        <i class="fa fa-shopping-cart"></i> {{'Menu.MyPurchases' | translate}}
+      </span>
+      <span style="float:left">
+        <i class="fa fa-user"></i> {{FullName}}
+      </span>
+    </h5>
+    <div class="card-body">
+      <div class="table-responsive respons">
+        <table class="table table-secondary">
+          <thead class="thead-light">
+
+            <tr>
+              <th scope="col">{{'Panel.PurchaseID' | translate}}</th>
+              <th scope="col">{{'Panel.Date' | translate}}</th>
+              <th scope="col">{{'ProductName' | translate}}</th>
+              <th scope="col">{{'Count' | translate}}</th>
+              <th scope="col">{{'UnitPrice' | translate}}</th>
+              <th scope="col">{{'Discount' | translate}}</th>
+              <th scope="col">{{'Total' | translate}}</th>
+
+              <th scope="col">{{'Status' | translate}}</th>
+            </tr>
+
+          </thead>
+          <tbody>
+
+
+            <tr *ngFor="let item of Purchase" class="respons-purchas">
+              <td>{{item.ID}}</td>
+              <td *ngIf="Lang=='fa'">{{item.DateShamsi}}</td>
+              <td *ngIf="Lang=='en'">{{item.CreateDate}}</td>
+              <td>{{item.ProducName}}</td>
+              <td>{{item.ShoppingCount}}</td>
+              <td>{{item.UnitPrice | number:'4.0-0'}}</td>
+              <td>{{item.TotalUnitDisount | number:'4.0-0'}}</td>
+              <td>{{item.UnitPrice*item.ShoppingCount | number:'4.0-0'}}</td>
+
+              <td>{{item.StatusName}}</td>
+
+            </tr>
+            <tr class="text-danger">
+
+              <td colspan="6">
+                <span style="float:left;padding-left:10px;">{{'Total' | translate}} : </span>
+
+              </td>
+              <td> {{Total | number:'4.0-0'}}</td>
+              <td>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!--PageGenerator_6--->
+  <div id="PageGenerator_6">
+
+  </div>
+</div>

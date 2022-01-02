@@ -113,6 +113,7 @@ namespace Api.Models
         public string InstagramTag { get; set; }
         public Nullable<int> VisitedCount { get; set; }
         public List<ProductImage> ProductImage { get; set; }
+        public  Nullable<Boolean> Comparison { get; set; }
     }
 
     public partial class ProductImage

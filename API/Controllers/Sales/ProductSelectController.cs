@@ -27,7 +27,7 @@ namespace API.Controllers
             }
             ProductResult model = new ProductResult();
             List<ProductSelect> pro;
-            pro= model.SelectProduct(lang, loguser, logIP, false, false, productGroupID, productID, companyID, null, stringParamGroupName, PageNumber, OrderByColumn, OrderDirection);
+            pro= model.SelectProduct(lang, loguser, logIP, isSpecialSales, IsNewCreate, productGroupID, productID, companyID, null, stringParamGroupName, PageNumber, OrderByColumn, OrderDirection);
             return pro;
         }
 

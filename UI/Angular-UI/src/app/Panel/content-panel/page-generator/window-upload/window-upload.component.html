@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card">
+
+    <div class="modal-title">
+      <div class="header-left">
+        <button (click)="onClose()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+      </div>
+
+      <span>
+        {{'Menu.PageContent' | translate}} 
+      </span>
+    </div>
+    
+    <div class="card-body">
+      <iframe [src]="transform()" title="editor" style="width:100%; min-height:750px;max-height:100%"></iframe>
+    </div>
+  </div>
+  
+</div>

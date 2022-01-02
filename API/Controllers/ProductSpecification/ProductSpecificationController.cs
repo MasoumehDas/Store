@@ -29,7 +29,6 @@ namespace API.Controllers
                 GroupType = proclist.Select(a => a.ID).FirstOrDefault();
             }
 
-
             int? ID = null;
             var list = db.sp_ProductSpecification_Select(Settings.SetNull(Lang), Settings.SetNull(UserName), ID, null, GroupType, companyID, Settings.SetNull(GroupTypeName)).ToList();
             return list;

@@ -14,6 +14,10 @@
               <img class="icon-image" src="../../assets/image/phone-call.svg" />
               <span>{{service.Company.Tell}}</span>
             </li>
+            <li *ngIf="service.Company.Mobile!=null && service.Company.Mobile!=''">
+              <img class="icon-image" src="../../assets/image/phone-call.svg" />
+              <span>{{service.Company.Mobile}}</span>
+            </li>
             <li *ngIf="service.Company.Address!=null && service.Company.Address!=''">
               <img class="icon-image" src="../../assets/image/placeholder.svg" />
               <span>{{service.Company.Address}}</span>

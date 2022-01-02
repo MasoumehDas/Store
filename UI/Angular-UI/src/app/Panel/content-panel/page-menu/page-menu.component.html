@@ -1,0 +1,56 @@
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="card-header " style="display: inline-block; padding:7px!important">
+      <a style="font-size:16px;">
+        {{'Menu.MenuManagement' | translate}}
+
+      </a>
+
+      <div style="float: left">
+        <button type="submit" class="btn btn-outline-success marg-right" (click)="onSave()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      <div class="row form-inline">
+
+          <table style="width:100%;" class="table">
+            <tr>
+              <th style="width:15%">
+                {{'Panel.SystemTitle' | translate}}
+              </th>
+              <th style="width:75%">
+                {{'Panel.NameView' | translate}}
+              </th>
+              <th width="10%">
+                {{'Panel.Active' | translate}}
+              </th>
+            </tr>
+            <tr *ngFor="let item of service.PageMenu">
+              <td style="width:15%">
+                {{item.SystemName}}
+              </td>
+              <td style="width:75%">
+                <input type="text" class="form-control" style="width:100%" [(ngModel)]="item.MenuTitle" maxlength="15">
+              </td>
+             
+              <td width="10%">
+                <label class="checkbox-lable">
+                  <input type="checkbox" [(ngModel)]="item.Active" [ngModelOptions]="{standalone: true}" />
+                  <span class="checkmark"></span>
+                </label>
+              </td>
+            </tr>
+          </table>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

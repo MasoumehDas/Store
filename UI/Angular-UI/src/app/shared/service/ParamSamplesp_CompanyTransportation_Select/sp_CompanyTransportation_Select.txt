@@ -1,0 +1,6 @@
+// SearchParamCompanyTransportation//*****************
+,this.SearchForm.controls.Lang.value
+,this.SearchForm.controls.UserName.value
+,this.SearchForm.controls.CompanyID.value
+,this.SearchForm.controls.TransportationCalculate_BasicData.value
+

@@ -1,0 +1,71 @@
+﻿
+
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()" method="post" >
+    <div class="all">
+        <div class="page">
+            <div class="row">
+                <div class="form-group col-md-12 text-center" style="border-bottom:#c1bbbb solid 1px; padding-bottom:5px; ">
+                    <h4>{{"loginForm.LoginPanel" | translate}}</h4>
+                    
+                </div>
+                
+                <!--<h5>پیام</h5>
+                <p style="color:red;"> تغییر رمز عبور تمامی کاربران تغییر رمز عبور تمامی کاربران تغییر رمز عبور تمامی کاربران</p>-->
+
+                <div class="form-group col-md-12 ">
+                    <label>{{"loginForm.UserName" | translate}} </label>
+                    <input type="text" class="form-control " name="UserName" formControlName="UserName" [ngClass]="{ 'has-error': isSubmitted && formControls.UserName.errors }"/>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="control-label" >{{"loginForm.Password" | translate}}</label>
+                    <input type="password" class="form-control " name="Password" formControlName="Password"  [ngClass]="{ 'has-error': isSubmitted && formControls.Password.errors }"/>
+
+                </div>
+                <div  class="form-group col-md-12">
+                  
+                    <div id="captcha">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="{{'loginForm.Captcha' | translate}}" id="cpatchaTextBox" name="Captcha" formControlName="Captcha" [ngClass]="{ 'has-error': isSubmitted && formControls.Captcha.errors }" autocomplete="off" />
+                        <div class="input-group-prepend">
+                            <input type="button" class="input-group-text" value="{{'Refresh' | translate}}" (click)="onCreateCaptcha()"/>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-12 form-group">
+                    <label class="checkbox-lable">
+                        
+                        <input type="checkbox"  />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label style="font-size:14px;">{{'loginForm.RememberMe' | translate}}</label>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    
+                    <select  (change)="useLanguage($event.target.value)" class="form-control" name="Lang" formControlName="Lang">
+                        <option value="">
+                            {{'SelectingLanguage' | translate}}
+                        </option>
+                        <option *ngFor="let item of authService.Language" value={{item.CodeChar}} [selected]="item.IsDefault">
+                           {{item.Title}}
+                        </option>
+                       
+                    </select>
+                    
+                </div>
+                <div class="form-group col-md-6">
+                    
+                    <input type="submit" class="btn btn-block" style="background-color:#222455 ; color:#fff;" value="{{'Submit' | translate}}" [disabled]="" />
+                </div>
+
+                
+            </div>
+        </div>
+
+    </div>
+</form>
+
+

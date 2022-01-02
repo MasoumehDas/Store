@@ -211,6 +211,8 @@ export class ProductService {
     this.configService.FetchParamShowSearch(Lang, GroupType,WebSite).subscribe(data => {
       
       this.ParamShowSearch=[];
+      
+      
       data.map(item => {
         return {
           
@@ -220,10 +222,13 @@ export class ProductService {
           IsShowEasySearch:item.IsShowEasySearch
         }
       }).forEach(item => this.ParamShowSearch.push(item));
-
-
+        if(data.length>0)
+        {
+          this.them.ProductGroup=data[0].ProductGroupID.toString();
+        }
       
-      this.configService.FetchProductSpecificationSelect(Lang, '', this.them.ProductGroup,'').subscribe(data => {
+      
+      this.configService.FetchProductSpecificationSelect(Lang, '', this.them.ProductGroup,'',this.them.CompanyID).subscribe(data => {
         
         this.BasicDataALL = data;
         this.BasicDataParam6=[];
@@ -273,7 +278,7 @@ export class ProductService {
       //-----------------بدست آوردن یک نوع از هر محصول
       
       for (let i in proc) {
-        debugger;
+        
         let count = this.Product.filter(a => a.ID == proc[i].ID);
         if (count.length == 0) {
 

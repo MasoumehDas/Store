@@ -1,0 +1,212 @@
+//CompanyTransportation//*****************
+//params: {
+//CompanyID:CompanyID,
+//CreateDate:CreateDate,
+//Factor:Factor,
+//ID:ID,
+//IsFree:IsFree,
+//LogUser:LogUser,
+//Title:Title,
+//TransportationCalculate_BasicData:TransportationCalculate_BasicData,
+//TransportationPrice:TransportationPrice,
+//UpdateDate:UpdateDate,
+//}
+//***UpdateForm CompanyTransportation//*****************
+// this.formControlsUpdate.CompanyID.patchValue(data[0].CompanyID);
+// this.formControlsUpdate.CreateDate.patchValue(data[0].CreateDate);
+// this.formControlsUpdate.Factor.patchValue(data[0].Factor);
+// this.formControlsUpdate.ID.patchValue(data[0].ID);
+// this.formControlsUpdate.IsFree.patchValue(data[0].IsFree);
+// this.formControlsUpdate.LogUser.patchValue(data[0].LogUser);
+// this.formControlsUpdate.Title.patchValue(data[0].Title);
+// this.formControlsUpdate.TransportationCalculate_BasicData.patchValue(data[0].TransportationCalculate_BasicData);
+// this.formControlsUpdate.TransportationPrice.patchValue(data[0].TransportationPrice);
+// this.formControlsUpdate.UpdateDate.patchValue(data[0].UpdateDate);
+
+//***UpdateParams CompanyTransportation//*****************
+//params: {
+//CompanyID:this.UpdateForm.controls.CompanyID.value,
+//CreateDate:this.UpdateForm.controls.CreateDate.value,
+//Factor:this.UpdateForm.controls.Factor.value,
+//ID:this.UpdateForm.controls.ID.value,
+//IsFree:this.UpdateForm.controls.IsFree.value,
+//LogUser:this.UpdateForm.controls.LogUser.value,
+//Title:this.UpdateForm.controls.Title.value,
+//TransportationCalculate_BasicData:this.UpdateForm.controls.TransportationCalculate_BasicData.value,
+//TransportationPrice:this.UpdateForm.controls.TransportationPrice.value,
+//UpdateDate:this.UpdateForm.controls.UpdateDate.value,
+//}
+//***InsertParams CompanyTransportation//*****************
+//params: {
+//CompanyID:this.InsertForm.controls.CompanyID.value,
+//CreateDate:this.InsertForm.controls.CreateDate.value,
+//Factor:this.InsertForm.controls.Factor.value,
+//ID:this.InsertForm.controls.ID.value,
+//IsFree:this.InsertForm.controls.IsFree.value,
+//LogUser:this.InsertForm.controls.LogUser.value,
+//Title:this.InsertForm.controls.Title.value,
+//TransportationCalculate_BasicData:this.InsertForm.controls.TransportationCalculate_BasicData.value,
+//TransportationPrice:this.InsertForm.controls.TransportationPrice.value,
+//UpdateDate:this.InsertForm.controls.UpdateDate.value,
+//}
+//***formBuilderInsert CompanyTransportation//*****************
+//this.InsertForm = this.formBuilder.group({//CompanyID:[null, [Validators.required]],
+//CreateDate:[null, [Validators.required]],
+//Factor:[null, [Validators.required]],
+//ID:[null, [Validators.required]],
+//IsFree:[null, [Validators.required]],
+//LogUser:['', [Validators.required]],
+//Title:['', [Validators.required]],
+//TransportationCalculate_BasicData:[null, [Validators.required]],
+//TransportationPrice:[null, [Validators.required]],
+//UpdateDate:[null, [Validators.required]],
+});
+//***HtmlInsertInput CompanyTransportation//*****************
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.CompanyID' | translate}}</label>
+<input type = "text" class="form-control" name="CompanyID" formControlName="CompanyID" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.CompanyID.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.CompanyID.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.CreateDate' | translate}}</label>
+<input type = "text" class="form-control" name="CreateDate" formControlName="CreateDate" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.CreateDate.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.CreateDate.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.Factor' | translate}}</label>
+<input type = "text" class="form-control" name="Factor" formControlName="Factor" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.Factor.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.Factor.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.ID' | translate}}</label>
+<input type = "text" class="form-control" name="ID" formControlName="ID" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.ID.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.ID.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.IsFree' | translate}}</label>
+<input type = "text" class="form-control" name="IsFree" formControlName="IsFree" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.IsFree.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.IsFree.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.LogUser' | translate}}</label>
+<input type = "text" class="form-control" name="LogUser" formControlName="LogUser" maxlength="50" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.LogUser.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.LogUser.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.Title' | translate}}</label>
+<input type = "text" class="form-control" name="Title" formControlName="Title" maxlength="50" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.Title.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.TransportationCalculate_BasicData' | translate}}</label>
+<input type = "text" class="form-control" name="TransportationCalculate_BasicData" formControlName="TransportationCalculate_BasicData" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.TransportationCalculate_BasicData.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.TransportationCalculate_BasicData.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.TransportationPrice' | translate}}</label>
+<input type = "text" class="form-control" name="TransportationPrice" formControlName="TransportationPrice" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.TransportationPrice.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.TransportationPrice.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.UpdateDate' | translate}}</label>
+<input type = "text" class="form-control" name="UpdateDate" formControlName="UpdateDate" maxlength="" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.UpdateDate.errors }" />
+<samp *ngIf = "isSubmitted && formControlsInsert.UpdateDate.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+//***HtmlInsertInput CompanyTransportation//*****************
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.CompanyID' | translate}}</label>
+<input type = "text" class="form-control" name="CompanyID" formControlName="CompanyID" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.CompanyID.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.CompanyID.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.CreateDate' | translate}}</label>
+<input type = "text" class="form-control" name="CreateDate" formControlName="CreateDate" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.CreateDate.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.CreateDate.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.Factor' | translate}}</label>
+<input type = "text" class="form-control" name="Factor" formControlName="Factor" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Factor.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.Factor.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.ID' | translate}}</label>
+<input type = "text" class="form-control" name="ID" formControlName="ID" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.ID.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.ID.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.IsFree' | translate}}</label>
+<input type = "text" class="form-control" name="IsFree" formControlName="IsFree" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.IsFree.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.IsFree.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.LogUser' | translate}}</label>
+<input type = "text" class="form-control" name="LogUser" formControlName="LogUser" maxlength="50" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.LogUser.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.LogUser.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.Title' | translate}}</label>
+<input type = "text" class="form-control" name="Title" formControlName="Title" maxlength="50" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Title.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.TransportationCalculate_BasicData' | translate}}</label>
+<input type = "text" class="form-control" name="TransportationCalculate_BasicData" formControlName="TransportationCalculate_BasicData" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.TransportationCalculate_BasicData.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.TransportationCalculate_BasicData.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.TransportationPrice' | translate}}</label>
+<input type = "text" class="form-control" name="TransportationPrice" formControlName="TransportationPrice" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.TransportationPrice.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.TransportationPrice.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+< div class="col-md-6 form-group">
+<label>{{'Panel.UpdateDate' | translate}}</label>
+<input type = "text" class="form-control" name="UpdateDate" formControlName="UpdateDate" maxlength="" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.UpdateDate.errors }" />
+<samp *ngIf = "isSubmittedUpdate && formControlsUpdate.UpdateDate.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+</div>
+
+//***HtmlInsertSerach CompanyTransportation//*****************
+st = List.filter(a =>
+||(a.CompanyID === null ? false : a.CompanyID.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.CreateDate === null ? false : a.CreateDate.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.Factor === null ? false : a.Factor.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.ID === null ? false : a.ID.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.IsFree === null ? false : a.IsFree.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.LogUser === null ? false : a.LogUser.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.Title === null ? false : a.Title.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.TransportationCalculate_BasicData === null ? false : a.TransportationCalculate_BasicData.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.TransportationPrice === null ? false : a.TransportationPrice.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+||(a.UpdateDate === null ? false : a.UpdateDate.toString().toLowerCase().includes(searchTerm.toLowerCase()))
+);
+//***HtmlTableSerach CompanyTransportation//*****************
+<th scope = "col" sortable = "CompanyID"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.CompanyID' | translate}}</th>
+<th scope = "col" sortable = "CreateDate"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.CreateDate' | translate}}</th>
+<th scope = "col" sortable = "Factor"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.Factor' | translate}}</th>
+<th scope = "col" sortable = "ID"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.ID' | translate}}</th>
+<th scope = "col" sortable = "IsFree"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.IsFree' | translate}}</th>
+<th scope = "col" sortable = "LogUser"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.LogUser' | translate}}</th>
+<th scope = "col" sortable = "Title"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.Title' | translate}}</th>
+<th scope = "col" sortable = "TransportationCalculate_BasicData"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.TransportationCalculate_BasicData' | translate}}</th>
+<th scope = "col" sortable = "TransportationPrice"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.TransportationPrice' | translate}}</th>
+<th scope = "col" sortable = "UpdateDate"(sort) = "onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.UpdateDate' | translate}}</th>
+

@@ -1,6 +1,7 @@
 
   
 <div class="container">
+  
 
   <div class="card" *ngIf="ProductDetails[0] !=undefined" style="margin-top:25px;">
     <div class="card-header" style="display: flex;">
@@ -14,33 +15,10 @@
       
       <!--تصاویر-->
       <div class="col-md-5" style="padding:0px;">
-
-
         <div class="col-md-12 " style="padding:0px;height:400px;">
-        
-        
-
-
-          <!-- <figure *ngIf="!ProductDetails[0].Image_Url.includes('.mp4')" [ngStyle]="{'background-image':  'url('+them.configUrlBasicImage+ProductDetails[0].Image_Url+')'}" class='zoom1' id="zoom1" (mousemove)='zoom($event)'>
-            <img src="{{them.configUrlBasicImage}}{{ProductDetails[0].Image_Url}}" />
-          </figure>  -->
-         
-          <app-image-gallery [src]="them.configUrlBasicImage+ProductDetails[0].Image_Url" [alt]="ProductDetails[0].Name"></app-image-gallery>
-
-          <video controls *ngIf="ProductDetails[0].Image_Url.toLowerCase().includes('.mp4')" class="video-details" poster="{{ProductDetails[0].DefaultImageVideo}}">
-            <source src="{{them.configUrlBasicImage}}{{ProductDetails[0].Image_Url}}" type="video/mp4">
-          </video>
+        <app-image-viewer [Product]="ProductDetails[0]"></app-image-viewer>
         </div>
-        <div class="col-md-12" style="padding:0px;">
-          <div class="row" style="border: solid; border-width: thin; border-color:#999999;">
-            
-              <img *ngFor="let img of ProductDetails[0].ProductImage" [src]="!img.Image_Url.toLowerCase().includes('.mp4') ? them.configUrlBasicImage+img.Image_Url : ProductDetails[0].DefaultImageVideo"  alt="{{img.Description}}" (click)="ProductDetails[0].Image_Url=img.Image_Url" style="width:50px;height:50px;padding:5px;">
-           
-              
-
-          </div>
-        </div>
-
+        
       </div>
       <!--ویژگی ها-->
       <div class="col-md-5">

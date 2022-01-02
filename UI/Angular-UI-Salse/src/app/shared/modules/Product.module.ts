@@ -47,11 +47,11 @@ export interface Product {
   InstagramError: string;
   TelegramBotToken: string;
   DefaultImageVideo: string;
- 
   Grad: Number;
   VisitedCount: Number;
   ProductDetails: ProductDetails[];
   ProductImage: ProductImage[];
+  Comparison:boolean;
 }
 
 export interface ProductDetails {

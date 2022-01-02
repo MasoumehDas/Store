@@ -1,0 +1,431 @@
+
+<div class="row background-fff" [ngClass]="{'open':!them.modal_open_edit || !them.modal_open_new,'close':them.modal_open_edit || them.modal_open_new}">
+  <div class="col-md-12 ">
+    <!--Advance Search--------------------------------------------------------------->
+    <fieldset class="panel" [ngClass]="{'open':them.AdvanceSearch,'close':!them.AdvanceSearch}" [@visibilityChanged]="them.AdvanceSearch">
+      <legend>{{'Panel.Advancedsearch' | translate}}</legend>
+
+      <form [formGroup]="SearchForm">
+        <div class="row">
+          <div class="col-md-3 form-group">
+            <label>
+              {{'Panel.Title' | translate}}
+            </label>
+            <input type="text" class="form-control" placeholder="{{'Panel.Title' | translate}}" name="Title" formControlName="Title" />
+          </div>
+          <div class="col-md-3 form-group">
+            <label>
+              {{'Panel.ParentTitle' | translate}}
+            </label>
+            <input type="text" class="form-control" placeholder="{{'Panel.ParentTitle' | translate}}" name="ParentTitle" formControlName="ParentTitle" />
+          </div>
+
+
+
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <hr />
+            <button class="btn btn-dark marg-right" (click)="questioner()" id="btn-Search"><i class="fa fa-search"></i>  {{'Panel.Search' | translate}}</button>
+
+            <button class="btn btn-dark marg-right" (click)="them.onResetPage(SearchForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+            <button class="btn btn-dark marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch"><i class="fa fa-times"></i> {{'Panel.close' | translate}}</button>
+          </div>
+        </div>
+
+      </form>
+    </fieldset>
+    <!--Table-------------------------------------------------------------------------->
+    <table class="table table-bordered table-responsive-lg">
+      <caption>
+        <div class="row">
+          <div class="col-md-12">
+            <h5>
+              {{'Menu.MC_Company' | translate}}
+            </h5>
+
+            <hr />
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+
+           
+            <button class="btn btn-light marg-right" (click)="them.modal_open_new=!them.modal_open_new" ngbTooltip="{{'Panel.New' | translate}}"><i class="fa fa-plus-square"></i></button>
+            <button class="btn btn-light marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch" ngbTooltip="{{'Panel.Advancedsearch' | translate}}"><i class="fa fa-search-plus"></i></button>
+
+
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="ml-3" *ngIf="service.loading$ | async">{{'Panel.Searching' | translate}}</span>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-search"></i></span>
+              </div>
+              <input class="form-control" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+            </div>
+          </div>
+        </div>
+
+      </caption>
+      <thead>
+
+        <tr>
+          <th width="50px">
+
+          </th>
+          <th cope="col" sortable="ID" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.ID' | translate}}</th>
+          <th scope="col" sortable="Title" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.Title' | translate}}</th>
+          <th scope="col" sortable="parent_Title" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.TitleParent' | translate}}</th>
+          <th scope="col" (sort)="onSort($event)" class="nowrap"> {{'Panel.ItHasProperties' | translate}}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of service.List$ | async" [ngClass]="{'select-row': them.selectedRowID === item.ID && them.selectRow===true}">
+          <th>
+            <button class="btn text-success" (click)="EditOpen(item.ID)" ngbTooltip="{{'Panel.Edit' | translate}}" id="EditGroup"><i class="fa fa-edit"></i></button>
+                      <button class="btn text-danger" (click)="them.DeleteRowConfirm(item.ID)" ngbTooltip="{{'Panel.Delete' | translate}}" id="DeleteGroup"><i class="fa fa-trash"></i></button>
+          </th>
+          <td>
+
+            {{item.ID}}
+          </td>
+          <td>
+
+            <ngb-highlight [result]="item.Title " [term]="service.searchTerm"></ngb-highlight>
+
+          </td>
+          <td>
+            <ngb-highlight [result]="item.parent_Title" [term]="service.searchTerm"></ngb-highlight>
+
+          </td>
+          <td>
+            <i [ngClass]="{'text-success' : item.IsLastChid ,'text-light':!item.IsLastChid}" class="fa fa-check-circle"></i>
+
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <!--pagination-------------------------------------------------------------------->
+    <div class="row">
+      <div class="col-md-9">
+        <div class="d-flex justify-content-between">
+          <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+          </ngb-pagination>
+
+
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <select class="custom-select" [(ngModel)]="service.pageSize" name="pageSize">
+          <option *ngFor="let item of them.PagSizeInvaite" [ngValue]="item">{{item}} {{'Panel.RowsOnEachpage' | translate}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--Modal_Edit-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_edit,'close':!them.modal_open_edit}">
+  <div class="card">
+    <div class="modal-title">
+      <div class="header-left">
+
+        <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+        <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+      </div>
+
+      <span>
+        {{'Panel.EditRow' | translate}} ({{them.selectedRowID}})
+      </span>
+    </div>
+    <div class="body-modal">
+      <form [formGroup]="UpdateForm">
+        <input type="hidden" name="ID" formControlName="ID" />
+        <div class="row">
+          <div class="col-md-12">
+
+            <button type="submit" class="btn btn-dark marg-right" (click)="onUpdate()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+
+
+          <div class="col-md-3 form-group">
+            <label>{{'Panel.Title' | translate}}</label>
+
+            <input type="text" class="form-control" placeholder="{{'Panel.Title' | translate}}" name="Title" formControlName="Title" />
+
+
+            <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+          </div>
+          <div class="col-md-3 form-group">
+            <label>{{'Panel.TitleParent' | translate}}</label>
+
+
+            <ng-multiselect-dropdown placeholder="Select"
+                                     [data]="service.ProductGroupParent"
+                                     [(ngModel)]="ProductGroup"
+                                     [settings]="dropdownTitleParent"
+                                     (onSelect)="onItemSelectTitleParent($event)"
+                                     (onSelectAll)="onSelectAll($event)"
+                                     formControlName="TitleParent">
+            </ng-multiselect-dropdown>
+            <samp *ngIf="isSubmittedUpdate && formControlsUpdate.TitleParent.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+          </div>
+
+
+
+          <div class="col-md-4 form-group">
+            <label>{{'Panel.Specification' | translate}}</label>
+            <input type="text" formControlName="Specification" class="form-control drowpdown-input" (keyup)="onFindSpecification()" (click)="onFindSpecification()" />
+
+
+            <ul class="ParamSearch" id="SpecificationFild" style="display:none;list-style-type:none;">
+              <li *ngFor="let det of service.ProductGroupDetail_Search" (click)="onSelectSpecification(det.ID)" style="cursor:pointer; border-bottom:solid thin #ffffff ;padding:7px;">
+
+                {{ det.GroupTypeName }}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 form-group">
+            <br />
+            
+            <button class="btn btn-light" (click)="onAddNew()" *ngIf="service.ProductGroupDetail_Search.length==0">{{'Panel.AddNew' | translate}}</button>
+          </div>
+
+
+        </div>
+
+
+      </form>
+      
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+
+            <th>{{'Panel.Specification' | translate}}</th>
+            <th>{{'Panel.ShowSearch' | translate}}</th>
+            <th>{{'Panel.Sort' | translate}}</th>
+            <th>{{'Panel.Delete' | translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ProductGroupDetail" [ngClass]="{'text-warning':item.Grouptype=='New'}">
+
+            <td>
+              <input type="text" class="form-control-sm" [(ngModel)]="item.GroupTypeName" [ngModelOptions]="{standalone: true}" />
+            </td>
+            <td>
+              <label class="checkbox-lable">
+                <input type="checkbox" name="IsShowSearch" [(ngModel)]="item.IsShowSearch" />
+                <span class="checkmark"></span>
+              </label>
+            </td>
+            <td><input type="text" class="form-control-sm" [(ngModel)]="item.Sort" [ngModelOptions]="{standalone: true}" /></td>
+            <td>
+              <button class="btn text-danger " ngbTooltip="{{'Panel.Delete' | translate}}" (click)="onDeleteSpecification(item.ID)"><i class="fa fa-trash"></i></button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal_New-------------------------------------------------------------->
+
+<div [ngClass]="{'open':them.modal_open_new,'close':!them.modal_open_new}">
+
+  <div class="card">
+
+
+    <div class="modal-title">
+      <div class="header-left">
+        <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+        <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+      </div>
+      <span>{{'Panel.New' | translate}}</span>
+    </div>
+
+    <div class="body-modal">
+      <form [formGroup]="InsertForm">
+        <div class="row">
+          <div class="col-md-12">
+            <hr />
+            <button type="submit" class="btn btn-dark marg-right" (click)="onInsert()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+
+          </div>
+        </div>
+        <div class="row">
+
+
+          <div class="col-md-3 form-group">
+            <label>{{'Panel.Title' | translate}}</label>
+
+
+
+            <input type="text" class="form-control" placeholder="{{'Panel.Title' | translate}}" name="Title" formControlName="Title" />
+            <samp *ngIf="isSubmitted && formControls.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+          </div>
+          <div class="col-md-3 form-group">
+            <label>{{'Panel.TitleParent' | translate}}</label>
+
+
+            <ng-multiselect-dropdown placeholder="Select"
+                                     [data]="service.ProductGroupParent"
+                                     [(ngModel)]="ProductGroup"
+                                     [settings]="dropdownTitleParent"
+                                     (onSelect)="onItemSelectTitleParent($event)"
+                                     (onSelectAll)="onSelectAll($event)"
+                                     formControlName="TitleParent">
+
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-md-4 form-group">
+            <label>{{'Panel.Specification' | translate}}</label>
+            <input type="text" formControlName="Specification" class="form-control drowpdown-input" (keyup)="onFindSpecificationInsert()" (click)="onFindSpecification()" />
+
+
+            <ul class="ParamSearch" id="SpecificationFildInsert" style="display:none;list-style-type:none;">
+              <li *ngFor="let det of service.ProductGroupDetail_Search" (click)="onSelectSpecification(det.ID)" style="cursor:pointer; border-bottom:solid thin #ffffff ;padding:7px;">
+
+                {{ det.GroupTypeName }}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-2 form-group">
+            <button class="btn btn-light" (click)="onAddNewInsert()" *ngIf="service.ProductGroupDetail_Search.length==0">{{'Panel.AddNew' | translate}}</button>
+          </div>
+
+        </div>
+
+
+      </form>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+
+            <th>{{'Panel.Specification' | translate}}</th>
+            <th>{{'Panel.ShowSearch' | translate}}</th>
+            <th>{{'Panel.Sort' | translate}}</th>
+            <th>{{'Panel.Delete' | translate}}</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ProductGroupDetail" [ngClass]="{'text-warning':item.Grouptype=='New'}">
+
+            <td>{{item.GroupTypeName}}</td>
+            <td>
+              <label class="checkbox-lable">
+                <input type="checkbox" name="IsShowSearch" [(ngModel)]="item.IsShowSearch" [ngModelOptions]="{standalone: true}" />
+                <span class="checkmark"></span>
+              </label>
+            </td>
+            <td><input type="text" class="form-control-sm" [(ngModel)]="item.Sort" [ngModelOptions]="{standalone: true}" /></td>
+
+            <td>
+              <button class="btn text-danger " ngbTooltip="{{'Panel.Delete' | translate}}" (click)="onDeleteSpecification(item.ID)"><i class="fa fa-trash"></i></button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<!--Modal_Delete-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_delete,'close':!them.modal_open_delete}">
+
+  <div class="modal-backdrop">
+    <div class="open-modal-delete">
+
+      <div class="alert alert-info">
+
+        <span style="text-align:center;">{{'Panel.Delete' | translate}}</span>
+      </div>
+      <div class="body-modal">
+        <h5>
+
+          {{'Panel.Suredelete?' | translate}} ({{them.selectedRowID}})
+
+        </h5>
+        <div class="row text-lg-center">
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-sm btn-block" (click)="ConfirmDeleteResponse(true)"><i class="fa fa-ticket"></i> {{'Panel.Yes' | translate}}</button>
+          </div>
+
+
+          <div class="col-md-6 "><button class="btn btn-sm btn-info btn-block" (click)="ConfirmDeleteResponse(false)"><i class="fa fa-ticket"></i> {{'Panel.No' | translate}} </button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--AddSettings-->
+<!--<div [ngClass]="{'open':them.modal_open_settings,'close':!them.modal_open_settings}" class="SettingsForm">
+
+
+  <div class="card  bg-light mb-3" style="min-width: 300px;">
+    <div class="modal-title">
+      <div class="header-left">
+        <button (click)="them.modal_open_settings=!them.modal_open_settings" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+      </div>
+      {{'Panel.AddSettings' | translate}}
+    </div>
+    <form [formGroup]="SettingsGroupForm">
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label>
+              {{'Panel.SettingsGroup' | translate}}
+
+            </label>
+            <ng-multiselect-dropdown placeholder="Select"
+                                     [data]="service.GroupType"
+                                     [(ngModel)]="GroupType"
+                                     [settings]="dropdownGroupSettings"
+                                     (onSelect)="onItemSelectGroupType($event)"
+                                     (onSelectAll)="onSelectAll($event)"
+                                     formControlName="GroupType">
+            </ng-multiselect-dropdown>
+            <samp *ngIf="isSubmittedSettings && formControlsGroup.GroupType.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+          </div>
+          <div class="col-md-12 form-group">
+            <label>{{'Panel.Name' | translate}}</label>
+            <input type="text" class="form-control" name="Name" formControlName="Name" [ngClass]="{ 'has-error': isSubmittedSettings && formControlsGroup.Name.errors }" />
+            <samp *ngIf="isSubmittedSettings && formControlsGroup.Name.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <hr />
+            <button type="submit" class="btn btn-dark marg-right" (click)="onInsertSettings()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+            <button class="btn btn-dark marg-right" (click)="them.onResetPage(SettingsGroupForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>-->
+
+

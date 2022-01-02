@@ -45,6 +45,7 @@ import { ConfirmBankPWGComponent } from './content/confirm-bank-pwg/confirm-bank
 import { ProductListSmallComponent } from './content/product-list-small/product-list-small.component';
 import { ProductListLargeComponent } from './content/product-list-large/product-list-large.component';
 import { EasySearchComponent } from './content/easy-search/easy-search.component';
+import { ImageViewerComponent } from './content/image-viewer/image-viewer.component';
 
 
 
@@ -75,7 +76,8 @@ export function createTranslateLoader(http: HttpClient) {
         ConfirmBankPWGComponent,
         ProductListSmallComponent,
         ProductListLargeComponent,
-        EasySearchComponent, 
+        EasySearchComponent,
+        ImageViewerComponent, 
     ],
     imports: [
         BrowserModule,

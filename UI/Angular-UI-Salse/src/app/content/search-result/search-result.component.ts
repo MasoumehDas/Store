@@ -34,6 +34,7 @@ export class SearchResultComponent implements OnInit {
   public Product: Product[] = [];
   public ProductDetails: Product[] = [];
   public ProductGroupBy: Product[] = [];
+  public _ComparisonProduct :Product[]=[];
   public Vertical:boolean=true;
   CustomerForm: FormGroup;
   UserComment: FormGroup;
@@ -162,7 +163,7 @@ export class SearchResultComponent implements OnInit {
   }//End ngOnInit
   
   scrollPage(SS:any){
-    debugger;
+   
     window.scroll({
       top: SS,
       behavior: 'smooth'
@@ -170,6 +171,7 @@ export class SearchResultComponent implements OnInit {
   }  
   public SearchProduct(ProductID: string) {
     this.Product = [];
+    this._ComparisonProduct = [];
     if (ProductID == 'param') {
       this.productservice.Paggin = [];
       ProductID = null;

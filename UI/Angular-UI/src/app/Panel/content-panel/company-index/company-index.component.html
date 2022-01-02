@@ -1,0 +1,662 @@
+
+<div class="row background-fff">
+    <div class="col-md-12 ">
+        <!--Advance Search--------------------------------------------------------------->
+        <fieldset class="panel" [ngClass]="{'open':them.AdvanceSearch,'close':!them.AdvanceSearch}" [@visibilityChanged]="them.AdvanceSearch">
+            <legend>{{'Panel.Advancedsearch' | translate}}</legend>
+
+            <form [formGroup]="SearchForm">
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label>
+                            {{'Panel.CompanyName' | translate}}
+                        </label>
+                        <input type="text" class="form-control" placeholder="{{'Panel.CompanyName' | translate}}" name="CompanyName" formControlName="CompanyName" />
+                    </div>
+
+                    <div class="col-md-3 form-group">
+                        <label for="typeahead-prevent-manual-entry">{{'Panel.City' | translate}}</label>
+
+
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.City"
+                                                 [(ngModel)]="City"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCity($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="City">
+                        </ng-multiselect-dropdown>
+
+
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>{{'Panel.Country' | translate}}</label>
+
+
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.Country"
+                                                 [(ngModel)]="Country"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCountry($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="Country">
+                        </ng-multiselect-dropdown>
+
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label>{{'Panel.CompanyGroup' | translate}}</label>
+
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.CompanyGroup"
+                                                 [(ngModel)]="CompanyGroup"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCountry($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="CompanyGroup">
+                        </ng-multiselect-dropdown>
+
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button class="btn btn-dark marg-right" (click)="questioner()" id="btn-Search"><i class="fa fa-search"></i>  {{'Panel.Search' | translate}}</button>
+
+                        <button class="btn btn-dark marg-right" (click)="them.onResetPage(SearchForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+                        <button class="btn btn-dark marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch"><i class="fa fa-times"></i> {{'Panel.close' | translate}}</button>
+                    </div>
+                </div>
+
+            </form>
+        </fieldset>
+        <!--Table-------------------------------------------------------------------------->
+        <table class="table table-bordered table-responsive-lg">
+            <caption>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>
+                            {{'Menu.MC_Company' | translate}}
+                        </h5>
+
+                        <hr />
+                    </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+
+                    
+                    <button class="btn btn-light marg-right" (click)="them.modal_open_new=!them.modal_open_new" ngbTooltip="{{'Panel.New' | translate}}" id="NewCompany"><i class="fa fa-plus-square"></i></button>
+                    <button class="btn btn-light marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch" ngbTooltip="{{'Panel.Advancedsearch' | translate}}"><i class="fa fa-search-plus"></i></button>
+                    <!--<button class="btn btn-info marg-right" (click)="UserSelect(selectedRowID)" ngbTooltip="{{'Menu.MU_Users' | translate}}"><i class="fa fa-user-circle"></i></button>-->
+                    <button class="btn btn-outline-info marg-right" (click)="onTelegramGroupChatID()">{{'Panel.ConfirmTelegram' | translate}} </button>
+                    <button class="btn btn-outline-info marg-right" (click)="onTelegramUserChatID()">{{'Panel.ConfirmTelegramUser' | translate}}</button>
+
+                    <a class="btn" href="../../../../assets/help/CreateBotTelegram_low.pdf"><i class="fa fa-question-circle" aria-hidden="true"></i> {{'Panel.HelpBot' | translate}}</a>
+                  </div>
+                    <div class="col-md-2 text-center">
+                        <span class="ml-3" *ngIf="service.loading$ | async">{{'Panel.Searching' | translate}}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-search"></i></span>
+                            </div>
+                            <input class="form-control" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+                        </div>
+                    </div>
+                </div>
+
+            </caption>
+            <thead>
+
+                <tr>
+                    <th width="50px">
+                      
+                    </th>
+                    <th cope="col" sortable="ID" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.ID' | translate}}</th>
+                    <th scope="col" sortable="Name" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.Name' | translate}}</th>
+                    <th scope="col" sortable="CountryTitle" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.Country' | translate}}</th>
+                    <th cope="col" sortable="CityName" (sort)="onSort($event)" class="nowrap"><i class="fa fa-sort"></i> {{'Panel.City' | translate}}</th>
+
+                    <th cope="col"> {{'Panel.Tell' | translate}}</th>
+                    
+                    <th cope="col">{{'Panel.Email' | translate}}</th>
+                    <th cope="col"> {{'Panel.CompanyGroup' | translate}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of service.List$ | async" [ngClass]="{'select-row': them.selectedRowID === item.ID && them.selectRow===true}">
+                    <th>
+                      <button class="btn text-success" (click)="EditOpen(item.ID)" ngbTooltip="{{'Panel.Edit' | translate}}" id="EditCompany"><i class="fa fa-edit"></i></button>
+                      <button class="btn text-danger" (click)="them.DeleteRowConfirm(item.ID)" ngbTooltip="{{'Panel.Delete' | translate}}" id="DeleteCompany"><i class="fa fa-trash"></i></button>
+                    </th>
+                    <td>
+
+                        {{item.ID}}
+                    </td>
+                    <td>
+
+                        <ngb-highlight [result]="item.Name " [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                    <td>
+                        <ngb-highlight [result]="item.CountryTitle" [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                    <td>
+                        <ngb-highlight [result]="item.CityName" [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                    <td>
+                        <ngb-highlight [result]="item.Tell" [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                    
+                    <td>
+                        <ngb-highlight [result]="item.Email" [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                    <td>
+                        <ngb-highlight [result]="item.CompanyGroup_Title" [term]="service.searchTerm"></ngb-highlight>
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <!--pagination-------------------------------------------------------------------->
+        <div class="row">
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between">
+                    <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                    </ngb-pagination>
+
+
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <select class="custom-select" [(ngModel)]="service.pageSize" name="pageSize">
+                    <option *ngFor="let item of them.PagSizeInvaite" [ngValue]="item">{{item}} {{'Panel.RowsOnEachpage' | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--Modal_Edit-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_edit,'close':!them.modal_open_edit}">
+    <div [ngClass]="{'modal-backdrop':them.modal_open_edit || !them.isMinSize,'modal-minimize':them.isMinSize}">
+        <div [ngClass]="{'open-modal':them.modal_open_edit || !them.isMinSize,'modal-minimize':them.isMinSize}">
+            <div class="modal-title">
+                <div class="header-left">
+
+                    <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+                    <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+                </div>
+
+                <span>
+                    {{'Panel.EditRow' | translate}} ({{them.selectedRowID}})
+                </span>
+            </div>
+            <div class="body-modal">
+                <form [formGroup]="UpdateForm">
+                    <input type="hidden" name="ID" formControlName="ID" />
+                    <div class="row">
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Name' | translate}}</label>
+                        <input type="text" class="form-control" name="Name" formControlName="Name" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Name.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Name.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.ContractName' | translate}}</label>
+                        <input type="text" class="form-control" name="ContractName" formControlName="ContractName" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.ContractName.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.ContractName.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Tell' | translate}}</label>
+                        <input type="text" class="form-control" name="Tell" formControlName="Tell" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Tell.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Tell.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.City' | translate}}</label>
+
+
+
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.City"
+                                                 [(ngModel)]="City"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCity($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="City">
+                        </ng-multiselect-dropdown>
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.City.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Country' | translate}}</label>
+
+
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.Country"
+                                                 [(ngModel)]="Country"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCountry($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="Country">
+                        </ng-multiselect-dropdown>
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Country.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.CompanyGroup' | translate}}</label>
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.CompanyGroup"
+                                                 [(ngModel)]="CompanyGroup"
+                                                 [settings]="dropdownSettings"
+                                                 (onSelect)="onItemSelectCompanyGroup($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="CompanyGroup">
+                        </ng-multiselect-dropdown>
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.CompanyGroup.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Mobile' | translate}}</label>
+                        <input type="text" class="form-control" name="Mobile" formControlName="Mobile" [ngClass]="{ 'has-error': isSubmitted && formControls.Mobile.errors }" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Fax' | translate}}</label>
+                        <input type="text" class="form-control" name="Fax" formControlName="Fax" [ngClass]="{ 'has-error': isSubmitted && formControls.Fax.errors }" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.WatsUpNumber' | translate}}</label>
+                        <input type="text" class="form-control" name="WatsUpNumber" formControlName="WatsUpNumber" [ngClass]="{ 'has-error': isSubmitted && formControls.WatsUpNumber.errors }" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.TelegramChanalName' | translate}}</label>
+                        <input type="text" class="form-control" name="TelegramChanalName" formControlName="TelegramChanalName" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramUserName' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="InstagramUserName" formControlName="InstagramUserName" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.TelegramUserName' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramUserName" formControlName="TelegramUserName" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramPassword' | translate}}</label>
+                        <div class="input-group">
+                          <span class="input-group-text">
+                            <i class="fa"
+                               [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType}"
+                               (click)="toggleFieldTextType()"></i>
+                          </span>
+                          <input [type]="fieldTextType ? 'text' : 'password'"
+                                 class="form-control"
+                                 formControlName="InstagramPassword" />
+
+                        </div>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Telegram Bot Token' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramBotToken" formControlName="TelegramBotToken" />
+                      </div>
+
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Email' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="Email" formControlName="Email" style="direction:ltr" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.WebsiteUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="WebsiteUrl" formControlName="WebsiteUrl" style="direction:ltr" [ngClass]="{ 'has-error': isSubmittedUpdate && formControls.WebsiteUrl.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.WebsiteUrl.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.TelegramUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramUrl" formControlName="TelegramUrl" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="InstagramUrl" formControlName="InstagramUrl" />
+                      </div>
+
+
+
+                      <div class="col-md-12 form-group">
+                        <label>{{'Panel.Address' | translate}}</label>
+                        <input type="text" class="form-control" name="Address" formControlName="Address" />
+                      </div>
+                      <div class="col-md-12 form-group">
+                        <label>{{'Panel.Description' | translate}}</label>
+                        <input type="text" class="form-control" name="Description" formControlName="Description" />
+                      </div>
+                      <!--Logo URL-->
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="LogoUrl" formControlName="LogoUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.LogoUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'Logo')" />
+                            </label>
+
+                            <img src="{{ImageUpdateLogo}}" style="vertical-align:unset;width:70px;height:70px; margin-right:10px; margin-left:10px;" />
+
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/logoSize.jpg" style="width:180px;" />
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="BackgroudUrl" formControlName="BackgroudUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.BackgroundUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'Back')" />
+                            </label>
+
+                            <img src="{{ImageUpdateBack}}" style="vertical-align:unset;width:70px;height:70px; margin-right:10px; margin-left:10px;" />
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/backSize.jpg" style="width:180px;" />
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                      <div class="col-md-4 ">
+                        <label class="checkbox-lable">
+                          <input type="checkbox" name="Active" formControlName="Active" />
+                          <span class="checkmark"></span>
+                        </label><label>{{'Panel.Active' | translate}}</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <hr />
+                            <button type="submit" class="btn btn-dark marg-right" (click)="onUpdate()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                            <button class="btn btn-dark marg-right" (click)="them.onResetPage(UpdateForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+                            <!--<!--<button class="btn btn-dark marg-right" (click)="them.modal_open_settings=!them.modal_open_settings"><i class="fa fa-plus" aria-hidden="true"></i> {{'Panel.AddSettings' | translate}}</button>-->
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal_New-------------------------------------------------------------->
+
+<div [ngClass]="{'open':them.modal_open_new,'close':!them.modal_open_new}">
+
+    <div [ngClass]="{'modal-backdrop':them.modal_open_new || !them.isMinSize,'modal-minimize':them.isMinSize}">
+        <div [ngClass]="{'open-modal':them.modal_open_new || !them.isMinSize,'modal-minimize':them.isMinSize}">
+
+            <div class="modal-title">
+                <div class="header-left">
+                    <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+                    <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+                </div>
+                <span>{{'Panel.New' | translate}}</span>
+            </div>
+
+            <div class="body-modal">
+                <form [formGroup]="InsertForm">
+                  <div class="row">
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Name' | translate}}</label>
+                      <input type="text" class="form-control" name="Name" formControlName="Name" [ngClass]="{ 'has-error': isSubmitted && formControls.Name.errors }" />
+                      <samp *ngIf="isSubmitted && formControls.Name.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.ContractName' | translate}}</label>
+                      <input type="text" class="form-control" name="ContractName" formControlName="ContractName" [ngClass]="{ 'has-error': isSubmitted && formControls.ContractName.errors }" />
+                      <samp *ngIf="isSubmitted && formControls.ContractName.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Tell' | translate}}</label>
+                      <input type="text" class="form-control" name="Tell" formControlName="Tell" [ngClass]="{ 'has-error': isSubmitted && formControls.Tell.errors }" />
+                      <samp *ngIf="isSubmitted && formControls.Tell.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.City' | translate}}</label>
+
+
+
+                      <ng-multiselect-dropdown placeholder="Select"
+                                               [data]="service.City"
+                                               [(ngModel)]="City"
+                                               [settings]="dropdownSettings"
+                                               (onSelect)="onItemSelectCity($event)"
+                                               (onSelectAll)="onSelectAll($event)"
+                                               formControlName="City">
+                      </ng-multiselect-dropdown>
+                      <samp *ngIf="isSubmitted && formControls.City.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Country' | translate}}</label>
+
+
+                      <ng-multiselect-dropdown placeholder="Select"
+                                               [data]="service.Country"
+                                               [(ngModel)]="Country"
+                                               [settings]="dropdownSettings"
+                                               (onSelect)="onItemSelectCountry($event)"
+                                               (onSelectAll)="onSelectAll($event)"
+                                               formControlName="Country"
+                                               [ngClass]="{ 'has-error': isSubmitted && formControls.Country.errors }">
+                      </ng-multiselect-dropdown>
+                      <samp *ngIf="isSubmitted && formControls.Country.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.CompanyGroup' | translate}}</label>
+                      <ng-multiselect-dropdown placeholder="Select"
+                                               [data]="service.CompanyGroup"
+                                               [(ngModel)]="CompanyGroup"
+                                               [settings]="dropdownSettings"
+                                               (onSelect)="onItemSelectCompanyGroup($event)"
+                                               (onSelectAll)="onSelectAll($event)"
+                                               formControlName="CompanyGroup">
+                      </ng-multiselect-dropdown>
+                      <samp *ngIf="isSubmitted && formControls.CompanyGroup.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Mobile' | translate}}</label>
+                      <input type="text" class="form-control" name="Mobile" formControlName="Mobile" [ngClass]="{ 'has-error': isSubmitted && formControls.Mobile.errors }" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Fax' | translate}}</label>
+                      <input type="text" class="form-control" name="Fax" formControlName="Fax" [ngClass]="{ 'has-error': isSubmitted && formControls.Fax.errors }" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.WatsUpNumber' | translate}}</label>
+                      <input type="text" class="form-control" name="WatsUpNumber" formControlName="WatsUpNumber" [ngClass]="{ 'has-error': isSubmitted && formControls.WatsUpNumber.errors }" />
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.TelegramChanalName' | translate}}</label>
+                      <input type="text" class="form-control" name="TelegramChanalName" formControlName="TelegramChanalName" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.InstagramUserName' | translate}}</label>
+                      <input type="text" class="form-control" name="InstagramUserName" formControlName="InstagramUserName" />
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.InstagramPassword' | translate}}</label>
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <i class="fa"
+                             [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType}"
+                             (click)="toggleFieldTextType()"></i>
+                        </span>
+                        <input [type]="fieldTextType ? 'text' : 'password'"
+                               class="form-control"
+                               formControlName="InstagramPassword" />
+
+                      </div>
+
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.TelegramUserName' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="TelegramUserName" formControlName="TelegramUserName" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Telegram Bot Token' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="TelegramBotToken" formControlName="TelegramBotToken" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.WebsiteUrl' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="WebsiteUrl" formControlName="WebsiteUrl" [ngClass]="{ 'has-error': isSubmitted && formControls.WebsiteUrl.errors }" />
+                      <samp *ngIf="isSubmitted && formControlsUpdate.WebsiteUrl.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.Email' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="Email" formControlName="Email" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.TelegramUrl' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="TelegramUrl" formControlName="TelegramUrl" />
+                    </div>
+                    <div class="col-md-4 form-group">
+                      <label>{{'Panel.InstagramUrl' | translate}}</label>
+                      <input type="text" class="form-control dir_ltr" name="InstagramUrl" formControlName="InstagramUrl" />
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                      <label>{{'Panel.Address' | translate}}</label>
+                      <input type="text" class="form-control" name="Address" formControlName="Address" />
+                    </div>
+
+                    <div class="col-md-12 form-group">
+                      <label>{{'Panel.Description' | translate}}</label>
+                      <input type="text" class="form-control" name="Description" formControlName="Description" />
+                    </div>
+
+                    <div class="col-md-4 ">
+                      <label class="checkbox-lable">
+                        <input type="checkbox" name="Active" formControlName="Active" />
+                        <span class="checkmark"></span>
+                      </label><label>{{'Panel.Active' | translate}}</label>
+                    </div>
+                  </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <hr />
+                            <button type="submit" class="btn btn-dark marg-right" (click)="onInsert()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                            <button class="btn btn-dark marg-right" (click)="them.onResetPage(InsertForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+                            <button class="btn btn-dark marg-right" (click)="them.modal_open_settings=!them.modal_open_settings"><i class="fa fa-plus" aria-hidden="true"></i> {{'Panel.AddSettings' | translate}}</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal_Delete-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_delete,'close':!them.modal_open_delete}">
+
+    <div class="modal-backdrop">
+        <div class="open-modal-delete">
+
+            <div class="alert alert-info">
+
+                <span style="text-align:center;">{{'Panel.Delete' | translate}}</span>
+            </div>
+            <div class="body-modal">
+                <h5>
+
+                    {{'Panel.Suredelete?' | translate}} ({{them.selectedRowID}})
+
+                </h5>
+                <div class="row text-lg-center">
+                    <div class="col-md-6">
+                        <button class="btn btn-danger btn-sm btn-block" (click)="ConfirmDeleteResponse(true)"><i class="fa fa-ticket"></i> {{'Panel.Yes' | translate}}</button>
+                    </div>
+
+
+                    <div class="col-md-6 "><button class="btn btn-sm btn-info btn-block" (click)="ConfirmDeleteResponse(false)"><i class="fa fa-ticket"></i> {{'Panel.No' | translate}} </button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--AddSettings-->
+<div [ngClass]="{'open':them.modal_open_settings,'close':!them.modal_open_settings}" class="SettingsForm">
+
+
+    <div class="card  bg-light mb-3" style="min-width: 300px;">
+        <div class="modal-title">
+            <div class="header-left">
+                <button (click)="them.modal_open_settings=!them.modal_open_settings" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+            </div>
+            {{'Panel.AddSettings' | translate}}
+        </div>
+        <form [formGroup]="SettingsGroupForm">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label>
+                            {{'Panel.SettingsGroup' | translate}}
+
+                        </label>
+                        <ng-multiselect-dropdown placeholder="Select"
+                                                 [data]="service.GroupType"
+                                                 [(ngModel)]="GroupType"
+                                                 [settings]="dropdownGroupSettings"
+                                                 (onSelect)="onItemSelectGroupType($event)"
+                                                 (onSelectAll)="onSelectAll($event)"
+                                                 formControlName="GroupType">
+                        </ng-multiselect-dropdown>
+                        <samp *ngIf="isSubmittedSettings && formControlsGroup.GroupType.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label>{{'Panel.Name' | translate}}</label>
+                        <input type="text" class="form-control" name="Name" formControlName="Name" [ngClass]="{ 'has-error': isSubmittedSettings && formControlsGroup.Name.errors }" />
+                        <samp *ngIf="isSubmittedSettings && formControlsGroup.Name.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button type="submit" class="btn btn-dark marg-right" (click)="onInsertSettings()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                        <button class="btn btn-dark marg-right" (click)="them.onResetPage(SettingsGroupForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

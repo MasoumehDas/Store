@@ -13,13 +13,13 @@
 
   <div class="info" *ngIf="service.Company!=undefined">
     <div class="row">
-      <div class="col-md-3 " *ngIf="service.Company.Tell!=null && service.Company.Tell!=''">
+      <div class="col-md-4 " *ngIf="service.Company.Tell!=null && service.Company.Tell!=''">
         <img class="icon-image" src="../../assets/image/phone-call.svg" />
-        <span>{{service.Company.Tell}}</span>
-
+        <span>{{service.Company.Tell}}</span><span>{{service.Company.Mobile}}</span>
+        
       </div>
 
-      <div class="col-md-4 " *ngIf="service.Company.Email!=null && service.Company.Email!=''">
+      <div class="col-md-3 " *ngIf="service.Company.Email!=null && service.Company.Email!=''">
         <img class="icon-image" src="../../assets/image/envelope.svg" />
         <span>
           {{service.Company.Email}}
@@ -67,7 +67,7 @@
 
   <div class="col-md-12" *ngIf="service.Company.Tell!=null && service.Company.Tell!=''">
     <img class="icon-image" src="../../assets/image/phone-call.svg" />
-    <span>{{service.Company.Tell}}</span>
+    <span>{{service.Company.Tell}}</span> - <span>{{service.Company.Mobile}}</span>
     <!-- <a [ngStyle]="{'color': them.HeaderFontColor,'background-color':them.HeaderColor}" href="{{them.configUrlPanel}}" target="_blank"><span class="far fa-arrow-left"></span><span>{{'Login' | translate}}</span></a> -->
   </div>
 

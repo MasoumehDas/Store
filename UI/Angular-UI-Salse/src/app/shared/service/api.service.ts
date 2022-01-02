@@ -198,15 +198,15 @@ export class ConfigService {
     );
   }
 
-  FetchProductSpecificationSelect(Lang: string, UserName: string, GroupType: string, GroupTypeName: string) {
+  FetchProductSpecificationSelect(Lang: string, UserName: string, GroupType: string, GroupTypeName: string,CompanyID:string) {
     this.configUrl = this.configUrlBasic + '/ProductSpecification/'
     return this.http.get<BasicData[]>(this.configUrl, {
       params: {
         Lang: Lang,
         UserName: UserName,
         GroupType: GroupType,
-
-        GroupTypeName: GroupTypeName
+        GroupTypeName: GroupTypeName,
+        companyID:CompanyID
       }
     }).pipe(
       catchError(this.handleError)

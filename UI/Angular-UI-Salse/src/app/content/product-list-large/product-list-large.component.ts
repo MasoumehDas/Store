@@ -18,7 +18,9 @@ export class ProductListLargeComponent implements OnInit {
   @Input() IsHomePage :boolean=false;
   @Input() type:string='';
   page :string='';
+  @Input() ComparisonProduct :Product[]=[];
   ngOnInit() {
+   
   }
   public onProductDetail(id: string,type:string) {
     
@@ -62,5 +64,18 @@ export class ProductListLargeComponent implements OnInit {
       } , 1000);
     window.history.back();
   }
+    }
+    onSelectCompar()
+    {
+      this.ComparisonProduct=this.products.filter(a=>a.Comparison==true);
+      let ss=800;
+      if(this.page!='home')
+      {
+        ss=450;
+      }
+      window.scroll({
+        top: ss,
+        behavior: 'smooth'
+      });
     }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ProductImage } from '../../shared/modules/images.module';
+import { Product } from '../../shared/modules/Product.module';
 import { NgbModule, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-image-gallery',
@@ -12,6 +12,7 @@ export class ImageGalleryComponent implements OnInit {
     
   @Input() src:string;
   @Input() alt:string;
+ 
   constructor() {
     
   }

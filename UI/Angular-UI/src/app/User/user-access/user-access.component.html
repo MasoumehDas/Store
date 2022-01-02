@@ -1,0 +1,110 @@
+
+<div class="container">
+  <div class="card">
+    <div class="card-header card-header-h5">
+      <h6>
+        {{'Menu.MC_UserAccess' |translate}}
+      </h6>
+    </div>
+    <div class="row" style="padding:15px;">
+
+      <div class="col-md-3">
+        <form>
+
+
+          <div class="form-group">
+            <!--<label>{{'Panel.RoleName' | translate}}</label>-->
+
+
+
+
+
+            <ng-multiselect-dropdown placeholder="Select"
+                                     [data]="service.UserRole"
+                                     [(ngModel)]="UserRoles"
+                                     [settings]="dropdownUserRoleSettings"
+                                     (onSelect)="onItemSelectUserRoles($event)"
+                                     (onSelectAll)="onSelectAll($event)"
+                                     [ngModelOptions]="{standalone: true}">
+            </ng-multiselect-dropdown>
+
+          </div>
+
+          <div class="form-group">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+
+
+
+                  <th>{{'Panel.SelectMenu' | translate}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of service.Menu">
+                  <td class="radio">
+
+                    <label><input type="radio" (change)="SelectRow(item.ControlID)" name="ch" /><span></span></label>
+
+
+
+                    {{item.Title}}
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <button class="btn btn-outline-success marg-right btn-block" (click)="questioner()" style="margin:0px;"><i class="fa fa-search"></i>  {{'Panel.Search' | translate}}</button>
+
+        </form>
+      </div>
+      <div class="col-md-9">
+
+        <div class="col-md-12 alert alert-light" style="height:45px; margin:0px;">
+
+          {{'Panel.AccessHeader' | translate}}
+        </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <br />
+            <div style="background-color:#a7a4a4">
+
+
+              <div (drop)="drop($event)" (dragover)="allowDrop($event)" id="Allow" class="Access" style="cursor:move;">
+                <p class="list-group-item list-group-item-action" style="color:#009de2;background-color:#f1efef !important">
+                  {{'Panel.Allow' | translate}}
+                </p>
+                <p *ngFor="let item of service.AllowMenu" class="list-group-item list-group-item-action " draggable="true" (dragstart)="drag($event,item.ID)" data-Allow="Allow" id="drag{{item.ID}}">{{item.TitleMenu}}</p>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 align-self-center">
+
+            <img src="../../../assets/image/arrow.png" style="width:110px;height:50px;margin-top:10px;" class="arrow" />
+          </div>
+          <div class="col-sm-5">
+            <br />
+            <div style="background-color:#a7a4a4">
+              <div (drop)="drop($event)" (dragover)="allowDrop($event)" id="Deny" class="Access" style="cursor:move;">
+
+                <p class="list-group-item list-group-item-action" style="color:#009de2;background-color:#f1efef !important">
+                  {{'Panel.Deny' | translate}}
+                </p>
+                <p *ngFor="let item of service.DenyMenu" class="list-group-item list-group-item-action" draggable="true" (dragstart)="drag($event,item.ID)" data-Allow="Deny" id="drag{{item.ID}}">{{item.TitleMenu}}</p>
+
+                <p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,429 @@
+
+        <div class="card">
+            <div class="card-header">
+                <div class="header-left">
+
+                    <button type="submit" class="btn btn-dark marg-right" (click)="onUpdate()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                </div>
+
+                <h5>
+                    {{'CompanyInfo' | translate}}
+                </h5>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-outline-info marg-right" (click)="onTelegramGroupChatID()">{{'Panel.ConfirmTelegram' | translate}} </button>
+                <button class="btn btn-outline-info marg-right" (click)="onTelegramUserChatID()">{{'Panel.ConfirmTelegramUser' | translate}}</button>
+                <a class="btn" href="../../../../assets/help/CreateBotTelegram_low.pdf"><i class="fa fa-question-circle" aria-hidden="true"></i> {{'Panel.HelpBot' | translate}}</a>
+                <hr />
+                <form [formGroup]="UpdateForm">
+                    <input type="hidden" name="ID" formControlName="ID" />
+                    <div class="row">
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Name' | translate}}</label>
+                        <input type="text" class="form-control" name="Name" formControlName="Name" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Name.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Name.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.ContractName' | translate}}</label>
+                        <input type="text" class="form-control" name="ContractName" formControlName="ContractName" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.ContractName.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.ContractName.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Tell' | translate}}</label>
+                        <input type="text" class="form-control" name="Tell" formControlName="Tell" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Tell.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Tell.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.City' | translate}}</label>
+
+                        <input type="text" [(ngModel)]="CityName" readonly [ngModelOptions]="{standalone: true}" class="form-control drowpdown-input" (keyup)="onFindSpecification('CityList')" (click)="onFindSpecification('CityList')" />
+
+
+                        <ul class="ParamSearch"  style="display:none;list-style-type:none;" id="CityList">
+                          <li *ngFor="let det of service.City" (click)="onSelectSpecification(det.ID,'CityList')" style="cursor:pointer; border-bottom:solid thin #ffffff ;padding:7px;">
+            
+                            {{ det.Title }}
+                          </li>
+                        </ul>
+
+                        
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.City.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Country' | translate}}</label>
+
+                        <input type="text" [(ngModel)]="CountryName" readonly [ngModelOptions]="{standalone: true}" class="form-control drowpdown-input" (keyup)="onFindSpecification('CountryList')" (click)="onFindSpecification('CountryList')" />
+
+
+                        <ul class="ParamSearch"  style="display:none;list-style-type:none;" id="CountryList">
+                          <li *ngFor="let det of service.Country" (click)="onSelectSpecification(det.ID,'CountryList')" style="cursor:pointer; border-bottom:solid thin #ffffff ;padding:7px;">
+            
+                            {{ det.Title }}
+                          </li>
+                        </ul>
+                        
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Country.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.CompanyGroup' | translate}}</label>
+                        <input type="text" [(ngModel)]="CompanyGroupName" readonly [ngModelOptions]="{standalone: true}" class="form-control drowpdown-input" (keyup)="onFindSpecification('CompanyGroupList')" (click)="onFindSpecification('CompanyGroupList')" />
+
+                        <ul class="ParamSearch"  style="display:none;list-style-type:none;" id="CompanyGroupList">
+                            <li *ngFor="let det of service.CompanyGroup" (click)="onSelectSpecification(det.ID,'CompanyGroupList')" style="cursor:pointer; border-bottom:solid thin #ffffff ;padding:7px;">
+              
+                              {{ det.Title }}
+                            </li>
+                          </ul>
+                        
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.CompanyGroup.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Mobile' | translate}}</label>
+                        <input type="text" class="form-control" name="Mobile" formControlName="Mobile" [ngClass]="{ 'has-error': isSubmitted && formControls.Mobile.errors }" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.Fax' | translate}}</label>
+                        <input type="text" class="form-control" name="Fax" formControlName="Fax" [ngClass]="{ 'has-error': isSubmitted && formControls.Fax.errors }" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.WatsUpNumber' | translate}}</label>
+                        <input type="text" class="form-control" name="WatsUpNumber" formControlName="WatsUpNumber" [ngClass]="{ 'has-error': isSubmitted && formControls.WatsUpNumber.errors }" />
+                      </div>
+                      
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="InstagramUrl" formControlName="InstagramUrl" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramUserName' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="InstagramUserName" formControlName="InstagramUserName" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.InstagramPassword' | translate}}</label>
+                        <div class="input-group">
+                          <span class="input-group-text">
+                            <i class="fa"
+                               [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType}"
+                               (click)="toggleFieldTextType()"></i>
+                          </span>
+                          <input [type]="fieldTextType ? 'text' : 'password'"
+                                 class="form-control"
+                                 formControlName="InstagramPassword" />
+
+                        </div>
+
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.TelegramUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramUrl" formControlName="TelegramUrl" />
+                      </div>
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.TelegramChanalName' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramChanalName" formControlName="TelegramChanalName" />
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.TelegramUserName' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramUserName" formControlName="TelegramUserName" />
+                      </div>
+                      
+                      <div class="col-md-4 form-group">
+                        <label>{{'Panel.WebsiteUrl' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="WebsiteUrl" formControlName="WebsiteUrl"  [ngClass]="{ 'has-error': isSubmittedUpdate && formControls.WebsiteUrl.errors }" />
+                        <samp *ngIf="isSubmittedUpdate && formControlsUpdate.WebsiteUrl.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      </div>
+                      
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.Email' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="Email" formControlName="Email"  />
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        
+                    </div>
+                      <div class="col-md-12 form-group">
+                        <label>{{'Panel.Address' | translate}}</label>
+                        <input type="text" class="form-control" name="Address" formControlName="Address" />
+                      </div>
+                      <div class="col-md-12 form-group">
+                        <label>{{'Panel.Description' | translate}}</label>
+                        <input type="text" class="form-control" name="Description" formControlName="Description" />
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>{{'Telegram Bot Token' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="TelegramBotToken" formControlName="TelegramBotToken" />
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label>{{'Panel.NamadTag' | translate}}</label>
+                        <textarea type="text" class="form-control dir_ltr" name="NamadTag" formControlName="NamadTag" ></textarea>
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <label>{{'Panel.LicenseTag1' | translate}}</label>
+                        <textarea type="text" class="form-control dir_ltr" name="LicenseTag1" formControlName="LicenseTag1" ></textarea>
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label>{{'Panel.LicenseTag2' | translate}}</label>
+                        <textarea type="text" class="form-control dir_ltr" name="LicenseTag2" formControlName="LicenseTag2" ></textarea>
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.HeaderColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="HeaderColor" formControlName="HeaderColor"  />
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.HeaderFontColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="HeaderFontColor" formControlName="HeaderFontColor"  />
+                      </div>
+                     <div class="col-md-4 form-group " [ngStyle]="{'color': UpdateForm.controls.HeaderFontColor.value,'background-color':UpdateForm.controls.HeaderColor.value}">
+                         <a style="margin-top: 15px;">{{'CompanyInfo' | translate}}</a>
+                     </div>
+                      
+                     <div class="col-md-4 form-group ">
+                        <label>{{'Panel.ButtonColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="ButtonColor" formControlName="ButtonColor"  />
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.ButtonFontColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="ButtonFontColor" formControlName="ButtonFontColor"  />
+                      </div>
+                     <div class="col-md-4 form-group ">
+                         
+                         <button class="btn_offer" [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}"  ><i class="fa fa-shopping-cart"></i> {{'Add' | translate}}</button>
+                     </div>
+                      
+                     <div class="col-md-4 form-group ">
+                        <label>{{'Panel.PriceColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="PriceColor" formControlName="PriceColor"  />
+                      </div>
+                      <div class="col-md-4 form-group ">
+                        <label>{{'Panel.PriceFontColor' | translate}}</label>
+                        <input type="color" class="form-control dir_ltr" name="PriceFontColor" formControlName="PriceFontColor"  />
+                      </div>
+                     <div class="col-md-4 form-group" >
+                        
+                         <button class="btn_price" [ngStyle]="{'color': UpdateForm.controls.PriceFontColor.value,'background-color':UpdateForm.controls.PriceColor.value}"><i class="fa fa-list"></i>  {{'MoreDeails' | translate}}</button>
+                     </div>
+
+                  
+
+                      <div class="col-md-6 form-group">
+                        <label>{{'Panel.SocialNetworks1_Url' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="SocialNetworks1_Url" formControlName="SocialNetworks1_Url" />
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="SocialNetworks1_LogUrl" formControlName="SocialNetworks1_LogUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.LogoUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'ImageSocialLogo1')" />
+                            </label>
+
+                            <img src="{{ImageSocialLogo1}}" style="vertical-align:unset;width:50px;height:50px; margin-right:10px; margin-left:10px;" />
+
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/logoSize.jpg" style="width:180px;" />
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label>{{'Panel.SocialNetworks2_Url' | translate}}</label>
+                        <input type="text" class="form-control dir_ltr" name="SocialNetworks2_Url" formControlName="SocialNetworks2_Url" />
+                      </div>
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="SocialNetworks2_LogUrl" formControlName="SocialNetworks2_LogUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.LogoUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'ImageSocialLogo2')" />
+                            </label>
+
+                            <img src="{{ImageSocialLogo2}}" style="vertical-align:unset;width:50px;height:50px; margin-right:10px; margin-left:10px;" />
+
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/logoSize.jpg" style="width:180px;" />
+
+
+                          </div>
+
+                        </div>
+                      </div>
+                  
+
+                      
+                      <!--Logo URL-->
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="LogoUrl" formControlName="LogoUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.LogoUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'Logo')" />
+                            </label>
+
+                            <img src="{{ImageUpdateLogo}}" style="vertical-align:unset;width:70px;height:70px; margin-right:10px; margin-left:10px;" />
+
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/logoSize.jpg" style="width:180px;" />
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="VideoDefault_ImageUrl" formControlName="VideoDefault_ImageUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.VideoDefault_ImageUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'ImageVideo')" />
+                            </label>
+
+                            <img src="{{ImageVideoBack}}" style="vertical-align:unset;width:70px;height:70px; margin-right:10px; margin-left:10px;" />
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/backSize.jpg" style="width:180px;" />
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                      <div class="col-md-12 form-group">
+                        <div class="row">
+                          <div class="col-md-6" style="display:inline-block">
+                            <input type="hidden" name="BackgroudUrl" formControlName="BackgroudUrl" />
+                            <label class="fileContainer" style="margin-top:28px;">
+                              <i class="fa fa-file-upload"></i>
+                              {{'Panel.BackgroundUrl' | translate}}
+                              <input type="file" class="fileContainer-input" (change)="fileProgress($event.target.files,false,'background')" />
+                            </label>
+
+                            
+                          </div>
+                          <div class="col-md-6">
+                            <img src="../../../../assets/image/backSize.jpg" style="width:180px;" />
+
+                          </div>
+           
+<div class="header_bar bar-pc row" [ngStyle]="{'color': UpdateForm.controls.HeaderFontColor.value,'background-color':UpdateForm.controls.HeaderColor.value}">
+
+
+   
+      <div class="row">
+        <div class="col-md-9">
+          <img class="icon-image" src="../../assets/image/phone-call.svg" />
+          <span>{{UpdateForm.controls.Tell.value}}</span>
+  
+       
+          <img class="icon-image" src="../../assets/image/envelope.svg" />
+          <span>
+            {{UpdateForm.controls.Email.value}}
+  
+          </span>
+        
+          <img class="icon-image" src="../../assets/image/placeholder.svg" />
+          <span>{{UpdateForm.controls.Address.value}}</span>
+        </div>
+        <div  class="col-md-3">
+        <ul class="d-flex flex-row align-items-center justify-content-start" >
+            <li><a [href]=" UpdateForm.controls.TelegramUrl.value"><i class="far fa-telegram fa-1x" aria-hidden="true" [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}"></i></a></li>
+            <li><a [href]=" UpdateForm.controls.InstagramUrl.value"><i class="far fa-instagram fa-1x" aria-hidden="true" [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}"></i></a></li>
+            <li><a [href]=" UpdateForm.controls.SocialNetworks1_Url.value" ><i [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}" class="far fa-1x"><img [src]="ImageSocialLogo1" style="width: 20px;height: 20px;" aria-hidden="true" /></i></a></li>
+            <li><a [href]=" UpdateForm.controls.SocialNetworks2_Url.value"><i [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}" class="far fa-1x"><img [src]="ImageSocialLogo2" style="width: 20px;height: 20px;" aria-hidden="true" /></i></a></li>
+  
+          </ul>
+        </div>
+      </div>
+    
+  
+  
+  </div>
+                            <div class="main-search" [ngStyle]="{'background-image':  'url('+ImageUpdateBack+')'}" >
+
+
+                                <div class="search">
+                                  <div class="container pading">
+                                    <div class="search_title" [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}">{{ 'Search' | translate }}</div>
+                                    <div class="row">
+                                      <div>
+                                        <div class="search_container">
+                              
+                                          <div class="search_form_container">
+                                            <div action="#" class="search_form" id="search_form">
+                                              
+                                              <div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
+                                                <div class="search_inputs d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">
+                              
+                              
+                                                  <div>
+                                                    <input type="text" class="search_input" >
+                                                    
+                                                  </div>
+                              
+                                                  <div>
+                                                    <input type="text" class="search_input" >
+                                                    
+                                                  </div>
+                              
+                                                  <div>
+                                                    <input type="text" class="search_input" >
+                                                    
+                                                  </div>
+                                                  <div>
+                                                    <input type="text" class="search_input" >
+                              
+                                                    
+                                                  </div>
+                                                  
+                              
+                              
+                                                </div>
+                                                <button class="search_button" [ngStyle]="{'color': UpdateForm.controls.ButtonFontColor.value,'background-color':UpdateForm.controls.ButtonColor.value}" >{{ 'Search' | translate }} </button>
+              
+                                              </div>
+                              
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+
+                      </div>
+                     
+                      
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <hr />
+                            <button type="submit" class="btn btn-dark marg-right" (click)="onUpdate()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                            
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    

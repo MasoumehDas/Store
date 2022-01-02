@@ -1,0 +1,269 @@
+
+<div class="row background-fff">
+
+    <div class="col-md-12 ">
+        <!--Advance Search---------------------------------------------------------------->
+        <fieldset class="panel" [ngClass]="{'open':them.AdvanceSearch,'close':!them.AdvanceSearch}" [@visibilityChanged]="them.AdvanceSearch">
+            <legend>{{'Panel.Advancedsearch' | translate}}</legend>
+           
+            <form [formGroup]="SearchForm">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>
+                            <label>{{'Panel.Category' | translate}}</label>
+                        </label>
+                        <select name="TransportationCalculateID"  class="form-control" formControlName="TransportationCalculate_BasicData" >
+                            <option *ngFor="let option of service.TransportationCalculate" [value]="option.CodeINT">{{option.Title}}</option>
+            
+                          </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <hr />
+                        <button class="btn btn-dark marg-right" (click)="questioner()" id="btn-Search"><i class="fa fa-search"></i>  {{'Panel.Search' | translate}}</button>
+
+                        <button class="btn btn-dark marg-right" (click)="them.onResetPage(SearchForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+                        <button class="btn btn-dark marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch"><i class="fa fa-times"></i> {{'Panel.close' | translate}}</button>
+                    </div>
+                </div>
+
+            </form>
+        </fieldset>
+    
+        <div class="row">
+            <div class="col-md-12">
+              <h5 class="modal-title">
+                {{'Menu.TransportationCalculate' | translate}} 
+              </h5>
+      
+              <hr />
+            </div>
+      
+          </div>
+    <div class="row">
+        <div class="col-md-6">
+  
+          <button class="btn btn-light marg-right"  (click)="them.modal_open_new=!them.modal_open_new" ngbTooltip="{{'Panel.New' | translate}}"><i class="fa fa-plus-square"></i></button>
+          <button class="btn btn-light marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch" ngbTooltip="{{'Panel.Advancedsearch' | translate}}"><i class="fa fa-search-plus"></i></button>
+  
+  
+        </div>
+        <div class="col-md-2 text-center">
+          <span class="ml-3" *ngIf="service.loading$ | async">{{'Panel.Searching' | translate}}</span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-search"></i></span>
+            </div>
+            <input class="form-control" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+          </div>
+        </div>
+    </div>
+        <!--Table------------------------------------------------------------------------->
+     
+    <div class="row list-table" *ngFor="let item of service.List$ | async" [ngClass]="{'select-row': them.selectedRowID === item.ID && them.selectRow===true}">
+
+        <div class="col-md-2">
+          <button class="btn text-success" (click)="EditOpen(item.ID)" ngbTooltip="{{'Panel.Edit' | translate}}" id="EditTransportationCalculate"><i class="fa fa-edit"></i></button>
+          <button class="btn text-danger" (click)="them.DeleteRowConfirm(item.ID)" ngbTooltip="{{'Panel.Delete' | translate}}" id="DeleteTransportationCalculate"><i class="fa fa-trash"></i></button>
+  
+          <label>
+            {{item.ID}}
+          </label>
+        </div>
+        <div class="col-md-4">
+          <ngb-highlight [result]="item.Title" ngbTooltip="{{'Panel.Title' | translate}}" [term]="service.searchTerm"></ngb-highlight>
+  
+        </div>
+        <div class="col-md-4">
+          
+          <ngb-highlight [result]="item.TransportationCalculateTitle" ngbTooltip="{{'Panel.Category' | translate}}" [term]="service.searchTerm"></ngb-highlight>
+        </div>
+        <div class="col-md-1">
+            <ngb-highlight [result]="item.Factor  | number:'4.0-0'" ngbTooltip="{{'Panel.Factor' | translate}}" [term]="service.searchTerm"></ngb-highlight>
+          
+        </div>
+        <div class="col-md-1">
+            <ngb-highlight [result]="item.TransportationPrice  | number:'4.0-0'" ngbTooltip="{{'Panel.TransportationPrice' | translate}}" [term]="service.searchTerm"></ngb-highlight>
+          
+        </div>
+       
+  
+      </div>
+        <!--pagination-------------------------------------------------------------------->
+        <div class="row">
+            <div class="col-md-9">
+                <div class="d-flex justify-content-between">
+                    <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                    </ngb-pagination>
+
+
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <select class="custom-select" [(ngModel)]="service.pageSize" name="pageSize">
+                    <option *ngFor="let item of them.PagSizeInvaite" [ngValue]="item">{{item}} {{'Panel.RowsOnEachpage' | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+    </div> 
+</div>
+
+<!--Modal_Edit-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_edit,'close':!them.modal_open_edit}">
+    <div [ngClass]="{'modal-backdrop':them.modal_open_edit || !them.isMinSize,'modal-minimize':them.isMinSize}">
+        <div [ngClass]="{'open-modal':them.modal_open_edit || !them.isMinSize,'modal-minimize':them.isMinSize}">
+            <div class="modal-title">
+                <div class="header-left">
+
+                    <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+                    <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+                </div>
+
+                <span>
+                    {{'Panel.EditRow' | translate}} ({{them.selectedRowID}})
+                </span>
+            </div>
+            <div class="body-modal">
+                <form [formGroup]="UpdateForm">
+                  <div class="row">
+                    <input type="hidden" formControlName="ID" name="ID" />
+                    <div class="col-md-6 form-group">
+                        <label>{{'Panel.Category' | translate}}</label>
+                        <select formControlName="TransportationCalculate_BasicData"  name="TransportationCalculate_BasicData" class="form-control" [value]='TransportationCalculate_BasicData' (change)="onChangeTransportationCalculate_Edit()">
+                            <option *ngFor="let option of service.TransportationCalculate" [value]="option.CodeINT">{{option.Title}}</option>
+            
+                          </select>
+                      <samp *ngIf="isSubmittedUpdate && formControlsUpdate.TransportationCalculate_BasicData.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                    </div>
+                   
+                    <div class="col-md-6 form-group">
+                      <label>{{'Panel.Title' | translate}}</label>
+                      <input type="text" class="form-control" name="Title" formControlName="Title" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Title.errors }" />
+                      <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="IsShowInFormUpdate">
+                      
+                      <label>{{'Panel.Factor' | translate}}</label><span class="float-left text-info">{{UpdateForm.controls.Factor.value| number:'4.0-0'}} {{them.DefaultCurrency}}</span>
+                      <input type="number" class="form-control" name="Factor" formControlName="Factor"  [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.Factor.errors }" />
+                      <samp *ngIf="isSubmittedUpdate && formControlsUpdate.Factor.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="IsShowInFormUpdate">
+                      <label>{{'Panel.TransportationPrice' | translate}}</label><span class="float-left text-info">{{UpdateForm.controls.TransportationPrice.value| number:'4.0-0'}} {{them.DefaultCurrency}}</span>
+                      <input type="number" class="form-control" name="TransportationPrice" formControlName="TransportationPrice" maxlength="8" [ngClass]="{ 'has-error': isSubmittedUpdate && formControlsUpdate.TransportationPrice.errors }" />
+                      <samp *ngIf="isSubmittedUpdate && formControlsUpdate.TransportationPrice.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+
+                    </div>
+                    
+                    
+                    
+                  </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <hr />
+                            <button type="submit" class="btn btn-dark marg-right" (click)="onUpdate()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                            
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal_New--------------------------------------------------------------->
+
+<div [ngClass]="{'open':them.modal_open_new,'close':!them.modal_open_new}">
+
+    <div [ngClass]="{'modal-backdrop':them.modal_open_new || !them.isMinSize,'modal-minimize':them.isMinSize}">
+        <div [ngClass]="{'open-modal':them.modal_open_new || !them.isMinSize,'modal-minimize':them.isMinSize}">
+
+            <div class="modal-title">
+                <div class="header-left">
+                    <button (click)="them.onclickMinSizeModal()" class="btn btn-modal-title" ngbTooltip="{{'Panel.SizeChange' | translate}}"><i class="fa" [ngClass]="{'fa-window-maximize':!them.isMinSize,'fa-window-minimize':them.isMinSize}"></i></button>
+                    <button (click)="them.onclickBackground()" class="btn btn-modal-title" ngbTooltip="{{'Panel.close' | translate}}"><i class="fa fa-times"> </i></button>
+                </div>
+                <span>{{'Panel.New' | translate}}</span>
+            </div>
+
+            <div class="body-modal">
+                <form [formGroup]="InsertForm">
+                  <div class="row">
+                    <div class="col-md-6 form-group">
+                      
+                            <label>{{'Panel.Category' | translate}}</label>
+                            <select formControlName="TransportationCalculate_BasicData" id="aantal" class="form-control" (change)="onChangeTransportationCalculate_New()" >
+                                <option *ngFor="let option of service.TransportationCalculate" [value]="option.CodeINT">{{option.Title}}</option>
+                
+                              </select>
+                          <samp *ngIf="isSubmittedUpdate && formControlsUpdate.TransportationCalculate_BasicData.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                      
+                    </div>
+                    
+                    <div class="col-md-6 form-group">
+                      <label>{{'Panel.Title' | translate}}</label>
+                      <input type="text" class="form-control" name="Title" formControlName="Title" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.Title.errors }" />
+                      <samp *ngIf="isSubmitted && formControlsInsert.Title.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="IsShowInFormInsert">
+                      <label>{{'Panel.Factor' | translate}}</label><span class="float-left text-info">{{InsertForm.controls.Factor.value| number:'4.0-0'}} {{them.DefaultCurrency}}</span>
+                      <input type="number" class="form-control" name="Factor" formControlName="Factor" maxlength="8" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.Factor.errors }" />
+                      <samp *ngIf="isSubmitted && formControlsInsert.Factor.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    <div class="col-md-6 form-group" *ngIf="IsShowInFormInsert">
+                      <label>{{'Panel.TransportationPrice' | translate}}</label><span class="float-left text-info">{{InsertForm.controls.TransportationPrice.value| number:'4.0-0'}} {{them.DefaultCurrency}}</span>
+                      <input type="number" class="form-control" name="TransportationPrice" formControlName="TransportationPrice" maxlength="8" [ngClass]="{ 'has-error': isSubmitted && formControlsInsert.TransportationPrice.errors }"/>
+                      <samp *ngIf="isSubmitted && formControlsInsert.TransportationPrice.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                    </div>
+                    
+                  </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <hr />
+                            <button type="submit" class="btn btn-dark marg-right" (click)="onInsert()"><i class="fa fa-save"></i>  {{'Panel.Save' | translate}}</button>
+                           
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal_Delete-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_delete,'close':!them.modal_open_delete}">
+
+    <div class="modal-backdrop">
+        <div class="open-modal-delete">
+
+            <div class="alert alert-info">
+
+                <span style="text-align:center;">{{'Panel.Delete' | translate}}</span>
+            </div>
+            <div class="body-modal">
+                <h5>
+
+                    {{'Panel.Suredelete?' | translate}} ({{them.selectedRowID}})
+
+                </h5>
+                <div class="row text-lg-center">
+                    <div class="col-md-6">
+                        <button class="btn btn-danger btn-sm btn-block" (click)="ConfirmDeleteResponse(true)"><i class="fa fa-ticket"></i> {{'Panel.Yes' | translate}}</button>
+                    </div>
+
+
+                    <div class="col-md-6 "><button class="btn btn-sm btn-info btn-block" (click)="ConfirmDeleteResponse(false)"><i class="fa fa-ticket"></i> {{'Panel.No' | translate}} </button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

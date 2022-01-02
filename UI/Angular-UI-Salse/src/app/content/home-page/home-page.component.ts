@@ -47,7 +47,7 @@ export class HomePageComponent implements OnInit {
   }
 
   public SearchProduct() {
-    debugger;
+   
     this.router.navigate(['/search-result'],
       {
         state: {

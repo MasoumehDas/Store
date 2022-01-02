@@ -1,0 +1,181 @@
+
+
+<div class="content-background">
+
+  <div class="header shadow-sm">
+
+    <div class="header-right">
+      <a (click)="isTop=!isTop" class="top-menu">
+
+        <i class="fa fa-bars chg-menu"> </i>
+
+
+      </a>
+      <a class="icon-responsive" (click)="ResponsiveChange()">
+        <i class="fa fa-bars icon-style"></i>
+      </a>
+
+      <img src="{{them.LogoUrl}}" class="log-image" />
+
+      <span class="header-title">{{them.CompanyName}}</span>
+    </div>
+
+
+    <div class="header-left">
+
+      <div class="dropdown" *ngIf="this.authService.isLoggedIn">
+        <button onclick="myFunction()" class="dropbtn"><i class="fa fa-user icon"></i> {{UserProfile}}</button>
+        <div id="myDropdown" class="dropdown-content">
+          <a (click)="logout()" *ngIf="this.authService.isLoggedIn" class="dropdown-a">{{'Panel.Singup' | translate}}</a>
+
+        </div>
+      </div>
+      <samp class="lang-show" id="locale">{{them.Lang}}</samp>
+
+    </div>
+
+
+  </div>
+  <div class="black-background" [ngClass]="{'black-background-close':isResponsive=='hidde'}"></div>
+  <!--Begin Menu---------------------------------------->
+  <div class="row  row-dec">
+
+
+    <div [ngClass]="{'col12-dec top col-md-12':isTop,'col-md-2 col2-dec ':!isTop , 'open': isResponsive=='show', 'close':isResponsive=='hidde' && !isTop}" class="backgroun">
+
+
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="companies">
+        <input type="checkbox" id="toggle1" class="toggle" />
+        <label class="title" for="toggle1" [ngClass]="{'top':isTop}">
+          {{'Menu.MC_Customers' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="defineCompanies">
+            <a class="nav-link" routerLink="/Panel/company-index" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.MC_Company' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="infoCompany">
+            <a class="nav-link" routerLink="/Panel/edit-Company" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'CompanyInfo' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="company-setting">
+            <a class="nav-link" routerLink="/Panel/company-setting" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.CompanySetting' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="company-transportation">
+            <a class="nav-link" routerLink="/Panel/company-transportation" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.TransportationCalculate' | translate}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="Users">
+        <input type="checkbox" id="toggle4" class="toggle" />
+        <label class="title" for="toggle4" [ngClass]="{'top':isTop}">
+          {{'Menu.MU_Users' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="DefineUsers">
+            <a class="nav-link" routerLink="/Panel/user-profile" routerLinkActive="active">{{'Menu.MU_DefineUsers' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="UserAccess">
+            <a class="nav-link" routerLink="/Panel/user-access" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.MC_UserAccess' | translate}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="Products">
+        <input type="checkbox" id="toggle3" class="toggle" />
+        <label class="title" for="toggle3" [ngClass]="{'top':isTop}">
+          {{'Menu.Products' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="ProductGroup">
+
+
+            <a class="nav-link" routerLink="/Panel/product-group" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.ProductGroup' | translate}}</a>
+            <a class="nav-link" routerLink="/Panel/edit-product-Specification" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.ProductGroup' | translate}}</a>
+
+          </div>
+          <div class="menu-sub" id="productSpecification">
+            <a class="nav-link" routerLink="/Panel/edit-product-Specification" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{'Menu.ProductSpecification' | translate}}</a>
+          </div>
+          <div class="menu-sub" *ngFor="let item of CompanyProductGroup" id="product{{item.ID}}">
+            <a class="nav-link" routerLink="/Panel/product-index" [queryParams]="{ id: item.ID,ProductGroupName:item.Title}" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><i class="badge badge-info">{{item.CountProduct}}</i> {{'Menu.Products' | translate}} {{item.Title}}</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="Salse">
+        <input type="checkbox" id="toggleSalse" class="toggle" />
+        <label class="title" for="toggleSalse" [ngClass]="{'top':isTop}">
+          {{'Menu.Salse' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="purchase">
+            <a class="nav-link" routerLink="/Panel/purchase" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> {{'Menu.OrderList' | translate}}</a>
+          </div>         
+        </div>
+      </div>
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="genetor">
+        <input type="checkbox" id="toggle6" class="toggle" />
+        <label class="title" for="toggle6" [ngClass]="{'top':isTop}">
+          {{'Menu.Content' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="page-genetor">
+            <a class="nav-link" routerLink="/Panel/page-genetor" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> {{'Menu.page-genetor' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="page-menu">
+            <a class="nav-link" routerLink="/Panel/page-menu" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> {{'Menu.MenuManagement' | translate}}</a>
+          </div>
+          <div class="menu-sub" id="product-comment">
+            <a class="nav-link" routerLink="/Panel/product-comment" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> {{'Menu.ProductComment' | translate}}</a>
+          </div>
+        </div>
+
+      </div>
+      <div class="option" [ngClass]="{'option-sub':isTop}" id="Help">
+        <input type="checkbox" id="toggle5" class="toggle" />
+        <label class="title" for="toggle5" [ngClass]="{'top':isTop}">
+          {{'Menu.Help' | translate}}
+        </label>
+        <div class="content" [ngClass]="{'content-sub':isTop}">
+          <div class="menu-sub" id="HelpBot">
+            <a class="nav-link" href="../../../assets/help/CreateBotTelegram_low.pdf">{{'Panel.HelpBot' | translate}}</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!--End Menu---------------------------------------->
+    <div [ngClass]="{'col-md-12 content-page-top':isTop,'col-md-10':!isTop}" class="content-page">
+      <router-outlet (activate)="onActivate($event)" #myRouterOutlet></router-outlet>
+
+      <!--Alert Form-->
+      <div class="AlertForm">
+
+        <div class="toast bg-info close-alert" id="alert-Info">
+
+          <div class="toast-header" *ngIf="them.body==''"> {{'Panel.Message' | translate}}</div>
+          <div class="toast-body" *ngIf="them.body==''">
+            {{'Panel.successful' | translate}}
+          </div>
+
+        </div>
+        <div class="toast bg-warning close-alert" id="alert-warning">
+
+          <div class="toast-header" *ngIf="them.body==''"> {{'Panel.Message' | translate}}</div>
+          <div class="toast-body" *ngIf="them.body==''">
+            {{'Panel.SelectRow' | translate}}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div *ngIf="them.loading !=undefined">
+  <img class="loader" src="../../../assets/loader.gif" *ngIf="them.loading" />
+</div> 

@@ -59,7 +59,7 @@ export class AuthService {
       console.log(res);
       this.currentUser = res;
       if (res[0].Status == 1) {
-        debugger;
+        
         localStorage.setItem('UserName', res[0].UserName)
         localStorage.setItem('UserID', res[0].UserID)
         localStorage.setItem('RoleID', res[0].RoleID)
@@ -81,7 +81,7 @@ export class AuthService {
   }
   onGetRestaurantName(Lang: string, Website: string) {
     this.service.FetchCompany_WesiteUrlGet(Lang,'', Website).subscribe(data => {
-      debugger;
+      
       this.them.CompanyName = data[0].Name.toString();
       
       this.them.CompanyID = data[0].ID.toString();
@@ -187,7 +187,7 @@ export class AuthService {
 
 
       for (let i = 0; i < data.length; i++) {
-        debugger;
+       
         if (data[i].CodeChar == Lang) {
 
           data[i].IsDefault = true;

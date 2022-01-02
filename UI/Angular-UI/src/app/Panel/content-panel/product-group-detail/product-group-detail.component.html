@@ -1,0 +1,85 @@
+
+<div  >
+    
+     <div class="container">
+       <div class="card">
+        <div class="card-header " >
+          {{'Menu.ProductSpecification' | translate}}
+        </div>
+      <div class="row margin-top-25">
+        <div class="col-md-12 ">
+            <button class="btn btn-light marg-right" *ngFor="let item of service.CompanyProductGroup" (click)="onSelectCompanyProductGroup(item.ID,item.Title)">{{item.Title}}</button>
+      </div>
+    </div>
+    
+    <div class="row margin-top-25">
+      <div class="col-md-4">
+        <ul class="list-group margin-bottom-25">
+          <li class="list-group-item disabled">{{'Panel.Category' | translate}} {{ProductGroupTitle}}</li>
+          <li tabindex="1" class="list-group-item GroupTypeName" style="cursor: pointer;" *ngFor="let item of service.ProductGroupDetail" (click)=onSelectProductGroupDetail(item.ProductGroupID,item.GroupTypeName)>
+            
+              {{item.GroupTypeName}}
+           
+             
+          </li>
+          
+        </ul>
+      </div>
+      <div class="col-md-8 ">
+
+        <ul class="list-group" >
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-search"></i></span>
+              </div>
+              <input class="form-control" type="text" name="searchTerm" [(ngModel)]="searchTerm"  (keyup)="onSearch()" placeholder="{{'Panel.Search' | translate}}"/>
+          </div>
+            
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of service.Specification">
+            <input class="form-control" type="text" [(ngModel)]="item.Title"  />
+
+            <button class="btn btn-light marg-right text-success" (click)="Update(item.ID,item.Title)"  id="EditSpecification" ngbTooltip="{{'Panel.Save' | translate}}"><i class="fa fa-edit"></i>{{'Panel.Edit' | translate}}</button>
+            <button class="btn btn-light marg-right text-danger" (click)="them.DeleteRowConfirm(item.ID)"  id="DeleteSpecification" ngbTooltip="{{'Panel.Delete' | translate}}"><i class="fa fa-trash"></i>{{'Panel.Delete' | translate}}</button>
+           
+          </li>
+          
+        </ul>
+        <p *ngIf="service?.Specification?.length==0">هیچ موردی یافت نشد</p>
+      </div>
+    </div></div>
+
+  </div>
+  </div>
+  <!--Modal_Delete-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_delete,'close':!them.modal_open_delete}">
+
+  <div class="modal-backdrop">
+      <div class="open-modal-delete">
+
+          <div class="alert alert-info">
+
+              <span style="text-align:center;">{{'Panel.Delete' | translate}}</span>
+          </div>
+          <div class="body-modal">
+              <h5>
+
+                  {{'Panel.Suredelete?' | translate}} ({{them.selectedRowID}})
+
+              </h5>
+              <div class="row text-lg-center">
+                  <div class="col-md-6">
+                      <button class="btn btn-danger btn-sm btn-block" (click)="ConfirmDeleteResponse(true)"><i class="fa fa-ticket"></i> {{'Panel.Yes' | translate}}</button>
+                  </div>
+
+
+                  <div class="col-md-6 "><button class="btn btn-sm btn-info btn-block" (click)="ConfirmDeleteResponse(false)"><i class="fa fa-ticket"></i> {{'Panel.No' | translate}} </button></div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+  
+  
+  

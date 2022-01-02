@@ -118,7 +118,7 @@
     </div>
     <!--لیست محصولات-->
     <app-product-list-small [products]="Product" [IsHomePage]="false" *ngIf="!Vertical" ></app-product-list-small>
-    <app-product-list-large [products]="Product" [IsHomePage]="false" *ngIf="Vertical"></app-product-list-large>
+    <app-product-list-large [products]="Product" [IsHomePage]="false" [ComparisonProduct]="_ComparisonProduct" *ngIf="Vertical"></app-product-list-large>
     <!--صفحه بندی-->
     <div class="row" *ngIf="productservice.Paggin.length>0">
       <div class="col-md-12">

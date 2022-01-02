@@ -1,0 +1,142 @@
+<div class="row background-fff" [ngClass]="{'open':!them.modal_open_new,'close':them.modal_open_new}">
+  <div class="col-md-12 ">
+    <!--Advance Search---------------------------------------------------------------[@visibilityChanged]="them.AdvanceSearch"!-->
+    <fieldset class="panel" [ngClass]="{'open':them.AdvanceSearch,'close':!them.AdvanceSearch}">
+      <legend>{{'Panel.Advancedsearch' | translate}}</legend>
+
+      <form [formGroup]="SearchForm">
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <label>
+              {{'Panel.PageContent' | translate}}
+            </label>
+            <input type="text" class="form-control" placeholder="{{'Panel.PageContent' | translate}}" name="PageContent" formControlName="PageContent" />
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <hr />
+            <button class="btn btn-dark marg-right" (click)="questioner()" id="btn-Search"><i class="fa fa-search"></i>  {{'Panel.Search' | translate}}</button>
+
+            <button class="btn btn-dark marg-right" (click)="them.onResetPage(SearchForm)"><i class="fa fa-pencil-ruler" aria-hidden="true"></i> {{'Panel.ResetPage' | translate}}</button>
+            <button class="btn btn-dark marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch"><i class="fa fa-times"></i> {{'Panel.close' | translate}}</button>
+          </div>
+        </div>
+
+      </form>
+    </fieldset>
+    <div class="row">
+      <div class="col-md-12">
+        <h5 class="modal-title">
+          {{'Menu.PageContent' | translate}} {{them.ProductGroupName}}
+        </h5>
+
+        <hr />
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+
+        <button class="btn btn-light marg-right" (click)="OpenNew()" ngbTooltip="{{'Panel.New' | translate}}"><i class="fa fa-plus-square"></i></button>
+        <button class="btn btn-light marg-right" (click)="them.AdvanceSearch=!them.AdvanceSearch" ngbTooltip="{{'Panel.Advancedsearch' | translate}}"><i class="fa fa-search-plus"></i></button>
+
+
+      </div>
+      <div class="col-md-2 text-center">
+        <span class="ml-3" *ngIf="service.loading$ | async">{{'Panel.Searching' | translate}}</span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i class="fa fa-search"></i></span>
+          </div>
+          <input class="form-control" type="text" name="searchTerm" [(ngModel)]="service.searchTerm" />
+        </div>
+      </div>
+    </div>
+    <!--Table-------------------------------------------------------------------------->
+
+    <div class="row list-table" *ngFor="let item of service.List$ | async" [ngClass]="{'select-row': them.selectedRowID === item.ID && them.selectRow===true}">
+
+      <div class="col-md-2">
+        <button class="btn text-success" (click)="EditOpen(item.ID)" ngbTooltip="{{'Panel.Edit' | translate}}" id="EditPageGenetor"><i class="fa fa-edit"></i></button>
+        <button class="btn text-danger" (click)="them.DeleteRowConfirm(item.ID)" ngbTooltip="{{'Panel.Delete' | translate}}" id="DeletePageGenetor"><i class="fa fa-trash"></i></button>
+
+        <label>
+          {{item.ID}}
+        </label>
+      </div>
+      <div class="col-md-3">
+        <ngb-highlight [result]="item.PageTitle" [term]="service.searchTerm"></ngb-highlight>
+
+      </div>
+      <div class="col-md-3">
+        <ngb-highlight [result]="item.PageLocation" [term]="service.searchTerm"></ngb-highlight>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control-sm" [(ngModel)]="item.Sort" (keyup)="onSortUpdate(item.ID,item.Sort)" placeholder="{{'Panel.Sort' | translate}}" />
+
+      </div>
+      <div class="col-md-1">
+        <label class="checkbox-lable">
+
+          <input type="checkbox" (change)="onActive(item.ID,item.Active)" [(ngModel)]="item.Active" />
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+
+    </div>
+    <!--pagination-------------------------------------------------------------------->
+
+    <div class="row m-3">
+      <div class="col-md-9 ">
+        <div class="d-flex justify-content-between">
+          <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+          </ngb-pagination>
+
+
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <select class="custom-select" [(ngModel)]="service.pageSize" name="pageSize">
+          <option *ngFor="let item of them.PagSizeInvaite" [ngValue]="item">{{item}} {{'Panel.RowsOnEachpage' | translate}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal_Delete-------------------------------------------------------------->
+<div [ngClass]="{'open':them.modal_open_delete,'close':!them.modal_open_delete}">
+
+  <div class="modal-backdrop">
+    <div class="open-modal-delete">
+
+      <div class="alert alert-info">
+
+        <span style="text-align:center;">{{'Panel.Delete' | translate}}</span>
+      </div>
+      <div class="body-modal">
+        <h5>
+
+          {{'Panel.Suredelete?' | translate}} ({{them.selectedRowID}})
+
+        </h5>
+        <div class="row text-lg-center">
+          <div class="col-md-6">
+            <button class="btn btn-danger btn-sm btn-block" (click)="ConfirmDeleteResponse(true)"><i class="fa fa-ticket"></i> {{'Panel.Yes' | translate}}</button>
+          </div>
+
+
+          <div class="col-md-6 "><button class="btn btn-sm btn-info btn-block" (click)="ConfirmDeleteResponse(false)"><i class="fa fa-ticket"></i> {{'Panel.No' | translate}} </button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

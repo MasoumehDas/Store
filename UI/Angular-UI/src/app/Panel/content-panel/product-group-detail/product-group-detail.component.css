@@ -1,0 +1,19 @@
+.margin-top-25{
+    margin-top:25px;
+  }
+  .margin-bottom-25{
+    margin-bottom:25px;
+  }
+  .GroupTypeName:hover{
+      background-color: rgb(189, 181, 181);
+
+  }
+  .GroupTypeName:active{
+    color: green;
+  }
+  li[tabindex]:focus {
+    color:rgb(14, 170, 92);
+    outline: none;
+    
+}
+

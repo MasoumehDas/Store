@@ -1,3 +1,29 @@
+<!--مقایسه محصول-->
+<div class="card" *ngIf="ComparisonProduct.length>0" style="margin-top: 15px;">
+<h5 class="card-header">مقایسه محصول</h5>
+
+<div class="row card-body" >
+ 
+ 
+    <div class="col-md-6" *ngFor="let item of ComparisonProduct" style="margin-bottom: 15px;border:solid 1px #d1caca;padding: 5px;">
+   
+      <div class="row " >
+        <div class="col-md-8">
+         <p style="text-align: center;font-size: 16px;">{{item.Name}} {{item.BarCode}}</p> 
+      <app-image-viewer [Product]="item"></app-image-viewer>
+    </div>
+    <div class="col-md-3 description" style="white-space:pre-wrap;font-size: 12px;line-height: 2;">
+     
+        {{item.SumerySpecification}} 
+    </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+</div>
+<!--لیست محصول-->
 <div class="row">
     <div class="col-xs-4 col-md-4 bootstrap snippets bootdeys" *ngFor="let item of products" id="W{{item.ID}}">
       <!-- product -->
@@ -21,11 +47,15 @@
               </span>
             </div>
           </div>
+          
           <div class="col-md-12 col-sm-12 col-xs-12">
+            
             <div class="product-deatil">
               <h6 class="name">
 
                 {{item.Name}}
+
+               
 
               </h6>
               <span style="color:#d1caca;font-size:12px;">{{item.ProductGroup_Title }}</span>
@@ -43,14 +73,22 @@
                   <p class="vc float-left" *ngIf="item.DiscountPrice>0">{{'Discount' | translate}} %{{item.OffPercent}}</p> 
                 </div>
               </div>
-              <span class="tag1">
+             
+              <p class="tag1">
+                <label class="custom-control overflow-checkbox">
+                  <input type="checkbox" class="overflow-control-input" [(ngModel)]="item.Comparison" [ngModelOptions]="{standalone: true}" (change)="onSelectCompar()" >
+                  <span class="overflow-control-indicator"></span>
+                  <span class="overflow-control-description comparison">مقایسه شود</span>
+                </label>
                 
-              </span>
+
+
+              </p>
             </div>
             <div class="description">
               <p>{{item.SumerySpecification}} </p>
 
-
+             
             </div>
 
             <div class="product-info smart-form" >

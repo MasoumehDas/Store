@@ -117,7 +117,7 @@ export class ProductIndexComponent implements OnInit {
   configUrlBasicImage: string = this.them.configUrlBasicImage;
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  formData = new FormData();
+  
   //-------------------------------------------------------
   public ParamShowSearch: ParamShowSearch[];
 
@@ -433,49 +433,29 @@ OpenNew(){
   //---------------------SAVE IMAGE--------------------------------------
 
    
-    fileChangeEvent(event: any,fileinput:any): void {
-        this.imageChangedEvent = event;
-        this.fileData = <File>fileinput[0];
-        if(this.fileData.type.toLowerCase() == 'video/mp4')
-      {
-        this.fileProgressInsert()
-      }
-    }
-    imageCropped(event: ImageCroppedEvent) {
-      this.formData.delete('file');
-      this.fileData = this.dataURItoBlob(event.base64);
-      this.croppedImage = event.base64;
-      this.formData.append('file', this.fileData,this.ProductInsert.ImageUrl+ '.jpg');
-    }
-    imageLoaded(image: HTMLImageElement) {
-        // show cropper
-    }
-    cropperReady() {
-        // cropper ready
-    }
-    loadImageFailed() {
-        // show message
-    }
-    
-  fileProgressInsert() {
+  fileProgressInsert(fileInput: any) {
 
     
     
     
+    this.fileData = <File>fileInput[0];
     var size=700;
-    debugger;
+    const formData = new FormData();
+    ;
     if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
       if(this.fileData.type.toLowerCase() == 'video/mp4')
       {
         size=50000;
-        this.formData.append('file', this.fileData);
+       
       }
       if (this.them.CheckImageSize(this.fileData,size)) {
-        this.formData.append('FolderName', "\\Product\\" + this.them.CompanyID + "\\");
-        this.formData.append('path', "/Product/" + this.them.CompanyID + "/");
+
         
+        formData.append('FolderName', "\\Product\\" + this.them.CompanyID + "\\");
+        formData.append('path', "/Product/" + this.them.CompanyID + "/");
+        formData.append('file', this.fileData);
         this.them.loading = true;
-        this.api.FileUploader(this.formData).subscribe(data => {
+        this.api.FileUploader(formData).subscribe(data => {
           
           var body = data;
           this.ProductInsert.ImageUrl = body.toString();

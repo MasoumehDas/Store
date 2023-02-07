@@ -70,11 +70,8 @@ namespace Api.Controllers.SocialNetworks
                                 System.Drawing.Image img = System.Drawing.Image.FromFile(uploadPath + item.ImageUrl);
 
                                 img= Settings.resizeImage(img, 1350, 1080);
-                                string NewName= uploadPath+ "/Instagram/"+Guid.NewGuid().ToString()+ ".jpg";
-
-                                img.Save(NewName);
-
-                                var media = new InstaImageUpload(NewName, 1080, 1350);
+                                string NewName= uploadPath + @"\Instagram\" + item.ID.ToString() + ".jpg";
+                                var media = new InstaImageUpload(NewName, 1080, 1080);
 
 
                                    

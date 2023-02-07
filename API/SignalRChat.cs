@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +7,15 @@ using System.Web;
 
 namespace Api
 {
-    public class SignalRChat : Hub
+    [HubName("MyHub")]
+    public class MyHub : Hub
     {
-        public void Hello()
+
+        [HubMethodName("NewMessage")]
+        public static void NewMessage()
         {
-            Clients.All.hello();
-        }
-        public void Send(string name, string message)
-        {
-            // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<MyHub>();
+            context.Clients.All.updateMessages();
         }
     }
 }

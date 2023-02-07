@@ -4,7 +4,8 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { TranslateService} from '@ngx-translate/core';
 import { Company } from '../modules/Company.module';
 import { Basic } from '../modules/BasicData.module';
-
+import { ProductGroup } from '../modules/ProductGroup.module';
+import { CompanyProductGroup } from '../../shared/modules/CompanyProductGroup.module';
 import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap, distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { them } from './themplate.service';
@@ -46,6 +47,8 @@ function sort(List: Company[], column: string, direction: string): Company[] {
 export class panelCompany {
    
     //===========================================================================
+    public ProductGroup: ProductGroup[] = [];
+    public CompanyProductGroup: CompanyProductGroup[] = [];
     public company: Company[] = [];
     public City: Basic[] ;
     public Country: Basic[];   
@@ -322,6 +325,18 @@ export class panelCompany {
       this.them.loading = false;
       result = data;
       Swal.fire('پیغام', result);
+    });
+  }
+  GetProductGroup(){
+    this.configService.Fetch_FilterProductGroupGet(this.Lang, this.UserName, null, null, null, null, null).subscribe(data => {
+        this.ProductGroup = data;
+      });
+  
+  }
+  GetCompanyProductGroup(){
+    this.configService.Fetch_FilterCompanyProductGroupGet(this.them.CompanyID, this.Lang)
+    .subscribe(data => {
+      this.CompanyProductGroup = data;
     });
   }
 }

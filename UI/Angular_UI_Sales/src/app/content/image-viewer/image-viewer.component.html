@@ -1,0 +1,16 @@
+
+        
+<div class="row" style="height:350px;background-color: #f9f9f9;">
+    <app-image-gallery [src]="them.configUrlBasicImage+Product.Image_Url" [alt]="Product.Name"></app-image-gallery>
+ 
+   <video controls *ngIf="Product.Image_Url.toLowerCase().includes('.mp4')" class="video-details" poster="{{Product.DefaultImageVideo}}">
+     <source src="{{them.configUrlBasicImage}}{{Product.Image_Url}}" type="video/mp4">
+   </video>
+ </div>
+ <div class="row">
+ <div class="col-md-12" style="padding:0px;">
+   <div class="row" style="border: solid; border-width: thin; border-color:#999999;background-color: #f9f9f9">
+       <img *ngFor="let img of Product.ProductImage" [src]="!img.Image_Url.toLowerCase().includes('.mp4') ? them.configUrlBasicImage+img.Image_Url : Product.DefaultImageVideo"  alt="{{img.Description}}" (click)="Product.Image_Url=img.Image_Url" style="width:50px;height:50px;padding:5px;">
+   </div>
+  </div>
+</div>

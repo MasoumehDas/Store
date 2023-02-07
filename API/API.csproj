@@ -448,6 +448,7 @@
     <Compile Include="Controllers\ProductUserComment\SelectProductUserCommentController.cs" />
     <Compile Include="Controllers\ProductUserComment\UpdateProductUserCommentController.cs" />
     <Compile Include="Controllers\Product\ProducListTorobController.cs" />
+    <Compile Include="Controllers\Product\ProductListElmazController.cs" />
     <Compile Include="Controllers\Sales\ProductSameSelectController.cs" />
     <Compile Include="Controllers\Product\UpdateProductController.cs" />
     <Compile Include="Controllers\Purchase\InsertOrderController.cs" />
@@ -521,6 +522,7 @@
     <Compile Include="Models\ProductResultcs.cs" />
     <Compile Include="Models\ReportParamsViewModel.cs" />
     <Compile Include="Models\CompanySetting.cs" />
+    <Compile Include="Models\RepositoryChat.cs" />
     <Compile Include="Models\SalePayment\GovermentSalePaymentRequestModel.cs" />
     <Compile Include="Models\SalePayment\ReversalModel.cs" />
     <Compile Include="Models\SalePayment\ReversalResponseViewModel.cs" />
@@ -536,6 +538,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SignalRChat.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Web References\ir.mizbansms.my\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4169,6 +4172,7 @@
     <Content Include="Web References\ir.mizbansms.my\VerAndroid.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
+    <Content Include="Views\ProductListElmaz\Index.cshtml" />
     <None Include="Web References\ir.mizbansms.my\wssms.disco" />
     <Content Include="Web References\ir.shaparak.pec\ClientPaymentResponseDataBase.datasource">
       <DependentUpon>Reference.map</DependentUpon>

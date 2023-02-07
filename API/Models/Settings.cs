@@ -160,6 +160,30 @@ namespace API.Models
             }
             return "0";
         }
+        public static void ResizeImageInstagram(string UrlImage, int width, int height,string ID)
+        {
+            
+            string uploadPath = System.Configuration.ConfigurationManager.AppSettings["DocumentUrl"];
+            
+            //Bitmap bmp = (Bitmap)Bitmap.FromFile(@"C:\testimage.bmp");
+            Bitmap bmp = (Bitmap)Bitmap.FromFile(uploadPath+UrlImage);
+
+            Bitmap newImage = ResizeBitmap(bmp, width, height);
+            string NewName = uploadPath + @"\Instagram\" + ID+ ".jpg";
+
+            newImage.Save(NewName);
+        }
+        private static Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
+        {
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.DrawImage(bmp, 0, 0, width, height);
+                g.Dispose();
+            }
+
+            return result;
+        }
         private static System.Drawing.Image resizeImage(System.Drawing.Image imgToResize, Size size)
         {
             //Get the image current width

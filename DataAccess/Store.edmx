@@ -243,6 +243,7 @@
           <Property Name="TelegramTimeSend" Type="datetime" />
           <Property Name="IstagramTimeSend" Type="datetime" />
           <Property Name="VisitedCount" Type="int" />
+          <Property Name="UpdateDateAvailableCount" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductDescription">
           <Key>
@@ -664,6 +665,13 @@
           <Parameter Name="OrderDirection" Type="int" Mode="In" />
           <Parameter Name="AvailableCount" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_Product_Select_Elmaz" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Lang" Type="varchar" Mode="In" />
+          <Parameter Name="LogIP" Type="varchar" Mode="In" />
+          <Parameter Name="ProductGroupID" Type="int" Mode="In" />
+          <Parameter Name="ProductID" Type="int" Mode="In" />
+          <Parameter Name="CompanyID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_Product_Select_Torob" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Lang" Type="varchar" Mode="In" />
           <Parameter Name="Loguser" Type="varchar" Mode="In" />
@@ -966,6 +974,7 @@
           <NavigationProperty Name="ProductUserComments" Relationship="StoreModel.FK_ProductUserComment_Product" FromRole="Product" ToRole="ProductUserComment" />
           <NavigationProperty Name="ProductDetails" Relationship="StoreModel.FK_ProductDetail_Product" FromRole="Product" ToRole="ProductDetail" />
           <Property Name="TransportationID" Type="Int32" />
+          <Property Name="UpdateDateAvailableCount" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ProductDescription">
           <Key>
@@ -1433,6 +1442,13 @@
             <Parameter Name="IsSendTelegram" Mode="In" Type="Boolean" />
             <Parameter Name="IsSpecialSales" Mode="In" Type="Boolean" />
             <Parameter Name="Specification" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Product_Select_Elmaz" ReturnType="Collection(StoreModel.sp_Product_Select_Elmaz_Result)">
+            <Parameter Name="Lang" Mode="In" Type="String" />
+            <Parameter Name="LogIP" Mode="In" Type="String" />
+            <Parameter Name="ProductGroupID" Mode="In" Type="Int32" />
+            <Parameter Name="ProductID" Mode="In" Type="Int32" />
+            <Parameter Name="CompanyID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_BaseData_GroupSelect_Result">
@@ -2261,6 +2277,22 @@
           <Property Type="Int32" Name="DiscountPrice" Nullable="true" />
           <Property Type="String" Name="CompanyTransportationTitle" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="sp_Product_Select_Elmaz_Result">
+          <Property Type="String" Name="Image_Url" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="ProductGroup_Title" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ProductGroupID" Nullable="true" />
+          <Property Type="Int64" Name="PriceSales" Nullable="true" />
+          <Property Type="Int64" Name="DiscountPrice" Nullable="true" />
+          <Property Type="Boolean" Name="IsAvailable" Nullable="true" />
+          <Property Type="Int32" Name="OffPercent" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrencyCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CourrencyName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SumerySpecification" Nullable="true" MaxLength="400" />
+          <Property Type="Boolean" Name="IsOffPercent" Nullable="true" />
+          <Property Type="String" Name="PageUrl" Nullable="true" MaxLength="203" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2304,6 +2336,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="StoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="UpdateDateAvailableCount" ColumnName="UpdateDateAvailableCount" />
                 <ScalarProperty Name="TransportationID" ColumnName="TransportationID" />
                 <ScalarProperty Name="VisitedCount" ColumnName="VisitedCount" />
                 <ScalarProperty Name="IsOffPercent" ColumnName="IsOffPercent" />
@@ -3359,6 +3392,26 @@
                 <ScalarProperty Name="VisitedCount" ColumnName="VisitedCount" />
                 <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
                 <ScalarProperty Name="CompanyTransportationTitle" ColumnName="CompanyTransportationTitle" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Product_Select_Elmaz" FunctionName="StoreModel.Store.sp_Product_Select_Elmaz">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="StoreModel.sp_Product_Select_Elmaz_Result">
+                <ScalarProperty Name="Image_Url" ColumnName="Image_Url" />
+                <ScalarProperty Name="ProductGroup_Title" ColumnName="ProductGroup_Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+                <ScalarProperty Name="PriceSales" ColumnName="PriceSales" />
+                <ScalarProperty Name="DiscountPrice" ColumnName="DiscountPrice" />
+                <ScalarProperty Name="IsAvailable" ColumnName="IsAvailable" />
+                <ScalarProperty Name="OffPercent" ColumnName="OffPercent" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="CourrencyName" ColumnName="CourrencyName" />
+                <ScalarProperty Name="SumerySpecification" ColumnName="SumerySpecification" />
+                <ScalarProperty Name="IsOffPercent" ColumnName="IsOffPercent" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

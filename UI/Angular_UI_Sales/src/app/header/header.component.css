@@ -1,0 +1,164 @@
+.header_bar {
+  height: 55px;
+}
+
+.fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+
+span {
+  font-size: 14px;
+  font-weight: 500;
+  
+  margin-left: 13px;
+  margin-right: 5px;
+}
+
+.icon-image {
+  max-height: 25px;
+  max-width: 25px;
+}
+
+.float-left {
+  text-align: left;
+}
+
+ .navbar-brand {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+  white-space: nowrap;
+} 
+
+/*-----------------------------------------------------------------*/
+.background-header {
+  background-color: #f9f9f9 !important;
+  color: #adc867 !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  height: 61px;
+}
+
+  .background-header a {
+    height: 61px;
+    padding: 15px;
+  }
+
+    .background-header a:hover {
+      background-color: #8da3d1;
+    }
+
+.navbar-brand {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  
+  font-size: 1.5rem;
+  line-height: inherit;
+  white-space: nowrap;
+  text-shadow: 2px 2px 2px #CCCCCC;
+  margin-right: 20px;
+}
+
+
+
+
+
+.active {
+  background-color: #8da3d1;
+}
+
+.header_bar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header_bar li {
+  margin-top: -5px;
+}
+
+li {
+  margin-right: 20px;
+}
+
+.li-margin {
+  margin-right: 0px !important;
+}
+
+.ul-margin {
+  margin-top: 0px;
+  background-color: #f9f9f9 !important;
+}
+
+.header_bar i {
+  background-color: #b2ca73;
+  color: #f9f9f9;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  padding-top: 8px;
+  border-radius: 50%;
+}
+
+  .header_bar i:hover {
+    color: #8da3d1;
+  }
+
+.info {
+  width: 73%;
+}
+
+.network {
+  width: 27%;
+}
+
+.bar-mobile {
+  display: none;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+}
+
+.bar-pc {
+  padding-left: 64px;
+  padding-right: 62px;
+  padding-top: 15px;
+}
+
+@media only screen and (max-width: 1200px) {
+  .bar-pc {
+    display: block;
+  }
+
+  .network {
+    display: none;
+  }
+
+  .info {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .bar-pc {
+    display: none;
+  }
+
+  .bar-mobile {
+    display: block;
+  }
+}
+
+select {
+  height: 35px;
+  width: 150px;
+  margin: 10px;
+  color: #8da3d1;
+}

@@ -171,11 +171,22 @@ export class EditCompanyComponent implements OnInit {
         this.City = this.service.City.filter(a => a.ID == data[0].CityID_Basic)
         this.CompanyGroup = this.service.CompanyGroup.filter(a => a.ID == data[0].CompanyGroupID_BaseData)
         this.CountryID = data[0].CountryID_Basic;
-        this.CountryName=this.Country[0].Title;
+        if(this.Country.length>0)
+        {
+          this.CountryName=this.Country[0].Title;
+        }
+        if(this.City.length>0)
+        {
+          this.CityName=this.City[0].Title;
+        }
+        if(this.CompanyGroup.length>0)
+        {
+          this.CompanyGroupName=this.CompanyGroup[0].Title;
+        }
         this.CityID = data[0].CityID_Basic;
-        this.CityName=this.City[0].Title;
+        
         this.CompanyGroupID = data[0].CompanyGroupID_BaseData;
-        this.CompanyGroupName=this.CompanyGroup[0].Title;
+        
         this.formControlsUpdate.NamadTag.patchValue(data[0].NamadTag);
         this.formControlsUpdate.LicenseTag1.patchValue(data[0].LicenseTag1);
         this.formControlsUpdate.LicenseTag2.patchValue(data[0].LicenseTag2);

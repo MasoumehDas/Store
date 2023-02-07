@@ -6,6 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using DataAccess;
 using API.Models;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
 
 namespace API.Controllers
 {
@@ -50,10 +53,9 @@ namespace API.Controllers
                 model.SalesCount = prod.PostData.product.SalesCount;
                 model.ToDateSpecialSales = Settings.SetNull(prod.PostData.product.ToDateSpecialSales);
                 model.ToDateSpecialSales_Mila = pc.ShamsiToMiladi(Settings.SetNull(prod.PostData.product.ToDateSpecialSales));
-                model.IsViewInstagram = prod.PostData.product.IsViewInstagram;
-                model.IsViewTelegram = prod.PostData.product.IsViewTelegram;
-                model.IsSendInstagram = false;
-                model.IsSendTelegram = false;
+                model.IsViewInstagram = model.ImageUrl.SetNull() != null? prod.PostData.product.IsViewInstagram:false;
+                model.IsViewTelegram = model.ImageUrl.SetNull() != null ? prod.PostData.product.IsViewTelegram : false;
+                
                 model.InstagramTag = prod.PostData.product.InstagramTag;
                 model.IsOffPercent = prod.PostData.product.IsOffPercent;
                 model.TransportationID = prod.PostData.product.TransportationID==-1?null: prod.PostData.product.TransportationID;
@@ -62,10 +64,22 @@ namespace API.Controllers
                 {
                     model.AvailableCount = 1;
                 }
+
+                if(model.AvailableCount!=prod.PostData.product.AvailableCount)
+                {
+                    model.UpdateDateAvailableCount = DateTime.Now;
+                }
+                
+                if(UpdateType != "Insert")
+                {
+                    model.IsSendInstagram = false;
+                    model.IsSendTelegram = false;
+                }
                 if (UpdateType == "Insert")
                 {
                     db.Products.Add(model);
                 }
+                
 
                 db.SaveChanges();
                 var Details = db.ProductDetails.Where(a => a.ProductID == model.ID).ToList();
@@ -104,6 +118,13 @@ namespace API.Controllers
                     model.BarCode = model.ID.ToString();
                 }
                 var dd = db.SaveChanges();
+                if(model.IsViewInstagram==true && model.ImageUrl.SetNull()!=null)
+                {
+                   
+
+                    Settings.ResizeImageInstagram(model.ImageUrl, 400, 400,model.ID.ToString());
+                    
+                }
                 return "0";
             }
             catch (Exception ex)

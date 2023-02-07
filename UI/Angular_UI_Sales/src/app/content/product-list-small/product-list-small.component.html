@@ -1,0 +1,51 @@
+<!--پیشنهادات ویژه نمایش کوچیک-->
+
+
+    <div style="display: flex; max-width: 1140px; overflow-x: scroll;">
+    
+    
+      <div  *ngFor="let item of products" id="W{{item.ID}}">
+        <!-- product -->
+        <div class="product-content-small  clearfix">
+         
+            
+              <div class="product-image-small" >
+                <!--Image-->
+                <video controls *ngIf="item.Image_Url.includes('.mp4')"  poster="{{item.DefaultImageVideo}}">
+                  <source src="{{them.configUrlBasicImage}}{{item.Image_Url}}" type="video/mp4">
+                </video>
+                <img *ngIf="!item.Image_Url.includes('.mp4')" src="{{them.configUrlBasicImage}}{{item.Image_Url}}" alt="{{item.Name}}" class="img-responsive image-list-small" routerLink="/p/{{item.ID}}/{{IsHomePage==true?'home':''}}">
+                
+                <span class="tag2 hot" *ngIf="item.IsOffPercent>0">
+                  {{item.OffPercent}}%
+                </span>
+                <img *ngIf="item.AvailableCount==0" src="/assets/image/Sold.png" class="Sold" />
+              </div>
+            
+            
+              <div class="product-deatil-small">
+                <p >
+  
+                  {{item.Name}}
+  
+                </p>
+                
+                <div class="row">
+                  <div class="col-md-7 price-container" style="padding:0px;">
+                    <p  class="price-text-color" [ngClass]="{'discountPrice':item.DiscountPrice>0}">{{item.PriceSales | number:'4.0-0'}}  {{item.CourrencyName}}</p>
+                      <p  class="price-text-color" *ngIf="item.DiscountPrice>0">{{item.PriceSales-item.DiscountPrice | number:'4.0-0'}} {{item.CourrencyName}}</p>
+                  </div>
+                  
+                </div>
+                
+              
+              
+            
+            </div>
+          
+        </div>
+        <!-- end product -->
+      </div>
+  
+    </div>
+ 

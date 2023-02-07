@@ -81,6 +81,7 @@ namespace API.Controllers.Order
                     {
                         datails.UnitDiscount = prod.OffPercent;
                     }
+                    
                     datails.TotalUnitDisount = item.TotalDiscount;
                     db.PurchaseDetails.Add(datails);
 

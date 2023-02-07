@@ -190,6 +190,9 @@
     <Compile Include="sp_Product_Panel_Select_Result.cs">
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_Product_Select_Elmaz_Result.cs">
+      <DependentUpon>Store.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_Product_Select_Result.cs">
       <DependentUpon>Store.tt</DependentUpon>
     </Compile>

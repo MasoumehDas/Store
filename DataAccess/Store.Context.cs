@@ -1055,5 +1055,30 @@ namespace DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Product_Panel_Select_Result>("sp_Product_Panel_Select", langParameter, userNameParameter, iDParameter, companyIDParameter, productGroupIDParameter, barCodeParameter, nameParameter, isAvailableParameter, aciveParameter, isViewTelegramParameter, isViewInstagramParameter, isSendInstagramParameter, isSendTelegramParameter, isSpecialSalesParameter, specificationParameter);
         }
+    
+        public virtual ObjectResult<sp_Product_Select_Elmaz_Result> sp_Product_Select_Elmaz(string lang, string logIP, Nullable<int> productGroupID, Nullable<int> productID, Nullable<int> companyID)
+        {
+            var langParameter = lang != null ?
+                new ObjectParameter("Lang", lang) :
+                new ObjectParameter("Lang", typeof(string));
+    
+            var logIPParameter = logIP != null ?
+                new ObjectParameter("LogIP", logIP) :
+                new ObjectParameter("LogIP", typeof(string));
+    
+            var productGroupIDParameter = productGroupID.HasValue ?
+                new ObjectParameter("ProductGroupID", productGroupID) :
+                new ObjectParameter("ProductGroupID", typeof(int));
+    
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("ProductID", productID) :
+                new ObjectParameter("ProductID", typeof(int));
+    
+            var companyIDParameter = companyID.HasValue ?
+                new ObjectParameter("CompanyID", companyID) :
+                new ObjectParameter("CompanyID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Product_Select_Elmaz_Result>("sp_Product_Select_Elmaz", langParameter, logIPParameter, productGroupIDParameter, productIDParameter, companyIDParameter);
+        }
     }
 }

@@ -91,7 +91,8 @@ namespace ConfirmBank.Controllers
                                     {
                                         prod.SalesCount = item.ShoppingCount + (prod.SalesCount == null ? 0 : prod.SalesCount);
                                         prod.AvailableCount = prod.AvailableCount - item.ShoppingCount;
-                                        if (prod.AvailableCount == 0)
+                                        prod.UpdateDateAvailableCount = DateTime.Now;
+                                        if (prod.AvailableCount <= 0)
                                         {
                                             prod.IsAvailable = false;
                                         }

@@ -68,8 +68,7 @@ namespace API.Controllers
                     
                    
                     img.Save(filePath, imgFile.RawFormat);
-                    Bitmap bmp = (Bitmap)Bitmap.FromFile(@"C:\testimage.bmp");
-                    Bitmap newImage = ResizeBitmap(bmp, 512, 512);
+                   
 
                 }
 
@@ -115,16 +114,7 @@ namespace API.Controllers
                 return Image.FromStream(mss);
             }
         }
-        private Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
-        {
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
-            {
-                g.DrawImage(bmp, 0, 0, width, height);
-            }
-
-            return result;
-        }
+        
 
     }
 }

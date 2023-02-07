@@ -1,13 +1,16 @@
-﻿using System;
+﻿using Api.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using System.Web.Http.Results;
 
 namespace API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values
@@ -35,6 +38,15 @@ namespace API.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
+        }
+        [HttpGet][HttpPost][HttpOptions]
+        [EnableCors(origins: "http://localhost:4200/", headers: "*", methods: "*")]
+        public List<Message_> GetMessages()
+        {
+            List<Message_> messages = new List<Message_>();
+            RepositoryChat r = new RepositoryChat();
+            messages = r.GetAllMessages();
+            return messages;
         }
     }
 }

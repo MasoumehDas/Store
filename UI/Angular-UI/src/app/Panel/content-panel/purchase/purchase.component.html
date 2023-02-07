@@ -114,7 +114,7 @@
              <div class="col-md-6 form-group">
                <div class="row">
                  <div class="col-md-4">
-                  <span class="list-span">{{'Panel.ID' | translate}} :</span>{{item[0].ID}}
+                  <span class="list-span">{{'Panel.ID' | translate}} :</span><span class="font-12">{{item[0].ID}}</span>
                  </div>
                  <div class="col-md-8">
                   <span class="list-span">{{'Panel.Date' | translate}} :</span>{{item[0].DateShamsi}}
@@ -143,30 +143,35 @@
            <div class="row ">
              <div class="col-md-6  form-group"><span class="list-span">{{'FullName' | translate}} : </span>{{item[0].FullName}}</div>
              <div class="col-md-6  form-group "><span class="list-span">{{'Panel.Mobile' | translate}} :</span> {{item[0].Mobile}}</div> 
-             <div class="col-md-12  form-group"><span class="list-span">{{'Panel.Address' | translate}} : </span>{{item[0].City}}/{{item[0].Address}}</div>
+             <div class="col-md-12  form-group"><span class="list-span ">{{'Panel.Address' | translate}} : </span><span class="font-12">{{item[0].City}}/{{item[0].Address}}</span></div>
              <div class="col-md-12  form-group"><span class="list-span">{{'Panel.Description' | translate}} : {{item[0].Description}}</span></div>
            </div>
            <div class="row">
             <div class="col-md-4 form-group"><span class="list-span">کد ملی : </span><label>{{item[0].CodeMelli}}</label></div>
             <div class="col-md-4 form-group"><span class="list-span">وضعیت پرداخت : </span><label>{{item[0].PaymentStatusTitle}}</label></div>
-            <div class="col-md-4 form-group"><span class="list-span">شناسه پرداخت : </span><label>{{item[0].BankRefrence}}</label></div>
+            <div class="col-md-4 form-group"><span class="list-span">شناسه پرداخت : </span><label class="font-12">{{item[0].BankRefrence}}</label></div>
             
           </div>
           </div>
         </div>
         <div></div>
-        <div class="col-md-6  border-info mb-2" style="padding-top: 5px;">
+        <div class="col-md-6  border-info mb-2" >
           
-          <div class="col-md-12 card ">
+          <div class="col-md-12 purchas-items" >
             <div class="row " *ngFor="let x of item" >
 
-              <div class="col-md-6 form-group"><span class="list-span">{{'ProductName' | translate}} :</span> {{x.ProducName}}</div>
+              <div class="col-md-6 form-group">
+                <span class="list-span">{{'ProductName' | translate}} :</span>
+                <span class="text-warning">{{x.ProductID}}</span>-
+                <span class="font-12">{{x.ProducName}}</span>
+                
+              </div>
               <div class="col-md-4 form-group"><span class="list-span">{{'UnitPrice' | translate}} :</span>{{x.UnitPrice| number:'4.0-0'}}</div>
               <div class="col-md-2 form-group"><span class="list-span">{{'Count' | translate}} :</span>{{x.ShoppingCount}}</div>
           </div>
           </div>
             
-          <div class="col-md-12 card ">
+          <div class="col-md-12 alert alert-info">
             
             <div class="row">
               <div class="col-md-4"></div>

@@ -9,6 +9,37 @@
     background-position: center center;
     
 }
+.search_input {
+  /*width: calc((100% - 10px) / 6);*/
+  width: 173px;
+  height: 51px;
+  padding-right: 27px;
+  background: #ffffff;
+  /*border: none;*/
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2b2e35;
+  margin: 0px 0px 12px 12px;
+  border: none;
+}
+.search_button {
+  width: 173px;
+  height: 51px;
+  background: #adc867;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  -webkit-transition: all 200ms ease;
+  -moz-transition: all 200ms ease;
+  -ms-transition: all 200ms ease;
+  -o-transition: all 200ms ease;
+  transition: all 200ms ease;
+}
 .pading{
     padding-top:200px;
 }

@@ -483,7 +483,7 @@
               <label class="fileContainer" style="margin-top:28px;">
                 <i class="fa fa-file-upload"></i>
                 {{'Panel.SelectFile' | translate}}
-                <input type="file" class="fileContainer-input" (change)="fileChangeEvent($event,$event.target.files)" />
+                <input type="file" class="fileContainer-input" (change)="fileProgressInsert($event.target.files)" />
               </label>
   
              
@@ -495,7 +495,7 @@
               <img src="../../../../assets/image/productSize.jpg" />
             </div>
             <div class="text-center col-md-8">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-md-8">
               <image-cropper
               [imageChangedEvent]="imageChangedEvent"
@@ -506,8 +506,8 @@
               (imageLoaded)="imageLoaded()"
               (cropperReady)="cropperReady()"
               (loadImageFailed)="loadImageFailed()"></image-cropper>
-            </div>
-        <div class="col-md-4">
+            </div>  -->
+         <!--<div class="col-md-4">
           
           <button type="submit" class="btn btn-outline-info marg-right" (click)="fileProgressInsert()" *ngIf="fileData!=null"><i class="fa fa-save"></i>  {{'Panel.ConfirmImage' | translate}}</button>
           <br />
@@ -515,7 +515,7 @@
           <img *ngIf="croppedImage!=null" [src]="croppedImage" width="200" height="200" />
          
         </div>
-        </div>
+        </div>!--> 
             </div>
           </div>
           </div>

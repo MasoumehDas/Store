@@ -49,7 +49,8 @@ namespace API.Controllers.Order
                 foreach (var item in list)
                 {
                     products pr = new products();
-                    pr.image_link = item.Image_Url;
+                    pr.image_link = item.Image_Url + db.Products.Where(a => a.ID == item.ID).Select(a => a.ImageUrl).FirstOrDefault();
+                    pr.image_links = db.ProductImages.Where(a => a.ProductID == item.ID).Select(a=> item.Image_Url+a.Image_Url).ToArray();// item.Image_Url;
                     pr.category_name = item.ProductGroup_Title;
                     pr.page_url = item.PageUrl;
                     pr.page_unique = item.ID;
@@ -84,7 +85,7 @@ namespace API.Controllers.Order
                 
                 product.count = db.Products.Where(a => a.Acive == true).Count();
                 product.max_pages = product.count / 100;
-
+                
                 log.WriteErrorLog(" WebSite Torob product.products :" + pro.Count().ToString());
                 log.WriteErrorLog(" WebSite Torob product.count :" + product.count.ToString());
                 log.WriteErrorLog(" WebSite Torob product.max_pages :" + product.max_pages.ToString());
@@ -146,6 +147,7 @@ namespace API.Controllers.Order
 
         public class products
         {
+            public string[] image_links { get; set; }
             public string image_link { get; set; }
             public string category_name { get; set; }
             public string title { get; set; }

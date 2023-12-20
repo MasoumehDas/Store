@@ -93,7 +93,8 @@ namespace API.Controllers.Order
                 log.WriteErrorLog(" InsertOrder order.ID :" + order.ID.ToString());
                 //--------------------------------ورود به درگاه بانک------------------------------------
                 SalePaymentRequestModel model_bank = new SalePaymentRequestModel();
-                
+                //----------------ارسال پیام به تلگرام----------------
+                Settings.sendMessge(model.CompanyID, model.FullName, model.Mobile);
                 var info = db.BankAcounts.Where(a => a.CompanyID == model.CompanyID && a.Active == true).FirstOrDefault();
                 if (info != null)
                 {
@@ -112,9 +113,6 @@ namespace API.Controllers.Order
                 }
                 else
                 {
-                    //----------------ارسال پیام به تلگرام----------------
-                    Settings.sendMessge(model.CompanyID, model.FullName);
-
                     return Json(new
                     {
 

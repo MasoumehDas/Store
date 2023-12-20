@@ -122,7 +122,7 @@ namespace API.Models
             return ip;
         }
         static TelegramBotClient bot;
-        public static async Task<string> sendMessge(int CompanyID, string FullName)
+        public static async Task<string> sendMessge(int CompanyID, string FullName, string mobile)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace API.Models
                     }
                     bot = new TelegramBotClient(Token);
 
-                    var responce = await bot.SendTextMessageAsync(comp.TelegramUserChatID, FullName + " یک درخواست سفارش داد ");
+                    var responce = await bot.SendTextMessageAsync(comp.TelegramUserChatID, FullName + " یک درخواست سفارش داد " +" شماره تماس :"+ mobile);
 
 
                 }

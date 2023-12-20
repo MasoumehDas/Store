@@ -108,7 +108,7 @@ namespace ConfirmBank.Controllers
 
                                 var customer= db.Customers.Where(a => a.ID == ord.CustomerID).FirstOrDefault();
                                 var CustomerID = customer.ID;
-                                string url = db.CompanySettings.Where(a => a.SettingName == "UrlFull" && a.CompanyID== CustomerID).Select(a => a.SettingValue).FirstOrDefault();
+                                string url = db.CompanySettings.Where(a => a.SettingName == "UrlFull" && a.CompanyID== ord.CompanyID).Select(a => a.SettingValue).FirstOrDefault();
                                 url = url + "/my-purchases?Id=" + CustomerID.ToString();
                                 log.WriteErrorLog($"Redirect 500 PurchaseID:" + pay.PurchaseID.ToString() + " URL :" + url);
                                 SendMessage(customer, pay.CompanyID);

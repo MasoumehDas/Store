@@ -585,7 +585,7 @@
               <label class="fileContainer" style="margin-top:28px;">
                 <i class="fa fa-file-upload"></i>
                 {{'Panel.SelectFile' | translate}}
-                <input type="file" class="fileContainer-input" (change)="fileProgressGallery($event.target.files)" />
+                <input type="file" multiple class="fileContainer-input" (change)="fileProgressGallery($event.target.files)" />
               </label>
 
               <img *ngIf="!ImageUpdate.includes('.mp4')" src="{{ImageUpdate}}" style="vertical-align:unset;width:70px;height:70px; margin-right:10px; margin-left:10px;" />

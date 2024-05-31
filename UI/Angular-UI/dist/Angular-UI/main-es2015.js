@@ -2448,7 +2448,6 @@ let ProductIndexComponent = class ProductIndexComponent {
     onInsert() {
         this.ProductInsert.FromDateSpecialSales = this.parserFormatter.format(this.ProductInsert.FromDateSpecialSales);
         this.ProductInsert.ToDateSpecialSales = this.parserFormatter.format(this.ProductInsert.ToDateSpecialSales);
-        debugger;
         var PostData = {
             product: this.ProductInsert,
             detail: this.details
@@ -2579,7 +2578,7 @@ let ProductIndexComponent = class ProductIndexComponent {
     //---------------------SAVE IMAGE--------------------------------------
     fileProgressInsert(fileInput) {
         this.fileData = fileInput[0];
-        var size = 700;
+        var size = 5024;
         const formData = new FormData();
         ;
         if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
@@ -2643,7 +2642,7 @@ let ProductIndexComponent = class ProductIndexComponent {
     }
     fileProgressGallery(fileInput) {
         this.fileData = fileInput[0];
-        var size = 700;
+        var size = 5024;
         const formData = new FormData();
         if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
             if (this.fileData.type.toLowerCase() == 'video/mp4') {
@@ -7006,6 +7005,8 @@ let panelCompany = class panelCompany {
         this.translate = translate;
         this.them = them;
         //===========================================================================
+        this.ProductGroup = [];
+        this.CompanyProductGroup = [];
         this.company = [];
         this.UserName = this.authService.getUserName();
         this.Lang = localStorage.getItem('language');
@@ -7210,6 +7211,17 @@ let panelCompany = class panelCompany {
             this.them.loading = false;
             result = data;
             sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('پیغام', result);
+        });
+    }
+    GetProductGroup() {
+        this.configService.Fetch_FilterProductGroupGet(this.Lang, this.UserName, null, null, null, null, null).subscribe(data => {
+            this.ProductGroup = data;
+        });
+    }
+    GetCompanyProductGroup() {
+        this.configService.Fetch_FilterCompanyProductGroupGet(this.them.CompanyID, this.Lang)
+            .subscribe(data => {
+            this.CompanyProductGroup = data;
         });
     }
 };
@@ -8829,8 +8841,8 @@ let them = class them {
             return this.DateEvent;
         }
     }
-    CheckImageSize(file, MaxVal = 700) {
-        var max = Number(MaxVal) * (1024);
+    CheckImageSize(file, MaxVal = 5024) {
+        var max = Number(MaxVal) * (5024);
         if (file.size > max) {
             if (this.Lang.toLowerCase() == 'fa') {
                 this.AlertLis.Title = 'خطا';

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace API.Models
+namespace ConfirmBank.Models
 {
 	internal sealed class Constants
 	{

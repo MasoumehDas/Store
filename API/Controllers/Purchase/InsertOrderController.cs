@@ -63,12 +63,12 @@ namespace API.Controllers.Order
 
                 db.Purchases.Add(order);
                 db.SaveChanges();
-                log.WriteErrorLog(" Purchase :"+ order.ID.ToString());
+                log.WriteErrorLog(" Purchase :" + order.ID.ToString());
 
                 foreach (var item in model.OrderDetails)
                 {
                     var prod = db.Products.Where(a => a.ID == item.ProductID).FirstOrDefault();
-                    
+
                     DataAccess.PurchaseDetail datails = new PurchaseDetail();
                     datails.AvalaibleCount = item.AvalaibleCount;
                     datails.ProducName = item.ProducName;
@@ -81,12 +81,9 @@ namespace API.Controllers.Order
                     {
                         datails.UnitDiscount = prod.OffPercent;
                     }
-                    
+
                     datails.TotalUnitDisount = item.TotalDiscount;
                     db.PurchaseDetails.Add(datails);
-
-
-
                 }
 
                 db.SaveChanges();
@@ -96,36 +93,28 @@ namespace API.Controllers.Order
                 //----------------ارسال پیام به تلگرام----------------
                 Settings.sendMessge(model.CompanyID, model.FullName, model.Mobile);
                 var info = db.BankAcounts.Where(a => a.CompanyID == model.CompanyID && a.Active == true).FirstOrDefault();
-                if (info != null)
+                if (info == null)
                 {
-                    model_bank.Amount = Convert.ToInt64(model.Total*10)-Convert.ToInt64(model.TotalDiscount*10);
-                    model_bank.LoginAccount = info.Password;
-                    model_bank.ConfirmAfterPayment = true;
-                    model_bank.AdditionalData = order.ID.ToString() + "," + model.CompanyID.ToString() + "," + model.FullName;
-                    model_bank.Originator = model.Mobile;
-
-                    model_bank.CallBackUrl = info.ReturnURL;
-
-                    log.WriteErrorLog("Send to bank InsertOrder order.ID" + order.ID.ToString());
-                    return SendToBank(model_bank);
-                    
-
+                    return Json(new { status = 10 });
                 }
-                else
-                {
-                    return Json(new
-                    {
 
-                        status = 10,
+                model_bank.Amount = Convert.ToInt64(model.Total * 10) - Convert.ToInt64(model.TotalDiscount * 10);
+                model_bank.LoginAccount = info.Password;
+                model_bank.ConfirmAfterPayment = true;
+                model_bank.AdditionalData = order.ID.ToString() + "," + model.CompanyID.ToString() + "," + model.FullName;
+                model_bank.Originator = model.Mobile;
 
-                    });
-                }
+                model_bank.CallBackUrl = info.ReturnURL;
+
+                log.WriteErrorLog("Send to bank InsertOrder order.ID" + order.ID.ToString());
+                return SendToBank(model_bank);
+
 
 
             }
             catch (Exception ex)
             {
-                
+
                 log.WriteErrorLog(" InsertOrder :" + ex.Message);
                 if (ex.InnerException != null)
                 {
@@ -150,7 +139,7 @@ namespace API.Controllers.Order
                     {
                         Message = ex.Message,
                         status = -1,
-                    
+
                     });
                 }
             }

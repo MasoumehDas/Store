@@ -5,25 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using API.Common;
+
 using ConfirmBank.ir.shaparak.pec1;
 using ConfirmBank.ir.shaparak.pec;
 using ConfirmBank.ir.mizbansms.my;
+using ConfirmBank.Models;
+using ConfirmBank.Common;
 
 namespace ConfirmBank.Controllers
 {
     public class IndexController : Controller
     {
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
+       
         StoreEntities db = new StoreEntities();
-        
-        API.Models.Log log = new API.Models.Log();
+
+        Log log = new Log();
 
 
-        public ActionResult Index(API.Models.PaymentCallbackModel model)
+        public ActionResult Index(PaymentCallbackModel model)
         {
             log.WriteErrorLog($"Parsian PGW service call PaymentCallback ورود مدل");
             if (model != null)
@@ -96,19 +95,19 @@ namespace ConfirmBank.Controllers
                                         {
                                             prod.IsAvailable = false;
                                         }
-                                        
+
                                     }
                                 }
 
-                               
+
                                 log.WriteErrorLog($"Redirect 500 PurchaseID:" + pay.PurchaseID.ToString());
                                 var ord = db.Purchases.Where(a => a.ID == pay.PurchaseID).FirstOrDefault();
                                 ord.Status = 1;
                                 db.SaveChanges();
 
-                                var customer= db.Customers.Where(a => a.ID == ord.CustomerID).FirstOrDefault();
+                                var customer = db.Customers.Where(a => a.ID == ord.CustomerID).FirstOrDefault();
                                 var CustomerID = customer.ID;
-                                string url = db.CompanySettings.Where(a => a.SettingName == "UrlFull" && a.CompanyID== ord.CompanyID).Select(a => a.SettingValue).FirstOrDefault();
+                                string url = db.CompanySettings.Where(a => a.SettingName == "UrlFull" && a.CompanyID == ord.CompanyID).Select(a => a.SettingValue).FirstOrDefault();
                                 url = url + "/my-purchases?Id=" + CustomerID.ToString();
                                 log.WriteErrorLog($"Redirect 500 PurchaseID:" + pay.PurchaseID.ToString() + " URL :" + url);
                                 SendMessage(customer, pay.CompanyID);
@@ -147,7 +146,7 @@ namespace ConfirmBank.Controllers
             else
             {
                 log.WriteErrorLog($"Parsian PGW service call PaymentCallback مدل خالی است");
-                
+
 
             }
             return View();
@@ -160,22 +159,22 @@ namespace ConfirmBank.Controllers
 
             return View();
         }
-        private void SendMessage(DataAccess.Customer model,int? CompanyID)
+        private void SendMessage(DataAccess.Customer model, int? CompanyID)
         {
             WSSMS v = new WSSMS();
             string StorBody = model.FullName + " " + "یک خرید پرداخت شده در سیستم دارد." + Environment.NewLine;
             StorBody += " شماره مشتری :" + model.Mobile;
             try
             {
-                
+
 
                 var setting = db.CompanySettings.Where(a => a.CompanyID == CompanyID && a.Category == "SMS").ToList();
 
-                if(setting!=null)
+                if (setting != null)
                 {
                     string username = setting.Where(a => a.SettingName == "SMSUsername").Select(a => a.SettingValue).FirstOrDefault();
-                    string password= setting.Where(a => a.SettingName == "Password").Select(a => a.SettingValue).FirstOrDefault();
-                    string Body= setting.Where(a => a.SettingName == "SMSMessage").Select(a => a.SettingValue).FirstOrDefault();
+                    string password = setting.Where(a => a.SettingName == "Password").Select(a => a.SettingValue).FirstOrDefault();
+                    string Body = setting.Where(a => a.SettingName == "SMSMessage").Select(a => a.SettingValue).FirstOrDefault();
                     string SMSNumber = setting.Where(a => a.SettingName == "SMSNumber").Select(a => a.SettingValue).FirstOrDefault();
                     string api = setting.Where(a => a.SettingName == "api").Select(a => a.SettingValue).FirstOrDefault();
                     string Mobile = setting.Where(a => a.SettingName == "SMSReciveNumber").Select(a => a.SettingValue).FirstOrDefault();
@@ -184,16 +183,16 @@ namespace ConfirmBank.Controllers
                     var c = v.sendsms(username, password, Mobile, StorBody, SMSNumber, api);
                     log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " result :" + result.First().ToString());
                 }
-                
 
-                
+
+
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                log.WriteErrorLog($"SendSMS  CompanyID:"+ CompanyID.ToString()+ " Error"+ ex.Message);
+                log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " Error" + ex.Message);
             }
-            
+
 
         }
         public ActionResult Contact()
@@ -216,7 +215,7 @@ namespace ConfirmBank.Controllers
                 string Mobile = setting.Where(a => a.SettingName == "SMSReciveNumber").Select(a => a.SettingValue).FirstOrDefault();
                 var result = v.sendsms(username, password, Mobile, Body, SMSNumber, api);
 
-                
+
             }
 
             return View();

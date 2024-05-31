@@ -257,7 +257,7 @@ export class ProductIndexComponent implements OnInit {
 
     this.ProductInsert.FromDateSpecialSales = this.parserFormatter.format(this.ProductInsert.FromDateSpecialSales)
     this.ProductInsert.ToDateSpecialSales = this.parserFormatter.format(this.ProductInsert.ToDateSpecialSales)
-    debugger;
+    
     var PostData: any = {
       product: this.ProductInsert,
       detail: this.details
@@ -439,7 +439,7 @@ OpenNew(){
     
     
     this.fileData = <File>fileInput[0];
-    var size=700;
+    var size=5024;
     const formData = new FormData();
     ;
     if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
@@ -526,7 +526,7 @@ OpenNew(){
   fileProgressGallery(fileInput: any) {
 
     this.fileData = <File>fileInput[0];
-    var size=700;
+    var size=5024;
     const formData = new FormData();
     if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg'  || this.fileData.type.toLowerCase() == 'video/mp4') {
       if(this.fileData.type.toLowerCase() == 'video/mp4')

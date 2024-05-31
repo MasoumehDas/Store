@@ -11,10 +11,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
-
 namespace API.Controllers
 {
-   
+
     public class UploaderController : ApiController
     {
         [HttpPost]
@@ -36,17 +35,18 @@ namespace API.Controllers
             //--------------ارسال فایل تصویر
             if (!Path.GetExtension(postedFile.FileName).ToLower().Contains("mp4"))
             {
-                System.Drawing.Image imgFile = System.Drawing.Image.FromStream(postedFile.InputStream);
+                Image imgFile = System.Drawing.Image.FromStream(postedFile.InputStream);
 
 
                 Bitmap img = new Bitmap(imgFile);
+
                 if (!Path.GetExtension(postedFile.FileName).ToLower().Contains("png"))
                 {
-                    imgFile = GetCompressedBitmap(img, 1024);
+                    imgFile = GetCompressedBitmap(img, 2048);
                 }
                 var imageHeight = img.Height;
                 var imageWidth = img.Width;
-               
+
                 if ((imageHeight.ToString() == Height && imageWidth.ToString() == Width) || (Height == null))
                 {
                     //Create custom filename
@@ -64,11 +64,63 @@ namespace API.Controllers
                     }
 
                     var filePath = uploadPath + FileName;
-                    //postedFile.SaveAs(filePath);
-                    
-                   
+
+
+                    Graphics graphics = Graphics.FromImage(img);
+
+                    Brush brush = new SolidBrush(Color.Yellow);
+
+
+
+                    int fontSize = 0;
+
+
+                    string text = "DASTANI CARPET";
+
+                    int h = 100;
+
+                    if (imageHeight > 300)
+                    {
+                        h = (imageHeight / 4);
+
+                    }
+                    else
+                    {
+                        h = (imageHeight / 3);
+
+                    }
+                    int w = 100;
+                    if (imageWidth > 500)
+                    {
+
+                        w = imageWidth / 3;
+                        fontSize = 40;
+                    }
+                    else
+                    {
+                        w = imageWidth / 12;
+                        fontSize = 30;
+                    }
+                    Font arial = new Font("Tahoma", fontSize, FontStyle.Regular);
+                    Point point = new Point(w, h);
+                    Size size = new Size(350, 200);
+                    Rectangle rectangle = new Rectangle(point, size);
+                    graphics.DrawString(text, arial, brush, rectangle);
+
+                    //Font font = new Font("Arial", 50, FontStyle.Italic, GraphicsUnit.Pixel);
+                    ////Color color = Color.FromArgb(255, 255, 0, 0);
+                    //int opacity = 128;
+                    //Point atpoint = new Point(imageWidth / 2, imageHeight / 2);
+                    //SolidBrush brush = new SolidBrush(Color.FromArgb(opacity, Color.Black));
+                    //Graphics graphics = Graphics.FromImage(img);
+                    //StringFormat sf = new StringFormat();
+                    //sf.Alignment = StringAlignment.Center;
+                    //sf.LineAlignment = StringAlignment.Center;
+                    //graphics.DrawString("فرش داستانی", font, brush, atpoint, sf);
+                    graphics.Dispose();
+
                     img.Save(filePath, imgFile.RawFormat);
-                   
+
 
                 }
 
@@ -79,7 +131,7 @@ namespace API.Controllers
             }
             else //----------ارسال فایل ویدیو
             {
-                
+
                 //Create custom filename
                 if (postedFile != null)
                 {
@@ -96,7 +148,7 @@ namespace API.Controllers
 
                 var filePath = uploadPath + FileName;
                 postedFile.SaveAs(filePath);
-                
+
             }
 
             return path + FileName;
@@ -114,7 +166,7 @@ namespace API.Controllers
                 return Image.FromStream(mss);
             }
         }
-        
+
 
     }
 }

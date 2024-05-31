@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using System.IO;
-namespace API.Models
+namespace ConfirmBank.Models
 {
     public class Log
     {
@@ -34,7 +34,7 @@ namespace API.Models
                 }
                 catch
                 {
-
+                    Status = false;
                 }
                 finally
                 {

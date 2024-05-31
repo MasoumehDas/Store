@@ -437,6 +437,7 @@
     <Compile Include="Controllers\PageMenu\SelectPageMenuController.cs" />
     <Compile Include="Controllers\PageMenu\UpdatePageMenuController.cs" />
     <Compile Include="Controllers\PageMenu\SelectMenuPageActiveController.cs" />
+    <Compile Include="Controllers\PaymentCallbackController.cs" />
     <Compile Include="Controllers\Payment\DeletePaymentController.cs" />
     <Compile Include="Controllers\Payment\InsertPaymentController.cs" />
     <Compile Include="Controllers\Payment\SelectPaymentController.cs" />
@@ -540,6 +541,11 @@
     <Compile Include="SignalRChat.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web References\ir.mizbansms.my\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ir.shaparak.pec.confitm\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -4173,7 +4179,15 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Views\ProductListElmaz\Index.cshtml" />
+    <Content Include="Views\PaymentCallback\Index.cshtml" />
     <None Include="Web References\ir.mizbansms.my\wssms.disco" />
+    <Content Include="Web References\ir.shaparak.pec.confitm\ClientConfirmResponseData.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\ir.shaparak.pec.confitm\ClientConfirmResponseDataAddData.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\ir.shaparak.pec.confitm\ConfirmService.disco" />
     <Content Include="Web References\ir.shaparak.pec\ClientPaymentResponseDataBase.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
@@ -4181,6 +4195,11 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Content>
     <Content Include="Web References\ir.shaparak.pec\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <None Include="Web References\ir.shaparak.pec.confitm\ConfirmService.wsdl" />
+    <Content Include="Web References\ir.shaparak.pec.confitm\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </Content>
@@ -4262,6 +4281,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>Api_ir_mizbansms_my_WSSMS</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ir.shaparak.pec.confitm\</RelPath>
+      <UpdateFromURL>https://pec.shaparak.ir/NewIPGServices/Confirm/ConfirmService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Api_ir_shaparak_pec_confitm_ConfirmService</CachedSettingsPropName>
     </WebReferenceUrl>
     <WebReferenceUrl Include="https://pec.shaparak.ir/NewIPGServices/Sale/SaleService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>

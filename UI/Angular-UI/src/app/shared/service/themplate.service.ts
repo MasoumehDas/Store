@@ -228,9 +228,9 @@ export class them {
       return this.DateEvent;
     }
   }
-  public CheckImageSize(file: File, MaxVal: Number = 700): boolean {
+  public CheckImageSize(file: File, MaxVal: Number = 5024): boolean {
 
-    var max = Number(MaxVal) * (1024);
+    var max = Number(MaxVal) * (5024);
 
 
     if (file.size > max) {

@@ -2580,7 +2580,6 @@ var ProductIndexComponent = /** @class */ (function () {
     ProductIndexComponent.prototype.onInsert = function () {
         this.ProductInsert.FromDateSpecialSales = this.parserFormatter.format(this.ProductInsert.FromDateSpecialSales);
         this.ProductInsert.ToDateSpecialSales = this.parserFormatter.format(this.ProductInsert.ToDateSpecialSales);
-        debugger;
         var PostData = {
             product: this.ProductInsert,
             detail: this.details
@@ -2728,7 +2727,7 @@ var ProductIndexComponent = /** @class */ (function () {
     ProductIndexComponent.prototype.fileProgressInsert = function (fileInput) {
         var _this = this;
         this.fileData = fileInput[0];
-        var size = 700;
+        var size = 5024;
         var formData = new FormData();
         ;
         if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
@@ -2793,7 +2792,7 @@ var ProductIndexComponent = /** @class */ (function () {
     ProductIndexComponent.prototype.fileProgressGallery = function (fileInput) {
         var _this = this;
         this.fileData = fileInput[0];
-        var size = 700;
+        var size = 5024;
         var formData = new FormData();
         if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
             if (this.fileData.type.toLowerCase() == 'video/mp4') {
@@ -7359,6 +7358,8 @@ var panelCompany = /** @class */ (function () {
         this.translate = translate;
         this.them = them;
         //===========================================================================
+        this.ProductGroup = [];
+        this.CompanyProductGroup = [];
         this.company = [];
         this.UserName = this.authService.getUserName();
         this.Lang = localStorage.getItem('language');
@@ -7609,6 +7610,19 @@ var panelCompany = /** @class */ (function () {
             _this.them.loading = false;
             result = data;
             sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('پیغام', result);
+        });
+    };
+    panelCompany.prototype.GetProductGroup = function () {
+        var _this = this;
+        this.configService.Fetch_FilterProductGroupGet(this.Lang, this.UserName, null, null, null, null, null).subscribe(function (data) {
+            _this.ProductGroup = data;
+        });
+    };
+    panelCompany.prototype.GetCompanyProductGroup = function () {
+        var _this = this;
+        this.configService.Fetch_FilterCompanyProductGroupGet(this.them.CompanyID, this.Lang)
+            .subscribe(function (data) {
+            _this.CompanyProductGroup = data;
         });
     };
     panelCompany.ctorParameters = function () { return [
@@ -9470,8 +9484,8 @@ var them = /** @class */ (function () {
         }
     };
     them.prototype.CheckImageSize = function (file, MaxVal) {
-        if (MaxVal === void 0) { MaxVal = 700; }
-        var max = Number(MaxVal) * (1024);
+        if (MaxVal === void 0) { MaxVal = 5024; }
+        var max = Number(MaxVal) * (5024);
         if (file.size > max) {
             if (this.Lang.toLowerCase() == 'fa') {
                 this.AlertLis.Title = 'خطا';

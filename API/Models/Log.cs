@@ -8,6 +8,7 @@ namespace API.Models
 {
     public class Log
     {
+        public string Url = "C:\\LogFiles\\Documention\\";
         public  bool  WriteErrorLog(string LogMessage, string path = null)
         {
             bool Status = false;
@@ -15,7 +16,7 @@ namespace API.Models
             {
                 path = string.Empty;
             }
-            string LogDirectory = "C:\\LogFiles\\Documention\\" + LogFileName(DateTime.Now) + "\\";
+            string LogDirectory = Url + LogFileName(DateTime.Now) + "\\";
 
             DateTime CurrentDateTime = DateTime.Now;
             string CurrentDateTimeString = CurrentDateTime.ToString();

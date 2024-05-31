@@ -5,7 +5,7 @@ using System.Web;
 using System.Globalization;
 using System.Reflection;
 
-namespace API.Models
+namespace ConfirmBank.Models
 {
 
     public class PersianCulture : CultureInfo

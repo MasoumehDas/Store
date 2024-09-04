@@ -40,10 +40,7 @@ namespace API.Controllers
 
                 Bitmap img = new Bitmap(imgFile);
 
-                if (!Path.GetExtension(postedFile.FileName).ToLower().Contains("png"))
-                {
-                    imgFile = GetCompressedBitmap(img, 2048);
-                }
+                
                 var imageHeight = img.Height;
                 var imageWidth = img.Width;
 
@@ -121,6 +118,11 @@ namespace API.Controllers
 
                     img.Save(filePath, imgFile.RawFormat);
 
+                    
+                   var imgFile_Compressed = GetCompressedBitmap(img, 256);
+                    
+                    var filePath_Compressed = uploadPath +"/zip/"+ imgFile_Compressed;
+                    imgFile_Compressed.Save(filePath_Compressed, imgFile_Compressed.RawFormat);
 
                 }
 

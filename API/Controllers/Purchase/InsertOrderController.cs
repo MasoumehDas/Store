@@ -58,13 +58,15 @@ namespace API.Controllers.Order
                 order.DateShamsi = pc.MiladiToShamsi(DateTime.Now);
                 order.Description = model.Description;
                 order.Status = 0;
-                order.Total = model.Total;
-                order.TotalDiscount = model.TotalDiscount;
+                order.Total = 0;
+
+
 
                 db.Purchases.Add(order);
                 db.SaveChanges();
                 log.WriteErrorLog(" Purchase :" + order.ID.ToString());
-
+                
+                order.TotalDiscount = 0;
                 foreach (var item in model.OrderDetails)
                 {
                     var prod = db.Products.Where(a => a.ID == item.ProductID).FirstOrDefault();
@@ -82,10 +84,13 @@ namespace API.Controllers.Order
                         datails.UnitDiscount = prod.OffPercent;
                     }
 
-                    datails.TotalUnitDisount = item.TotalDiscount;
+                    datails.TotalUnitDisount = item.TotalPrice* prod.OffPercent/ 100;
+                    order.TotalDiscount += Convert.ToInt64(datails.TotalUnitDisount);
+                    order.Total += Convert.ToInt64(datails.UnitPrice* item.ShoppingCount);
+
                     db.PurchaseDetails.Add(datails);
                 }
-
+                
                 db.SaveChanges();
                 log.WriteErrorLog(" InsertOrder order.ID :" + order.ID.ToString());
                 //--------------------------------ورود به درگاه بانک------------------------------------
@@ -98,7 +103,7 @@ namespace API.Controllers.Order
                     return Json(new { status = 10 });
                 }
 
-                model_bank.Amount = Convert.ToInt64(model.Total * 10) - Convert.ToInt64(model.TotalDiscount * 10);
+                model_bank.Amount = Convert.ToInt64(order.Total * 10) - Convert.ToInt64(order.TotalDiscount * 10);
                 model_bank.LoginAccount = info.Password;
                 model_bank.ConfirmAfterPayment = true;
                 model_bank.AdditionalData = order.ID.ToString() + "," + model.CompanyID.ToString() + "," + model.FullName;

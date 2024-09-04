@@ -46,61 +46,63 @@ import { ProductListSmallComponent } from './content/product-list-small/product-
 import { ProductListLargeComponent } from './content/product-list-large/product-list-large.component';
 import { EasySearchComponent } from './content/easy-search/easy-search.component';
 import { ImageViewerComponent } from './content/image-viewer/image-viewer.component';
+import { BasketComponent } from './content/basket/basket.component';
 
 
 
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        FooterComponent,
-        HeaderComponent,
-        HomePageComponent,
-        ContentComponent,
-        AboutUsComponent,
-        SearchResultComponent,
-        ImageGalleryComponent,
-        NgbdSortableHeader,
-        AppComponent,
-        NgbdSortableHeader,
-        NotFoundComponent,
-        ContractShoppingComponent,
-        MyPurchasesComponent,
-        PagesComponent,
-        ProductDetailsComponent,
-        ConfirmBankPWGComponent,
-        ProductListSmallComponent,
-        ProductListLargeComponent,
-        EasySearchComponent,
-        ImageViewerComponent, 
-    ],
-    imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        NgbPaginationModule,
-        NgbAlertModule,
-        NgbModule,
-        
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-      }),
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    HeaderComponent,
+    HomePageComponent,
+    ContentComponent,
+    AboutUsComponent,
+    SearchResultComponent,
+    ImageGalleryComponent,
+    NgbdSortableHeader,
+    AppComponent,
+    NgbdSortableHeader,
+    NotFoundComponent,
+    ContractShoppingComponent,
+    MyPurchasesComponent,
+    PagesComponent,
+    ProductDetailsComponent,
+    ConfirmBankPWGComponent,
+    ProductListSmallComponent,
+    ProductListLargeComponent,
+    EasySearchComponent,
+    ImageViewerComponent,
+    BasketComponent
+  ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    NgbModule,
 
-      
-    ],
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
+
+
+  ],
   providers: [ConfigService, them, DecimalPipe, NgbdSortableHeader, ProductService],
-    bootstrap: [AppComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

@@ -16,7 +16,7 @@ import { ParamShowSearch } from '../../../shared/modules/ParamShowSearch.module'
 import { NgbdSortableHeader, SortEvent } from '../../../shared/service/sortable.directive';
 
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
-import { NgbDateStruct, NgbDatepickerI18n, NgbCalendar, NgbCalendarPersian, NgbDateParserFormatter,NgbPopover} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDatepickerI18n, NgbCalendar, NgbCalendarPersian, NgbDateParserFormatter, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';//https://www.npmjs.com/package/ng-multiselect-dropdown
 import { DecimalPipe } from '@angular/common';
@@ -42,7 +42,7 @@ export class NgbDatepickerI18nPersian extends NgbDatepickerI18n {
     { provide: localStorage.getItem('language') == 'fa' ? NgbCalendar : NuLLValue, useClass: localStorage.getItem('language') == 'fa' ? NgbCalendarPersian : NuLLValue },
 
     { provide: localStorage.getItem('language') == 'fa' ? NgbDatepickerI18n : NuLLValue, useClass: localStorage.getItem('language') == 'fa' ? NgbDatepickerI18nPersian : NuLLValue }
-    , them, panelProcuct, DecimalPipe, ConfigService,NgbPopover
+    , them, panelProcuct, DecimalPipe, ConfigService, NgbPopover
   ],
 
   //animations: [
@@ -60,7 +60,7 @@ export class ProductIndexComponent implements OnInit {
   List$: Observable<Product[]>;
   total$: Observable<number>;
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
-  fileData: any = null;
+  fileData: any[] = [];
 
   onSort({ column, direction }: SortEvent) {
 
@@ -117,7 +117,7 @@ export class ProductIndexComponent implements OnInit {
   configUrlBasicImage: string = this.them.configUrlBasicImage;
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  
+
   //-------------------------------------------------------
   public ParamShowSearch: ParamShowSearch[];
 
@@ -128,21 +128,21 @@ export class ProductIndexComponent implements OnInit {
     this.Lang = this.service.Lang;
     this.CompanyID = this.them.CompanyID;
     this.activatedRoute.queryParams.subscribe(params => {
-      this.details=[];
-      this.them.modal_open_new=false;
+      this.details = [];
+      this.them.modal_open_new = false;
       this.ProductGroupID = params['id'];
       this.them.ProductGroupName = params['ProductGroupName'];
       this.service.SelectCompanyTransportationGet();
       this.service.Select(this.UserName, this.Lang, '', this.CompanyID, this.ProductGroupID, '', '',
-      null,null,null,null,null,null,null,true,null);
-     
+        null, null, null, null, null, null, null, true, null);
+
       this.details = this.service.onProductDetailGet(this.UserName, this.Lang, this.ProductGroupID);
       this.service.onSpecificationGet(this.Lang, this.ProductGroupID);
 
       this.ProductInsert = {
         ID: null,
         CompanyID: Number(this.them.CompanyID),
-        TransportationID : -1,
+        TransportationID: -1,
         PriceBuy: null,
         PriceSales: null,
         IsAvailable: true,
@@ -178,14 +178,14 @@ export class ProductIndexComponent implements OnInit {
     this.SearchForm = this.formBuilder.group({
       BarCode: [''],
       Name: [''],
-      IsAvailable	: [null],
-      Acive		: [null],	
-      IsViewTelegram : [null],
+      IsAvailable: [null],
+      Acive: [null],
+      IsViewTelegram: [null],
       IsViewInstagram: [null],
       IsSendInstagram: [null],
-      IsSendTelegram : [null],
-      IsSpecialSales : [null],
-      Specification : [null],
+      IsSendTelegram: [null],
+      IsSpecialSales: [null],
+      Specification: [null],
 
     });
 
@@ -233,9 +233,9 @@ export class ProductIndexComponent implements OnInit {
   questioner() {
     this.ResetCombo();
     this.service.Select(this.UserName, this.Lang, '', this.CompanyID, this.ProductGroupID, this.SearchForm.controls.BarCode.value, this.SearchForm.controls.Name.value
-    ,this.SearchForm.controls.IsAvailable.value,this.SearchForm.controls.Acive.value,this.SearchForm.controls.IsViewTelegram.value,
-    this.SearchForm.controls.IsViewInstagram.value,this.SearchForm.controls.IsSendInstagram.value,this.SearchForm.controls.IsSendTelegram.value,this.SearchForm.controls.IsSpecialSales.value
-    ,true,this.SearchForm.controls.Specification.value
+      , this.SearchForm.controls.IsAvailable.value, this.SearchForm.controls.Acive.value, this.SearchForm.controls.IsViewTelegram.value,
+      this.SearchForm.controls.IsViewInstagram.value, this.SearchForm.controls.IsSendInstagram.value, this.SearchForm.controls.IsSendTelegram.value, this.SearchForm.controls.IsSpecialSales.value
+      , true, this.SearchForm.controls.Specification.value
     );
   }
 
@@ -257,7 +257,7 @@ export class ProductIndexComponent implements OnInit {
 
     this.ProductInsert.FromDateSpecialSales = this.parserFormatter.format(this.ProductInsert.FromDateSpecialSales)
     this.ProductInsert.ToDateSpecialSales = this.parserFormatter.format(this.ProductInsert.ToDateSpecialSales)
-    
+
     var PostData: any = {
       product: this.ProductInsert,
       detail: this.details
@@ -265,89 +265,89 @@ export class ProductIndexComponent implements OnInit {
     this.service.Insert(PostData);
 
     this.oClose();
-    
+
   }
   //***********************Edit********************************
   EditOpen(selectedRowID) {
-    
+
     this.them.selectedRowID = selectedRowID;
 
     this.ResetDefaultValue();
 
-      this.api.Fetch_FilterProductID(this.Lang, this.UserName, this.them.selectedRowID.toString()).subscribe(data => {
+    this.api.Fetch_FilterProductID(this.Lang, this.UserName, this.them.selectedRowID.toString()).subscribe(data => {
 
-        this.ProductInsert.ID = data[0].ID;
-        this.ProductInsert.CompanyID = data[0].CompanyID;
-        this.ProductInsert.PriceBuy = data[0].PriceBuy;
-        this.ProductInsert.PriceSales = data[0].PriceSales;
-        this.ProductInsert.IsAvailable = data[0].IsAvailable;
-        this.ProductInsert.OffPercent = data[0].OffPercent;
-        this.ProductInsert.ProductGroupID = data[0].ProductGroupID;
-        this.ProductInsert.Currency = data[0].Currency;
-        this.ProductInsert.LogUser = data[0].LogUser;
-        this.ProductInsert.Acive = data[0].Acive;
-        this.ProductInsert.AvailableCount = data[0].AvailableCount;
-        this.ProductInsert.SalesCount = data[0].SalesCount;
-        this.ProductInsert.IsSpecialSales = data[0].IsSpecialSales;
-        this.ProductInsert.FromDateSpecialSales = data[0].FromDateSpecialSales;
-        this.ProductInsert.ToDateSpecialSales = data[0].ToDateSpecialSales;
-        this.ProductInsert.Description = data[0].ProductDescription;
+      this.ProductInsert.ID = data[0].ID;
+      this.ProductInsert.CompanyID = data[0].CompanyID;
+      this.ProductInsert.PriceBuy = data[0].PriceBuy;
+      this.ProductInsert.PriceSales = data[0].PriceSales;
+      this.ProductInsert.IsAvailable = data[0].IsAvailable;
+      this.ProductInsert.OffPercent = data[0].OffPercent;
+      this.ProductInsert.ProductGroupID = data[0].ProductGroupID;
+      this.ProductInsert.Currency = data[0].Currency;
+      this.ProductInsert.LogUser = data[0].LogUser;
+      this.ProductInsert.Acive = data[0].Acive;
+      this.ProductInsert.AvailableCount = data[0].AvailableCount;
+      this.ProductInsert.SalesCount = data[0].SalesCount;
+      this.ProductInsert.IsSpecialSales = data[0].IsSpecialSales;
+      this.ProductInsert.FromDateSpecialSales = data[0].FromDateSpecialSales;
+      this.ProductInsert.ToDateSpecialSales = data[0].ToDateSpecialSales;
+      this.ProductInsert.Description = data[0].ProductDescription;
 
-        this.ProductInsert.IsViewInstagram = data[0].IsViewInstagram;
-        this.ProductInsert.IsViewTelegram = data[0].IsViewTelegram;
-        this.ProductInsert.InstagramTag = data[0].InstagramTag;
-        this.ProductInsert.IsOffPercent = data[0].IsOffPercent;
-        this.ProductInsert.TransportationID= data[0].TransportationID==null?-1:data[0].TransportationID;
-        if (this.Lang == 'en') {
+      this.ProductInsert.IsViewInstagram = data[0].IsViewInstagram;
+      this.ProductInsert.IsViewTelegram = data[0].IsViewTelegram;
+      this.ProductInsert.InstagramTag = data[0].InstagramTag;
+      this.ProductInsert.IsOffPercent = data[0].IsOffPercent;
+      this.ProductInsert.TransportationID = data[0].TransportationID == null ? -1 : data[0].TransportationID;
+      if (this.Lang == 'en') {
 
-          this.ProductInsert.FromDateSpecialSales = this.them.ToDate(data[0].FromDateSpecialSales_Mila);
-          this.ProductInsert.ToDateSpecialSales = this.them.ToDate(data[0].ToDateSpecialSales_Mila);
+        this.ProductInsert.FromDateSpecialSales = this.them.ToDate(data[0].FromDateSpecialSales_Mila);
+        this.ProductInsert.ToDateSpecialSales = this.them.ToDate(data[0].ToDateSpecialSales_Mila);
 
-        }
-        if (this.Lang == 'fa') {
-          this.ProductInsert.FromDateSpecialSales = this.them.ToDate(data[0].FromDateSpecialSales);
-          this.ProductInsert.ToDateSpecialSales = this.them.ToDate(data[0].ToDateSpecialSales);
+      }
+      if (this.Lang == 'fa') {
+        this.ProductInsert.FromDateSpecialSales = this.them.ToDate(data[0].FromDateSpecialSales);
+        this.ProductInsert.ToDateSpecialSales = this.them.ToDate(data[0].ToDateSpecialSales);
 
 
-        }
+      }
 
-        this.ProductInsert.BarCode = data[0].BarCode;
-        this.ProductInsert.ImageUrl = data[0].ImageUrl;
-        this.ProductInsert.Name = data[0].Name;
-        this.ImageInsert = this.them.configUrlBasicImage + data[0].ImageUrl;
+      this.ProductInsert.BarCode = data[0].BarCode;
+      this.ProductInsert.ImageUrl = data[0].ImageUrl;
+      this.ProductInsert.Name = data[0].Name;
+      this.ImageInsert = this.them.configUrlBasicImage + data[0].ImageUrl;
 
-        this.details = this.service.details_themp;
-        console.log("details");
-        console.log(this.details);
-        this.api.Fetch_FilterProductDetail_SpecificationGet(this.Lang, this.UserName, this.them.selectedRowID.toString()).subscribe(data => {
+      this.details = this.service.details_themp;
+      console.log("details");
+      console.log(this.details);
+      this.api.Fetch_FilterProductDetail_SpecificationGet(this.Lang, this.UserName, this.them.selectedRowID.toString()).subscribe(data => {
 
-          this.ProductDetailSpecification = data;
+        this.ProductDetailSpecification = data;
 
-          for (let item of this.ProductDetailSpecification) {
-            var dd = this.details.find(a => a.ParamSearch == item.GroupTypeName);
-            if (dd != undefined) {
-              this.details.find(a => a.ParamSearch == item.GroupTypeName).PeropertyItems.push({Text:item.Title,ID:item.ID})
-            }
-
+        for (let item of this.ProductDetailSpecification) {
+          var dd = this.details.find(a => a.ParamSearch == item.GroupTypeName);
+          if (dd != undefined) {
+            this.details.find(a => a.ParamSearch == item.GroupTypeName).PeropertyItems.push({ Text: item.Title, ID: item.ID })
           }
-          console.log("details_themp");
-          console.log(this.service.details_themp);
-          this.them.loading = false;
-        });
 
-        this.them.modal_open_new = true;
-
-
+        }
+        console.log("details_themp");
+        console.log(this.service.details_themp);
+        this.them.loading = false;
       });
-    
+
+      this.them.modal_open_new = true;
+
+
+    });
+
 
   }
 
 
-OpenNew(){
-  this.ResetDefaultValue();
-  this.them.modal_open_new=!this.them.modal_open_new;
-}
+  OpenNew() {
+    this.ResetDefaultValue();
+    this.them.modal_open_new = !this.them.modal_open_new;
+  }
 
   private ResetDefaultValue() {
     this.ProductDetailSpecification = [];
@@ -374,19 +374,19 @@ OpenNew(){
 
 
   onFindSpecification(ParamSearch: string, value: string) {
-    
-   
+
+
     if (this.oldParamSearch != '') {
       document.getElementById(this.oldParamSearch).style.display = "none";
     }
     document.getElementById(ParamSearch).style.display = "block";
-    var list=this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils;
+    var list = this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils;
 
     if (list.length <= 1) {
 
-      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils=[];
-      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils=this.service.Specification.filter(a => a.GroupTypeName_Fa == ParamSearch)
-     }
+      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils = [];
+      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils = this.service.Specification.filter(a => a.GroupTypeName_Fa == ParamSearch)
+    }
 
     console.log(this.details);
     var bb = this.service.details_themp.find(a => a.ParamSearch == ParamSearch);
@@ -398,18 +398,18 @@ OpenNew(){
 
   }
   onFindSpecificationclick(ParamSearch: string) {
-    
-     if (this.oldParamSearch != '') {
+
+    if (this.oldParamSearch != '') {
       document.getElementById(this.oldParamSearch).style.display = "none";
-     }
+    }
     document.getElementById(ParamSearch).style.display = "block";
-    var list=this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils;
-    this.service.details_themp.find(a => a.ParamSearch == ParamSearch).Specification='';
+    var list = this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils;
+    this.service.details_themp.find(a => a.ParamSearch == ParamSearch).Specification = '';
     if (list.length <= 1) {
 
-      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils=[];
-      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils=this.service.Specification.filter(a => a.GroupTypeName_Fa == ParamSearch)
-     }
+      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils = [];
+      this.service.details_themp.find(a => a.ParamSearch == ParamSearch).listDeatils = this.service.Specification.filter(a => a.GroupTypeName_Fa == ParamSearch)
+    }
 
     this.oldParamSearch = ParamSearch;
 
@@ -417,46 +417,44 @@ OpenNew(){
   onSelectSpecification(ID: number, Title: string, ParamSearch: string) {
 
     //document.getElementById(ParamSearch).style.display = "none";
-    var count=this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.filter(a=>a.ID==ID).length
-    if(count==0)
-    {
+    var count = this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.filter(a => a.ID == ID).length
+    if (count == 0) {
       this.oldParamSearch = ParamSearch;
       this.details.find(a => a.ParamSearch == ParamSearch).Specification = Title;
       this.details.find(a => a.ParamSearch == ParamSearch).ID = ID;
-      this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.push({Text:Title.toString(),ID:ID})
+      this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.push({ Text: Title.toString(), ID: ID })
     }
-    
+
   }
-  RemoveItems(ID: number,ParamSearch: string){
-    this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems=this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.filter(a=>a.ID!=ID)
+  RemoveItems(ID: number, ParamSearch: string) {
+    this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems = this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.filter(a => a.ID != ID)
   }
   //---------------------SAVE IMAGE--------------------------------------
 
-   
+
   fileProgressInsert(fileInput: any) {
 
-    
-    
-    
-    this.fileData = <File>fileInput[0];
-    var size=5024;
+
+
+
+    this.fileData[0] = <File>fileInput[0];
+    var size = 5024;
     const formData = new FormData();
     ;
-    if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg' || this.fileData.type.toLowerCase() == 'video/mp4') {
-      if(this.fileData.type.toLowerCase() == 'video/mp4')
-      {
-        size=50000;
-       
-      }
-      if (this.them.CheckImageSize(this.fileData,size)) {
+    if (this.fileData[0].type.toLowerCase() == 'image/jpg' || this.fileData[0].type.toLowerCase() == 'image/jpeg' || this.fileData[0].type.toLowerCase() == 'video/mp4') {
+      if (this.fileData[0].type.toLowerCase() == 'video/mp4') {
+        size = 50000;
 
-        
+      }
+      if (this.them.CheckImageSize(this.fileData[0], size)) {
+
+
         formData.append('FolderName', "\\Product\\" + this.them.CompanyID + "\\");
         formData.append('path', "/Product/" + this.them.CompanyID + "/");
-        formData.append('file', this.fileData);
+        formData.append('file', this.fileData[0]);
         this.them.loading = true;
         this.api.FileUploader(formData).subscribe(data => {
-          
+
           var body = data;
           this.ProductInsert.ImageUrl = body.toString();
           this.ImageInsert = this.configUrlBasicImage + body.toString();
@@ -490,7 +488,7 @@ OpenNew(){
 
     // separate out the mime component
     //var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    var mimeString='image/jpg'
+    var mimeString = 'image/jpg'
     // write the bytes of the string to a typed array
     var ia = new Uint8Array(byteString.length);
     for (var i = 0; i < byteString.length; i++) {
@@ -525,52 +523,58 @@ OpenNew(){
   }
   fileProgressGallery(fileInput: any) {
 
-    this.fileData = <File>fileInput[0];
-    var size=5024;
-    const formData = new FormData();
-    if (this.fileData.type.toLowerCase() == 'image/jpg' || this.fileData.type.toLowerCase() == 'image/jpeg'  || this.fileData.type.toLowerCase() == 'video/mp4') {
-      if(this.fileData.type.toLowerCase() == 'video/mp4')
-      {
-        size=50000;
-      }
-      if (this.them.CheckImageSize(this.fileData,size)) {
+    /*this.fileData = <File>fileInput[0];*/
+    this.fileData = [];
+    this.fileData.push(<File>fileInput);
+
+    for (let i = 0; i <= this.fileData.length; i++) {
+      let file = <File>fileInput[i]
+      var size = 5024;
+      const formData = new FormData();
+      if (file.type.toLowerCase() == 'image/jpg' || file.type.toLowerCase() == 'image/jpeg' || file.type.toLowerCase() == 'video/mp4') {
+        if (file.type.toLowerCase() == 'video/mp4') {
+          size = 50000;
+        }
+        if (this.them.CheckImageSize(file, size)) {
 
 
-        formData.append('FolderName', "\\Product\\" + this.them.CompanyID + "\\");
-        formData.append('path', "/Product/" + this.them.CompanyID + "/");
-        formData.append('file', this.fileData);
-        this.api.FileUploader(formData).subscribe(data => {
+          formData.append('FolderName', "\\Product\\" + this.them.CompanyID + "\\");
+          formData.append('path', "/Product/" + this.them.CompanyID + "/");
+          formData.append('file', file);
+          this.api.FileUploader(formData).subscribe(data => {
 
-          var body = data;
-          //this.formControlsInsert.ImageID.patchValue(body);
-          this.ImageUpdate = this.configUrlBasicImage + body.toString();
+            var body = data;
+            //this.formControlsInsert.ImageID.patchValue(body);
+            this.ImageUpdate = this.configUrlBasicImage + body.toString();
 
-          //----Insert Image DataBase------------------------------
-          var params = {
-            ProductID: this.them.selectedRowID,
-            Image_Url: body,
-            IsDefault: false,
-            Description: ''
-          }
-          this.service.InsertImage(params, this.them.selectedRowID.toString());
+            //----Insert Image DataBase------------------------------
+            var params = {
+              ProductID: this.them.selectedRowID,
+              Image_Url: body,
+              IsDefault: false,
+              Description: ''
+            }
+            this.service.InsertImage(params, this.them.selectedRowID.toString());
 
 
-        })
-      }
-    }
-    else {
-      if (this.Lang.toLowerCase().includes('fa')) {
-        this.them.AlertLis.Title = 'خطا'
-        this.them.AlertLis.Body = 'فرمت قابل قبول jpg'
+          })
+        }
       }
       else {
-        this.them.AlertLis.Title = 'Error'
-        this.them.AlertLis.Body = 'Acceptable jpg format'
-      }
+        if (this.Lang.toLowerCase().includes('fa')) {
+          this.them.AlertLis.Title = 'خطا'
+          this.them.AlertLis.Body = 'فرمت قابل قبول jpg'
+        }
+        else {
+          this.them.AlertLis.Title = 'Error'
+          this.them.AlertLis.Body = 'Acceptable jpg format'
+        }
 
-      this.them.SeupAlert(this.them.AlertLis, 'alert-warning');
-      this.them.ShowAlert('alert-warning');
+        this.them.SeupAlert(this.them.AlertLis, 'alert-warning');
+        this.them.ShowAlert('alert-warning');
+      }
     }
+
   }
   DeleteImage(ID: string) {
     this.service.DeleteImage(this.UserName, ID, this.them.selectedRowID.toString());
@@ -628,62 +632,61 @@ OpenNew(){
         ParamName: item.GroupTypeName,
         ID: null,
         Specification: '',
-        PeropertyItems:[],
-        Specification_new:''
+        PeropertyItems: [],
+        Specification_new: ''
       }
       this.service.details_themp.push(b);
 
     }
     this.details = this.service.details_themp;
   }
-  onEditPrice(Price:Number,ID:Number){
+  onEditPrice(Price: Number, ID: Number) {
     var params = {
       ID: ID,
       PriceSales: Price
-      
+
     }
     this.service.Update(params);
   }
   Title = 'World';
-  toggleWithGreeting(popover,  title: string) {
+  toggleWithGreeting(popover, title: string) {
     debugger
-    this.Title=title
+    this.Title = title
     if (popover.isOpen()) {
       popover.close();
     } else {
-      popover.open({title});
+      popover.open({ title });
     }
   }
-  SaveNewSpecification(popover,ParamSearch,NewSpecification){
+  SaveNewSpecification(popover, ParamSearch, NewSpecification) {
     debugger;
-    if(this.details.find(a => a.ParamSearch == ParamSearch).listDeatils.filter(a=>a.Title==NewSpecification).length==0)
-    {
- var  param= {
-      GroupType: ParamSearch,
-      Title: NewSpecification,
-      ID: 0,
-      Active: true,
-      Show: true,
-      CreateDate: '',
-      UpdateDate: '',
-      LogUser: '',
-      IsDefault: true,
-      GroupTypeName_Fa:ParamSearch,
-      GroupTypeName_En: ParamSearch,
-      CompanyID :this.them.CompanyID,
-    
+    if (this.details.find(a => a.ParamSearch == ParamSearch).listDeatils.filter(a => a.Title == NewSpecification).length == 0) {
+      var param = {
+        GroupType: ParamSearch,
+        Title: NewSpecification,
+        ID: 0,
+        Active: true,
+        Show: true,
+        CreateDate: '',
+        UpdateDate: '',
+        LogUser: '',
+        IsDefault: true,
+        GroupTypeName_Fa: ParamSearch,
+        GroupTypeName_En: ParamSearch,
+        CompanyID: this.them.CompanyID,
+
+      }
+      this.details.find(a => a.ParamSearch == ParamSearch).listDeatils.push(param);
+      this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.push({ Text: NewSpecification, ID: null })
     }
-    this.details.find(a => a.ParamSearch == ParamSearch).listDeatils.push(param);
-    this.details.find(a => a.ParamSearch == ParamSearch).PeropertyItems.push({Text:NewSpecification,ID:null})
-  }
-      
+
     if (popover.isOpen()) {
       popover.close();
-    } 
-    
-    
+    }
+
+
   }
-    
+
 }
 
 

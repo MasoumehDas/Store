@@ -229,7 +229,7 @@
             <div class="separator clear-left">
 
               <p class="btn-add">
-                <button class="btn_offer" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" (click)="onSelectProductOrder(item.ID, item.ProductGroupID ,item.ProductGroup_Title,11)" *ngIf="item.IsAvailable==true"><i class="fa fa-shopping-cart"></i> {{'Add' | translate}}</button>
+                <button class="btn_offer" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" (click)="onSelectProductOrder(item.ID)" *ngIf="item.IsAvailable==true"><i class="fa fa-shopping-cart"></i> {{'Add' | translate}}</button>
                 <button class="btn_offer" disabled="disabled" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}"  *ngIf="item.IsAvailable==false"> {{'NotAvailable' | translate}}</button>
               </p>
               <p >

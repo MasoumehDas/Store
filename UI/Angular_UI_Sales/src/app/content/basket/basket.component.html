@@ -1,0 +1,136 @@
+<!--سبد خرید-->
+
+  <div class="container">
+    <div class="card m-5 bg-secondary">
+      <h5 class="card-header text-white">
+        <span style="float:right">
+          <i class="fa fa-shopping-basket"></i> {{'Menu.ShoppingBasket' | translate}}
+        </span>
+
+      </h5>
+
+      <div class="card-body">
+        <div class="respons">
+          <table class="table table-bordered table-secondary">
+            <thead class="thead-light">
+
+              <tr>
+                <th scope="col">{{'ProductName' | translate}}</th>
+                <th scope="col">{{'Count' | translate}}</th>
+                <th scope="col">{{'UnitPrice' | translate}}</th>
+                <th scope="col">{{'Total' | translate}}</th>
+                <th scope="col">{{'Discount' | translate}}</th>
+                <th scope="col">{{'Panel.Delete' | translate}}</th>
+              </tr>
+
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let item of productservice.Order.OrderDetails" class="respons-basket">
+                <td>{{item.ProducName}}</td>
+                <td>
+                  <input type="number" min="1" max="{{item.AvalaibleCount}}" (change)="AvalaibleCount()" readonly [(ngModel)]="item.ShoppingCount" [ngModelOptions]="{standalone: true}" *ngIf="item.AvalaibleCount>1" />
+                  <span *ngIf="item.AvalaibleCount==1">{{item.ShoppingCount}}</span>
+                </td>
+                <td>{{them.parseNumber(item.UnitPrice)}}</td>
+                <td>{{them.parseNumber(item.UnitPrice*item.ShoppingCount)}}</td>
+                <td>{{them.parseNumber(item.TotalDiscount)}}</td>
+                <td><button class="btn text-danger" ngbTooltip="{{'Panel.Delete' | translate}}" (click)="DeleteBasket(item.ProductID)"><i class="fa fa-trash"></i></button></td>
+              </tr>
+              <tr class="text-danger">
+
+                <td colspan="4">
+                  <span style="float:left">{{'Total' | translate}} : </span>
+
+                </td>
+                <td> {{them.parseNumber(productservice.Total) }}</td>
+                <td>
+
+                  <button class="btn_price" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" style="margin-top:10px;" (click)="onCloseDetails()"> <i class="fa fa-arrow-circle-right"></i>  {{'BackToList' | translate}}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card text-dark mb-3">
+          <div class="card-header">{{'CustomerInformation' | translate}} </div>
+          <div class="card-body">
+            <form [formGroup]="CustomerForm">
+              <div class="form-group row">
+                <label for="Mobile" class="col-sm-3 col-form-label">{{'Panel.Mobile' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="Mobile" placeholder="09126700000" maxlength="14" formControlName="Mobile" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.Mobile.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.Mobile.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="staticCodeMelli" class="col-sm-3 col-form-label">{{'Panel.CodeMelli' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="staticCodeMelli" placeholder="0050000000" maxlength="10" formControlName="CodeMelli" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.CodeMelli.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.CodeMelli.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="FullName" class="col-sm-3 col-form-label"> {{'FullName' | translate}}<samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="FullName" formControlName="FullName" maxlength="50" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.FullName.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.FullName.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="City" class="col-sm-3 col-form-label"> {{'Panel.City' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="City" formControlName="City" maxlength="50" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.City.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.City.errors" class="error-red">{{'Panel.required' | translate}}</samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="Address" class="col-sm-3 col-form-label"> {{'Panel.Address' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="Address" formControlName="Address" maxlength="200" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.Address.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.Address.errors" class="error-red">{{'Panel.required' | translate}} </samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="Email" class="col-sm-3 col-form-label"> {{'Panel.Email' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="Email" formControlName="Email" maxlength="200" [ngClass]="{ 'has-error': isSubmitted && formControlsCustomer.Email.errors }" />
+                  <samp *ngIf="isSubmitted && formControlsCustomer.Email.errors" class="error-red">{{'Panel.required' | translate}} </samp>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="Description" class="col-sm-3 col-form-label"> {{'Panel.Description' | translate}}</label>
+                <div class="col-sm-9">
+                  <textarea class="form-control" id="Description" placeholder="{{'Panel.Description' | translate}}" formControlName="Description" rows="3" maxlength="200"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="Description" class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-9">
+                  <div class="custom-control custom-checkbox checkbox-lg">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-2" formControlName="Confirm">
+                    <label class="custom-control-label" for="checkbox-2">  {{'ConfirmRule' | translate}} <samp style="font-size:11px">({{'Panel.required' | translate}})</samp></label>
+                  </div>
+                  <samp *ngIf="isSubmitted && formControlsCustomer.Confirm.errors" class="error-red">{{'Panel.required' | translate}} </samp>
+                </div>
+
+
+              </div>
+              <div>
+                <span style="float:left;">
+                  <button class="btn_price" [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}" (click)="SaveOrder()">{{'SubmitAndPayment' | translate}}</button>
+                </span>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--PageGenerator_3--->
+    <div id="PageGenerator_3">
+
+    </div>
+  </div>
+

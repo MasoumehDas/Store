@@ -150,7 +150,7 @@ export class ProductDetailsComponent implements OnInit {
 
     if(this.page!='home')
     {
-      this.router.navigate(['/search-result'],
+      this.router.navigate(['/basket'],
 
       {
         state: {

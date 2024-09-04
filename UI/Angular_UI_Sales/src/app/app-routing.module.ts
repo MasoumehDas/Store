@@ -16,6 +16,7 @@ import { ContractShoppingComponent } from './content/contract-shopping/contract-
 import { MyPurchasesComponent } from './content/my-purchases/my-purchases.component';
 import { PagesComponent } from './content/pages/pages.component';
 import { ProductDetailsComponent } from './content/product-details/product-details.component';
+import { BasketComponent } from './content/basket/basket.component';
 
 const routes: Routes = [
 
@@ -35,6 +36,8 @@ const routes: Routes = [
       { path: 'p/:id/:page', component: ProductDetailsComponent },
       { path: 'p/:id/:page/:y', component: ProductDetailsComponent },
       { path: 'confirm-PWG', component: ConfirmBankPWGComponent },
+      { path: 'basket', component: BasketComponent },
+      
     ],
   },
   { path: '404', component: NotFoundComponent },

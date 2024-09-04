@@ -24,6 +24,7 @@ import { Company } from '../modules/Company.module';
 import { Paggin } from '../../shared/modules/Product.module';
 import { Title } from '@angular/platform-browser'
 import { ProductUserComment } from '../modules/ProductUserComment.module';
+import Swal from 'sweetalert2';
 
 
 
@@ -902,4 +903,77 @@ GetProducGroup(){
     
     
   }
+
+  public Total:Number;
+  public TotalDiscount: Number;
+  async onSelectProductOrder(ProductID: Number) {
+
+    this.configService.Fetch_FilterProductID(this.Lang, this.UserName, ProductID.toString()).subscribe(data => {
+
+
+
+      let count = this.Order.OrderDetails.filter(a => a.ProductID == ProductID).length;
+
+
+      let OrderDetail = {
+        ProductID: data[0].ID,
+        ProducName: data[0].Name,
+        ShoppingCount: Number(count + 1),
+        AvalaibleCount: Number(data[0].AvailableCount),
+        UnitPrice: data[0].PriceSales,
+        TotalPrice: Number(data[0].PriceSales) * Number(count + 1),
+        TotalDiscount: Number(data[0].DiscountPrice) * Number(count + 1),
+        Total: 0,
+        OrderID: null,
+        CompanyID: this.them.CompanyID
+
+      }
+
+      //const sum = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+
+      if (OrderDetail.AvalaibleCount >= OrderDetail.ShoppingCount) {
+        this.Order.OrderDetails.push(OrderDetail);
+
+        this.Total = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+        this.TotalDiscount = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
+        this.Total = Number(this.Total) - Number(this.TotalDiscount)
+
+        console.log('productservice', this.Order.OrderDetails)
+        //-------------------------------
+        window.scroll({
+          top: 0,
+          behavior: 'smooth'
+        });
+        //----------------------------
+        this.them.TotalShopping = this.Order.OrderDetails.length.toString();
+      }
+      else {
+        if (this.them.Lang == 'fa') {
+          Swal.fire({
+            title: 'خطا!',
+            text: 'موجودی محصول کافی نیست',
+            icon: 'error',
+            confirmButtonText: 'تایید',
+            confirmButtonColor: this.them.ButtonColor,
+          })
+
+        }
+        else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'product inventory is not enough',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: this.them.ButtonColor,
+          })
+        }
+
+
+      }
+    });
+  }
+
+
+
+
 }

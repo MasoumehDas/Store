@@ -151,19 +151,11 @@ namespace ConfirmBank.Controllers
 
             return View();
         }
-        public ActionResult About()
-        {
-            //WSSMS v = new WSSMS();
-            //var a=  v.sendsms2("mpi_09125572091", "7840566", "09126766025", "dffdf", "50002123262933");
-            //var b=  v.sendsms("mpi_09125572091", "7840566", "09126766025", "dffdf", "50002123262933","41");
-
-            return View();
-        }
+       
         private void SendMessage(DataAccess.Customer model, int? CompanyID)
         {
             WSSMS v = new WSSMS();
-            string StorBody = model.FullName + " " + "یک خرید پرداخت شده در سیستم دارد." + Environment.NewLine;
-            StorBody += " شماره مشتری :" + model.Mobile;
+
             try
             {
 
@@ -176,12 +168,15 @@ namespace ConfirmBank.Controllers
                     string password = setting.Where(a => a.SettingName == "Password").Select(a => a.SettingValue).FirstOrDefault();
                     string Body = setting.Where(a => a.SettingName == "SMSMessage").Select(a => a.SettingValue).FirstOrDefault();
                     string SMSNumber = setting.Where(a => a.SettingName == "SMSNumber").Select(a => a.SettingValue).FirstOrDefault();
+                    string StorMessage = setting.Where(a => a.SettingName == "StorMessage").Select(a => a.SettingValue).FirstOrDefault();
                     string api = setting.Where(a => a.SettingName == "api").Select(a => a.SettingValue).FirstOrDefault();
-                    string Mobile = setting.Where(a => a.SettingName == "SMSReciveNumber").Select(a => a.SettingValue).FirstOrDefault();
-                    var result = v.sendsms(username, password, model.Mobile, Body, SMSNumber, api);
+                    string SMSReciveNumber = setting.Where(a => a.SettingName == "SMSReciveNumber").Select(a => a.SettingValue).FirstOrDefault();
 
-                    var c = v.sendsms(username, password, Mobile, StorBody, SMSNumber, api);
-                    log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " result :" + result.First().ToString());
+                    var result1 = v.sendsms(username, password, model.Mobile, Body, SMSNumber, api);
+
+                    var result2 = v.sendsms(username, password, SMSReciveNumber, StorMessage + " " + model.FullName, SMSNumber, api);
+                    log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " result1 :" + result1.First().ToString());
+                    log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " result2 :" + result2.First().ToString());
                 }
 
 
@@ -193,14 +188,17 @@ namespace ConfirmBank.Controllers
                 log.WriteErrorLog($"SendSMS  CompanyID:" + CompanyID.ToString() + " Error" + ex.Message);
             }
 
-
         }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            
 
             WSSMS v = new WSSMS();
-
+            //email.SendMail(Body, "188.34.147.87", "admin@nikoooo.ir", "Md9126766025", "dastani_m@yahoo.com","", "Test");
+            string StorBody = "" + " " + "یک خرید پرداخت شده در سیستم دارد." + Environment.NewLine;
+            StorBody += " شماره مشتری :" + "";
             var setting = db.CompanySettings.Where(a => a.CompanyID == 1 && a.Category == "SMS").ToList();
 
             if (setting != null)
@@ -211,10 +209,21 @@ namespace ConfirmBank.Controllers
                 string SMSNumber = setting.Where(a => a.SettingName == "SMSNumber").Select(a => a.SettingValue).FirstOrDefault();
                 string api = setting.Where(a => a.SettingName == "api").Select(a => a.SettingValue).FirstOrDefault();
                 string Mobile = setting.Where(a => a.SettingName == "SMSReciveNumber").Select(a => a.SettingValue).FirstOrDefault();
-                var result = v.sendsms(username, password, Mobile, Body, SMSNumber, api);
-
+                string StorMessage = setting.Where(a => a.SettingName == "StorMessage").Select(a => a.SettingValue).FirstOrDefault();
+                var result1 = v.sendsms(username, password, Mobile, StorMessage, SMSNumber, api);
+                var result2 = v.sendsms(username, password, Mobile, StorMessage, SMSNumber, api);
+                log.WriteErrorLog($" result1 :" + result1.First().ToString());
+                log.WriteErrorLog($" result2 :" + result2.First().ToString());
 
             }
+
+            return View();
+        }
+        public ActionResult About()
+        {
+            //WSSMS v = new WSSMS();
+            //var a=  v.sendsms2("mpi_09125572091", "7840566", "09126766025", "dffdf", "50002123262933");
+            //var b=  v.sendsms("mpi_09125572091", "7840566", "09126766025", "dffdf", "50002123262933","41");
 
             return View();
         }

@@ -92,25 +92,12 @@ export class HomePageComponent implements OnInit {
       )
       .subscribe();
   }
-  onSelectProductOrder(ProductID: Number, productGroup: Number, ProductGroupName: string, basket: Number) {
+  onSelectProductOrder(ProductID: Number) {
+
+    this.productService.onSelectProductOrder(Number(ProductID)).then(a => {
+      this.router.navigate(['/basket']);
+    });
     
-    this.router.navigate(['/search-result'],
-
-      {
-        state: {
-          DATA: this.productService.ParamNameString(),
-          Param1: this.productService.Param1,
-          Param2: this.productService.Param2,
-          Param3: this.productService.Param3,
-          Param4: this.productService.Param4,
-          Param5: this.productService.Param5,
-          id: ProductID,
-          basket: basket,
-          ProductGroup: productGroup,
-          ProductGroupName: ProductGroupName
-        },
-
-      });
 
   }
   public onProductDetail(id: string,type:string):string {

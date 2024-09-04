@@ -33,7 +33,7 @@ export class ProductListLargeComponent implements OnInit {
   onSelectProductOrder(ProductID: Number, productGroup: Number, ProductGroupName: string, basket: Number) {
 
     if (this.page != 'home') {
-      this.router.navigate(['/search-result'],
+      this.router.navigate(['/basket'],
 
         {
           state: {

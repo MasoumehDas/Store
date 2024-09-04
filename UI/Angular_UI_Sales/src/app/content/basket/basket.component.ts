@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { ProductService } from '../../shared/service/product.service';
+
+
 import { ConfigService } from '../../shared/service/api.service';
 import { Product } from '../../shared/modules/Product.module';
 import { them } from '../../shared/service/themplate.service';
@@ -8,6 +9,7 @@ import Swal from 'sweetalert2'
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ProductService } from '../../shared/service/product.service';
 
 
 @Component({
@@ -45,14 +47,14 @@ export class BasketComponent implements OnInit {
   RequestResponse: PaymentRequestResponseModel;
 
   constructor(private activatedRoute: ActivatedRoute,
-    public productservice: ProductService,
+    public productService: ProductService,
     private configService: ConfigService,
     public them: them,
     public router: Router,
     private formBuilder: FormBuilder,
     private translate: TranslateService
   ) {
-    let data = this.productservice.Order.OrderDetails;
+    let data = this.productService.Order.OrderDetails;
     console.log('data', data)
     
   }
@@ -61,11 +63,15 @@ export class BasketComponent implements OnInit {
 
     this.UserName = '';
 
-    this.Lang = this.productservice.Lang;
-   
+    this.Lang = this.productService.Lang;
+
+    console.log('retrievedObject__: ', this.productService.Order.OrderDetails);
+    this.productService.Order.OrderDetails = JSON.parse(localStorage.getItem('basket'));
+
+    console.log('retrievedObject: ', JSON.parse(localStorage.getItem('basket')));
     
     //--------------صفحه سبد خرید
-    this.productservice.onPageGroupSelect(3);
+    this.productService.onPageGroupSelect(3);
 
 
     this.CustomerForm = this.formBuilder.group({
@@ -109,7 +115,7 @@ export class BasketComponent implements OnInit {
 
 
 
-      let count = this.productservice.Order.OrderDetails.filter(a => a.ProductID == ProductID).length;
+      let count = this.productService.Order.OrderDetails.filter(a => a.ProductID == ProductID).length;
 
 
       let OrderDetail = {
@@ -126,13 +132,13 @@ export class BasketComponent implements OnInit {
 
       }
 
-      //const sum = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+      //const sum = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
 
       if (OrderDetail.AvalaibleCount >= OrderDetail.ShoppingCount) {
-        this.productservice.Order.OrderDetails.push(OrderDetail);
+        this.productService.Order.OrderDetails.push(OrderDetail);
 
-        this.Total = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
-        this.TotalDiscount = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
+        this.Total = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+        this.TotalDiscount = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
         this.Total = Number(this.Total) - Number(this.TotalDiscount)
         //-------------------------------
         window.scroll({
@@ -140,7 +146,7 @@ export class BasketComponent implements OnInit {
           behavior: 'smooth'
         });
         //----------------------------
-        this.them.TotalShopping = this.productservice.Order.OrderDetails.length.toString();
+        this.them.TotalShopping = this.productService.Order.OrderDetails.length.toString();
       }
       else {
         if (this.them.Lang == 'fa') {
@@ -196,12 +202,12 @@ export class BasketComponent implements OnInit {
     //}
   }
   DeleteBasket(ProductID: Number) {
-    this.productservice.Order.OrderDetails = this.productservice.Order.OrderDetails.filter(a => a.ProductID != ProductID);
-    this.Total = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
-    this.them.TotalShopping = this.productservice.Order.OrderDetails.length.toString();
+    this.productService.Order.OrderDetails = this.productService.Order.OrderDetails.filter(a => a.ProductID != ProductID);
+    this.Total = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+    this.them.TotalShopping = this.productService.Order.OrderDetails.length.toString();
   }
   AvalaibleCount() {
-    this.productservice.Order.OrderDetails.forEach(a => {
+    this.productService.Order.OrderDetails.forEach(a => {
       if (a.AvalaibleCount < a.ShoppingCount) {
         a.ShoppingCount = a.AvalaibleCount;
         if (this.them.Lang == 'fa') {
@@ -227,8 +233,8 @@ export class BasketComponent implements OnInit {
       }
 
     });
-    this.Total = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
-    this.TotalDiscount = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
+    this.Total = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+    this.TotalDiscount = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
     this.Total = Number(this.Total) - Number(this.TotalDiscount)
   }
   onSearchCustomer(Mobile: string, Email: string, CodeMelli: string) {
@@ -253,18 +259,18 @@ export class BasketComponent implements OnInit {
     }
     else {
       this.them.loading = true;
-      this.productservice.Order.Address = this.CustomerForm.controls.Address.value;
-      this.productservice.Order.City = this.CustomerForm.controls.City.value;
-      this.productservice.Order.CustomerID = this.CustomerForm.controls.CustomerID.value;
-      this.productservice.Order.FullName = this.CustomerForm.controls.FullName.value;
-      this.productservice.Order.Description = this.CustomerForm.controls.Description.value;
-      this.productservice.Order.Email = this.CustomerForm.controls.Email.value;
-      this.productservice.Order.Mobile = this.CustomerForm.controls.Mobile.value;
-      this.productservice.Order.CodeMelli = this.CustomerForm.controls.CodeMelli.value;
-      this.productservice.Order.CompanyID = this.them.CompanyID;
-      this.productservice.Order.Total = this.Total;
-      this.productservice.Order.TotalDiscount = this.TotalDiscount;
-      this.configService.InsertOrder(this.productservice.Order).subscribe(data => {
+      this.productService.Order.Address = this.CustomerForm.controls.Address.value;
+      this.productService.Order.City = this.CustomerForm.controls.City.value;
+      this.productService.Order.CustomerID = this.CustomerForm.controls.CustomerID.value;
+      this.productService.Order.FullName = this.CustomerForm.controls.FullName.value;
+      this.productService.Order.Description = this.CustomerForm.controls.Description.value;
+      this.productService.Order.Email = this.CustomerForm.controls.Email.value;
+      this.productService.Order.Mobile = this.CustomerForm.controls.Mobile.value;
+      this.productService.Order.CodeMelli = this.CustomerForm.controls.CodeMelli.value;
+      this.productService.Order.CompanyID = this.them.CompanyID;
+      this.productService.Order.Total = this.Total;
+      this.productService.Order.TotalDiscount = this.TotalDiscount;
+      this.configService.InsertOrder(this.productService.Order).subscribe(data => {
         this.them.loading = false;
         //------------درگاه نداشته باشد.
         if (data.status == 10) {

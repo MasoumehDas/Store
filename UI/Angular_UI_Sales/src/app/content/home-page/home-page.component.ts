@@ -95,6 +95,7 @@ export class HomePageComponent implements OnInit {
   onSelectProductOrder(ProductID: Number) {
 
     this.productService.onSelectProductOrder(Number(ProductID)).then(a => {
+      localStorage.setItem("basket", JSON.stringify(this.productService.Order.OrderDetails));
       this.router.navigate(['/basket']);
     });
     

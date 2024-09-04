@@ -26,7 +26,7 @@
             </thead>
             <tbody>
 
-              <tr *ngFor="let item of productservice.Order.OrderDetails" class="respons-basket">
+              <tr *ngFor="let item of productService.Order.OrderDetails" class="respons-basket">
                 <td>{{item.ProducName}}</td>
                 <td>
                   <input type="number" min="1" max="{{item.AvalaibleCount}}" (change)="AvalaibleCount()" readonly [(ngModel)]="item.ShoppingCount" [ngModelOptions]="{standalone: true}" *ngIf="item.AvalaibleCount>1" />
@@ -43,7 +43,7 @@
                   <span style="float:left">{{'Total' | translate}} : </span>
 
                 </td>
-                <td> {{them.parseNumber(productservice.Total) }}</td>
+                <td> {{them.parseNumber(productService.Total) }}</td>
                 <td>
 
                   <button class="btn_price" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" style="margin-top:10px;" (click)="onCloseDetails()"> <i class="fa fa-arrow-circle-right"></i>  {{'BackToList' | translate}}</button>

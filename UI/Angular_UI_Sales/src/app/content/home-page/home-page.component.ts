@@ -92,10 +92,11 @@ export class HomePageComponent implements OnInit {
       )
       .subscribe();
   }
-  onSelectProductOrder(ProductID: Number) {
+ async onSelectProductOrder(ProductID: Number) {
 
-    this.productService.onSelectProductOrder(Number(ProductID)).then(a => {
-      localStorage.setItem("basket", JSON.stringify(this.productService.Order.OrderDetails));
+    
+   await this.productService.onSelectProductOrder(Number(ProductID)).then(a => {
+      
       this.router.navigate(['/basket']);
     });
     

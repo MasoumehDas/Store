@@ -30,39 +30,15 @@ export class ProductListLargeComponent implements OnInit {
 
   }
   //------------Add to basket-----------------------------------------------
-  onSelectProductOrder(ProductID: Number, productGroup: Number, ProductGroupName: string, basket: Number) {
+  async onSelectProductOrder(ProductID: Number) {
 
-    if (this.page != 'home') {
-      this.router.navigate(['/basket'],
 
-        {
-          state: {
-            DATA: this.productService.ParamNameString(),
-            Param1: this.productService.Param1,
-            Param2: this.productService.Param2,
-            Param3: this.productService.Param3,
-            Param4: this.productService.Param4,
-            Param5: this.productService.Param5,
-            id: ProductID,
-            basket: basket,
-            ProductGroup: productGroup,
-            ProductGroupName: ProductGroupName,
+    await this.productService.onSelectProductOrder(Number(ProductID)).then(a => {
 
-          },
+      this.router.navigate(['/basket']);
+    });
 
-        });
 
-    }
-    else {
-      let gg = this.them.ScrollY;
-      setTimeout(function () {
-        window.scroll({
-          top: gg
-
-        });
-      }, 1000);
-      window.history.back();
-    }
   }
   onSelectCompar() {
     this.ComparisonProduct = this.products.filter(a => a.Comparison == true);

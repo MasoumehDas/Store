@@ -907,45 +907,65 @@ GetProducGroup(){
   public Total:Number;
   public TotalDiscount: Number;
   async onSelectProductOrder(ProductID: Number) {
+    this.them.loading = true;
+   await this.configService.Fetch_FilterProductID(this.Lang, this.UserName, ProductID.toString()).subscribe(data => {
+     console.log('onSelectProductOrder 2: ', data);
+     let basket = JSON.parse(localStorage.getItem('basket'));
+     if (basket != null) {
 
-    this.configService.Fetch_FilterProductID(this.Lang, this.UserName, ProductID.toString()).subscribe(data => {
+       for (let i = 0; i < basket.OrderDetails.length; i++) {
+         if (basket.OrderDetails[i].ProductID == ProductID) {
+           Swal.fire({
+             title: 'خطا!',
+             text: 'این محصول قبلا به سفارشات شما اضافه شده است.',
+             icon: 'error',
+             confirmButtonText: 'تایید',
+             confirmButtonColor: this.them.ButtonColor,
+           })
+           return;
+         }
+         this.Order.OrderDetails.push(basket.OrderDetails[i]);
+       }
 
+       localStorage.clear();
+     }
 
-
-      let count = this.Order.OrderDetails.filter(a => a.ProductID == ProductID).length;
-
-
+      
       let OrderDetail = {
         ProductID: data[0].ID,
         ProducName: data[0].Name,
-        ShoppingCount: Number(count + 1),
+        ShoppingCount: 1,
         AvalaibleCount: Number(data[0].AvailableCount),
         UnitPrice: data[0].PriceSales,
-        TotalPrice: Number(data[0].PriceSales) * Number(count + 1),
-        TotalDiscount: Number(data[0].DiscountPrice) * Number(count + 1),
-        Total: 0,
+        TotalPrice: Number(data[0].PriceSales),
+        TotalDiscount: Number(data[0].DiscountPrice) ,
+        Total: Number(data[0].PriceSales) - Number(data[0].DiscountPrice),
         OrderID: null,
         CompanyID: this.them.CompanyID
 
       }
 
       //const sum = this.productservice.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
-
+     
       if (OrderDetail.AvalaibleCount >= OrderDetail.ShoppingCount) {
+
+        
+
         this.Order.OrderDetails.push(OrderDetail);
-
-        this.Total = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
-        this.TotalDiscount = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
-        this.Total = Number(this.Total) - Number(this.TotalDiscount)
-
-        console.log('productservice', this.Order.OrderDetails)
+        this.Order.Total = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+        this.Order.TotalDiscount = this.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
+        this.Order.Total = Number(this.Order.Total) - Number(this.Order.TotalDiscount)
+        this.them.loading = false;
+        
+        
+        localStorage.setItem("basket", JSON.stringify(this.Order));
         //-------------------------------
         window.scroll({
           top: 0,
           behavior: 'smooth'
         });
         //----------------------------
-        this.them.TotalShopping = this.Order.OrderDetails.length.toString();
+       
       }
       else {
         if (this.them.Lang == 'fa') {

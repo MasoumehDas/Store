@@ -54,8 +54,6 @@ export class BasketComponent implements OnInit {
     private formBuilder: FormBuilder,
     private translate: TranslateService
   ) {
-    let data = this.productService.Order.OrderDetails;
-    console.log('data', data)
     
   }
 
@@ -63,12 +61,17 @@ export class BasketComponent implements OnInit {
 
     this.UserName = '';
 
-    this.Lang = this.productService.Lang;
-
-    console.log('retrievedObject__: ', this.productService.Order.OrderDetails);
-    this.productService.Order.OrderDetails = JSON.parse(localStorage.getItem('basket'));
-
-    console.log('retrievedObject: ', JSON.parse(localStorage.getItem('basket')));
+    this.Lang = this.productService.Lang
+    setTimeout(() => {
+      let data = JSON.parse(localStorage.getItem('basket'));
+      if (data != null && data != undefined) {
+        this.productService.Order = data;
+        this.them.TotalShopping = this.productService.Order.OrderDetails.length.toString();
+        localStorage.setItem("basketcount", JSON.stringify(this.them.TotalShopping));
+        this.them.loading = false;
+      }
+      
+    }, 2000);
     
     //--------------صفحه سبد خرید
     this.productService.onPageGroupSelect(3);
@@ -92,9 +95,7 @@ export class BasketComponent implements OnInit {
       Description: ['', [Validators.required]],
       ProductID: ['']
     });
-    var element = document.getElementById('Arzan');
-    element.style.backgroundColor = this.them.ButtonColor;
-    element.style.color = this.them.ButtonFontColor
+   
   }//End ngOnInit
 
   scrollPage(scroll: any) {
@@ -201,10 +202,17 @@ export class BasketComponent implements OnInit {
     //  this.SearchProduct(null);
     //}
   }
+ 
   DeleteBasket(ProductID: Number) {
     this.productService.Order.OrderDetails = this.productService.Order.OrderDetails.filter(a => a.ProductID != ProductID);
-    this.Total = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+
+    this.productService.Order.Total = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.UnitPrice) * Number(current.ShoppingCount), 0);
+    this.productService.Order.TotalDiscount = this.productService.Order.OrderDetails.reduce((sum, current) => sum + Number(current.TotalDiscount), 0);
+    this.productService.Order.Total = Number(this.productService.Order.Total) - Number(this.productService.Order.TotalDiscount)
     this.them.TotalShopping = this.productService.Order.OrderDetails.length.toString();
+
+    localStorage.clear();
+    localStorage.setItem("basket", JSON.stringify(this.productService.Order));
   }
   AvalaibleCount() {
     this.productService.Order.OrderDetails.forEach(a => {
@@ -330,10 +338,11 @@ export class BasketComponent implements OnInit {
   }
 
  
-  public onProductDetail(id: Number) {
+  public onProductDetail(id: string, type: string): string {
 
-    this.them.ScrollY = window.scrollY;
-    this.router.navigate(['/p/' + id]);
+    var url = this.productService.RouterProductDetail(id, type, false)
+    return url;
+
 
   }
 }

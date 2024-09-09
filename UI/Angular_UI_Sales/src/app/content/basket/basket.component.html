@@ -11,15 +11,15 @@
 
       <div class="card-body">
         <div class="respons">
-          <table class="table table-bordered table-secondary">
+          <table class="table table-bordered table-secondary" style="text-align:center;font-size:20px;">
             <thead class="thead-light">
 
               <tr>
                 <th scope="col">{{'ProductName' | translate}}</th>
                 <th scope="col">{{'Count' | translate}}</th>
                 <th scope="col">{{'UnitPrice' | translate}}</th>
-                <th scope="col">{{'Total' | translate}}</th>
                 <th scope="col">{{'Discount' | translate}}</th>
+                <th scope="col">{{'Total' | translate}}</th>
                 <th scope="col">{{'Panel.Delete' | translate}}</th>
               </tr>
 
@@ -27,15 +27,16 @@
             <tbody>
 
               <tr *ngFor="let item of productService.Order.OrderDetails" class="respons-basket">
-                <td>{{item.ProducName}}</td>
+                <td><a [href]="onProductDetail(item.ProductID,'W')">{{item.ProducName}}</a></td>
                 <td>
                   <input type="number" min="1" max="{{item.AvalaibleCount}}" (change)="AvalaibleCount()" readonly [(ngModel)]="item.ShoppingCount" [ngModelOptions]="{standalone: true}" *ngIf="item.AvalaibleCount>1" />
                   <span *ngIf="item.AvalaibleCount==1">{{item.ShoppingCount}}</span>
                 </td>
                 <td>{{them.parseNumber(item.UnitPrice)}}</td>
-                <td>{{them.parseNumber(item.UnitPrice*item.ShoppingCount)}}</td>
                 <td>{{them.parseNumber(item.TotalDiscount)}}</td>
-                <td><button class="btn text-danger" ngbTooltip="{{'Panel.Delete' | translate}}" (click)="DeleteBasket(item.ProductID)"><i class="fa fa-trash"></i></button></td>
+                <td>{{them.parseNumber((item.UnitPrice-item.TotalDiscount)*item.ShoppingCount)}}</td>
+                
+                <td><button class="btn text-info" ngbTooltip="{{'Panel.Delete' | translate}}" (click)="DeleteBasket(item.ProductID)"><i class="fa fa-trash"></i></button></td>
               </tr>
               <tr class="text-danger">
 
@@ -43,12 +44,14 @@
                   <span style="float:left">{{'Total' | translate}} : </span>
 
                 </td>
-                <td> {{them.parseNumber(productService.Total) }}</td>
+                
+                <td style="font-size:22px"><strong>{{them.parseNumber(productService.Order.Total) }}</strong> </td>
                 <td>
 
-                  <button class="btn_price" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" style="margin-top:10px;" (click)="onCloseDetails()"> <i class="fa fa-arrow-circle-right"></i>  {{'BackToList' | translate}}</button>
+                  تومان
                 </td>
               </tr>
+             
             </tbody>
           </table>
         </div>

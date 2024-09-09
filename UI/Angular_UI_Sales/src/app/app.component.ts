@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+   
     this.them.loading = false;
     if (this.language == 'fa') {
       document.getElementById('boot_en').setAttribute("disabled", "disabled");
@@ -48,7 +49,8 @@ export class AppComponent implements OnInit {
     document.getElementById('Panel_en').setAttribute("disabled", "disabled");
     document.getElementById('Panel_fa').setAttribute("disabled", "disabled");
 
-    
+    let basketCount = localStorage.getItem('basketCount');
+    this.them.TotalShopping = basketCount;
   }
 
 

@@ -1,66 +1,72 @@
-.product-group{
-  text-decoration: none;color: #787272; text-shadow: 2px 2px #e7e0e0;
+.product-group {
+  text-decoration: none;
+  color: #787272;
+  text-shadow: 2px 2px #e7e0e0;
 }
-.product-group:hover{
-  color: #113d7e;
+
+  .product-group:hover {
+    color: #113d7e;
+  }
+
+.Sold {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
-.Sold{
-    width: 130px;
-    height: 130px;
-    position: absolute;
-    top:5px;
-    left: 5px;
-}
-.Barcode{
+
+.Barcode {
   width: 70px;
   height: 25px;
   position: absolute;
-  top:0px;
-  left:-5px;
+  top: 0px;
+  left: -5px;
   background-color: #fcf805;
   color: #000;
   text-align: center;
 }
+
 @media only screen and (max-width: 768px) {
-  .image-list{
-    width:100%;
+  .image-list {
+    width: 100%;
   }
+
   .product-content .product-image {
     background-color: #fff;
     display: block;
-    
     overflow: hidden;
     position: relative
   }
 }
+
 @media only screen and (min-width: 769px) {
-  .image-list{
-    width:100%;
+  .image-list {
+    width: 100%;
     /* height:300px; */
   }
+
   .product-content .product-image {
     background-color: rgb(248 244 244);
     display: block;
     height: 300px;
-
-    overflow-y:scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
     position: relative
   }
+
   ::-webkit-scrollbar {
     width: 8px;
   }
   /* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #7e92bd;
-  
-}
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #7e92bd;
+  }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background:  #7e92bd;
-  
-}
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #7e92bd;
+  }
 }
 
 .visible {
@@ -152,7 +158,7 @@ option {
 }
 
 @media only screen and (max-width: 768px) {
- 
+
   .card-header {
     font-size: 0.8rem;
   }
@@ -210,10 +216,12 @@ option {
     content: "جمع کل";
     color: #906f25;
   }
+
   .respons-basket td:nth-of-type(5):before {
     content: "تخفیف";
     color: #906f25;
   }
+
   .respons-basket td:nth-of-type(6):before {
     content: "حذف";
     color: #906f25;
@@ -243,10 +251,12 @@ option {
     content: "قیمت واحد";
     color: #906f25;
   }
+
   .respons-purchas td:nth-of-type(6):before {
     content: "تخفیف";
     color: #906f25;
   }
+
   .respons-purchas td:nth-of-type(7):before {
     content: "جمع کل";
     color: #906f25;
@@ -425,7 +435,7 @@ option {
   font-weight: 500;
   color: #ffffff;
   border: unset;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 @media (max-width:1000px) and (min-width:800px) {
@@ -441,7 +451,6 @@ option {
     margin-left: 100px !important;
     margin-top: 10px !important;
   }
-  
 }
 
 @media only screen and (max-width:800px) {
@@ -458,8 +467,6 @@ option {
     margin-left: 0px !important;
     margin-top: 0px !important;
   }
-  
- 
 }
 
 @media only screen and (max-width:1300px) {
@@ -732,7 +739,7 @@ option {
     margin-left: 0
   }
 
-  
+
 
   .product-content .product-deatil {
     border-bottom: 1px solid #dfe5e9;
@@ -1040,6 +1047,7 @@ option {
   border-width: 1px;
   border-color: rgba(0, 0, 0, 0.125);
 }
+
 .product-datils-price {
   bottom: 0px;
   position: absolute;
@@ -1085,31 +1093,30 @@ option {
   }
 
   .btn_price {
-    width: 100px;
+    width: 90px;
     font-size: 12px;
-    margin-right: 10px;
+    margin-right: 5px;
     padding-right: 3px !important;
   }
-  .btn_price i 
-    {
-display: none;
+
+    .btn_price i {
+      display: none;
     }
+
   .btn_offer {
-    width: 100px;
-    font-size: 12px;
+    margin-bottom: 5px;
   }
-  .btn_offer i 
-  {
-display: none;
-  }
-  
-  
+
+    .btn_offer i {
+      display: none;
+    }
 }
 
 
 .card-mr :hover {
   margin-bottom: 25px;
 }
+
 .price-responsive {
   padding: 0px;
   width: 50%;
@@ -1137,20 +1144,25 @@ figure.zoom1 {
     width: 100%;
     height: 100%;
   }
-  .video-details{
-    width: 445px;
-    height: 400px;
-  }
-.btn {
-    border-radius:0px!important;
+
+.video-details {
+  width: 445px;
+  height: 400px;
 }
+
+.btn {
+  border-radius: 0px !important;
+}
+
 .pagination {
   border-radius: 0px !important;
 }
+
 .page-link {
   border-radius: 0px !important;
-  font-size:14px;
+  font-size: 14px;
 }
+
 .sort-color {
   color: #999999;
 }
@@ -1167,25 +1179,29 @@ figure.zoom1 {
   border-bottom: 1px dashed #efefef;
   margin-bottom: 25px;
 }
+
   .media p {
     font-size: 14px;
-    line-height:2;
+    line-height: 2;
   }
-  
-  .media-list img {
+
+.media-list img {
   border-radius: 50%;
   width: 50px;
   height: 50px;
   border: 2px solid #e5e7e8;
   margin-left: 20px;
 }
-.text-muted{
-    float:left;
+
+.text-muted {
+  float: left;
 }
-.discountPrice{
+
+.discountPrice {
   text-decoration: line-through;
   font-size: 14px;
 }
+
 .vc {
   margin-top: 15px;
   background: #c8a627;
@@ -1199,48 +1215,54 @@ figure.zoom1 {
   border-right: 1px dashed #fff;
   border-left: 1px dashed #fff;
 }
-.footer-namad{
+
+.footer-namad {
   background-color: #fcf6f6;
-    width: 130px;
-    border-radius: 10px;
+  width: 130px;
+  border-radius: 10px;
 }
-.description-detail{
-  text-align:justify;
-   color:dimgray;
-   font-size: 14px;
+
+.description-detail {
+  text-align: justify;
+  color: dimgray;
+  font-size: 14px;
 }
-.logo{
+
+.logo {
   width: 60px;
   height: 60px;
   margin-right: 20px;
 }
-.details-title{
+
+.details-title {
   margin-left: 25px;
   color: #b5ae40;
 }
-.sort-icon{
+
+.sort-icon {
   margin-left: 6px;
 }
-.clear-texbox{
+
+.clear-texbox {
   position: relative;
   /* padding: 5px; */
-  right:-35px;
-  color:rgb(192 186 186);
+  right: -35px;
+  color: rgb(192 186 186);
   font-size: 25px;
   cursor: pointer;
-  vertical-align:middle;
+  vertical-align: middle;
   display: none;
-  top :5px;
-  
-  
-}
-.clear-texbox:hover{
-  color:#003399;
+  top: 5px;
 }
 
- .display-flex{
-  display:flex ;
-} 
+  .clear-texbox:hover {
+    color: #003399;
+  }
+
+.display-flex {
+  display: flex;
+}
+
 hr {
   overflow: visible; /* For IE */
   padding: 0;
@@ -1249,67 +1271,65 @@ hr {
   color: #8da3d1;
   text-align: center;
 }
-hr:after {
-  content: "⁜";
-  display: inline-block;
-  position: relative;
-  top: -0.7em;
-  font-size: 1.8em;
-  padding: 0 0.25em;
-   background: white; 
-}
-.whatsup{
-  
- 
-  
+
+  hr:after {
+    content: "⁜";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.8em;
+    padding: 0 0.25em;
+    background: white;
+  }
+
+.whatsup {
   color: #fff;
- 
   display: block;
   font-size: 13px;
- 
   position: fixed;
   bottom: 25px;
   right: 25px;
-  
-  width: 60px;
-  height: 60px;
- 
-  
-
-}
-
-.whatsup img{
   width: 60px;
   height: 60px;
 }
+
+  .whatsup img {
+    width: 60px;
+    height: 60px;
+  }
+
 .tooltip1 {
   position: relative;
   display: inline-block;
-  
 }
 
-.tooltip1 .tooltiptext {
-  visibility: hidden;
-  width: 200px;
-  background-color:rgb(37 211 102);
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 15px ;
-  font-size: 18px;
+  .tooltip1 .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgb(37 211 102);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 15px;
+    font-size: 18px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
 
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
+  .tooltip1:hover .tooltiptext {
+    visibility: visible;
+  }
+
+.seo-tag {
+  width: 100%;
+  padding: 15px;
+  border-top: rgb(160, 158, 158);
+  border-top-width: 1px;
+  border-top-style: solid;
 }
 
-.tooltip1:hover .tooltiptext {
-  visibility: visible;
-}
-.seo-tag{
-  width: 100%;padding: 15px;border-top: rgb(160, 158, 158) ; border-top-width: 1px; border-top-style: solid;
-}
-  .seo-tag samp{
+  .seo-tag samp {
     border: rgb(207, 203, 203);
     border-width: 1px;
     border-style: solid;
@@ -1317,7 +1337,8 @@ hr:after {
     font-size: 12px;
     display: inline-block;
   }
-  .seo-tag h1{
+
+  .seo-tag h1 {
     border: rgb(207, 203, 203);
     border-width: 1px;
     border-style: solid;
@@ -1325,7 +1346,8 @@ hr:after {
     font-size: 12px;
     display: inline-block;
   }
-  .seo-tag h2{
+
+  .seo-tag h2 {
     border: rgb(207, 203, 203);
     border-width: 1px;
     border-style: solid;
@@ -1333,6 +1355,7 @@ hr:after {
     font-size: 12px;
     display: inline-block;
   }
+
   .seo-tag h3 {
     border: rgb(207, 203, 203);
     border-width: 1px;
@@ -1341,6 +1364,7 @@ hr:after {
     font-size: 12px;
     display: inline-block;
   }
+
   .seo-tag a {
     border: rgb(192, 190, 190);
     border-width: 1px;

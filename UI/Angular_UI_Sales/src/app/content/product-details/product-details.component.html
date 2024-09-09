@@ -78,11 +78,11 @@
             <span  style="color:#c5bfbf; padding: 5px;"><i class="fa fa-thumbs-up">  </i> {{ProductDetails[0].Grad}}</span>
             <span  style="color:#c5bfbf; padding: 5px;"><i class="fa fa-thumbs-down">  </i> 0</span>
             <br/>
-            <button class="btn_offer" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" (click)="onSelectProductOrder(ProductDetails[0].ID, ProductDetails[0].ProductGroupID ,ProductDetails[0].ProductGroup_Title,11)" *ngIf="ProductDetails[0].IsAvailable===true"><i class="fa fa-plus"></i> {{'Add' | translate}}</button>
+            <button class="btn_offer" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" (click)="onSelectProductOrder(ProductDetails[0].ID)" *ngIf="ProductDetails[0].IsAvailable===true"><i class="fa fa-plus"></i> {{'Add' | translate}}</button>
             <button class="btn_offer" disabled="disabled" [ngStyle]="{'color': them.ButtonFontColor,'background-color':them.ButtonColor}" *ngIf="ProductDetails[0].IsAvailable===false"> {{'NotAvailable' | translate}}</button>
 
 
-            <button class="btn_price" [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}" style="margin-top:10px;" (click)="onSelectProductOrder(ProductDetails[0].ID, ProductDetails[0].ProductGroupID ,ProductDetails[0].ProductGroup_Title,0)"> <i class="fa fa-arrow-circle-right"></i> {{'BackToList' | translate}} </button>
+            <button class="btn_price" [ngStyle]="{'color': them.PriceFontColor,'background-color':them.PriceColor}" style="margin-top:10px;" (click)="onSelectProductOrder(ProductDetails[0].ID)"> <i class="fa fa-arrow-circle-right"></i> {{'BackToList' | translate}} </button>
             
           </div>
         </div>
